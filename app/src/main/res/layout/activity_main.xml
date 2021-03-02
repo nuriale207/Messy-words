@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <Button
+        android:id="@+id/botonJugar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="JUGAR"
+        app:layout_constraintBottom_toTopOf="@+id/botonRanking"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.529"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tagDesordenadas"
+        app:layout_constraintVertical_bias="0.587" />
+
+    <TextView
+        android:id="@+id/tagDesordenadas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="136dp"
+        android:text="DESORDENADAS"
+        app:layout_constraintBottom_toTopOf="@+id/botonJugar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.529"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/botonInstrucciones"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="INSTRUCCIONES"
+        app:layout_constraintBottom_toTopOf="@+id/botonSalir"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.536"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/botonRanking"
+        app:layout_constraintVertical_bias="0.142" />
+
+    <Button
+        android:id="@+id/botonRanking"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="RANKING"
+        app:layout_constraintBottom_toTopOf="@+id/botonInstrucciones"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.527"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/botonJugar" />
+
+    <Button
+        android:id="@+id/botonSalir"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:text="Salir"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.904" />
+
+    <Button
+        android:id="@+id/botonIdioma"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Idioma"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.773"
+        app:layout_constraintStart_toEndOf="@+id/botonSalir"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.904" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
