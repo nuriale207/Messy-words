@@ -2,6 +2,7 @@ package com.example.practica1_desordenadas;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -21,7 +22,8 @@ public class MainActivity extends AppCompatActivity implements DialogoSalir.List
         botonRanking=findViewById(R.id.botonRanking);
         botonInstrucciones=findViewById(R.id.botonInstrucciones);
         botonSalir=findViewById(R.id.botonSalir);
-
+        BaseDeDatos GestorDB = new BaseDeDatos (this, "NombreBD", null, 1);
+        SQLiteDatabase bd = GestorDB.getWritableDatabase();
 
 
         //Paso X: Añadir los listeners de cada boton
