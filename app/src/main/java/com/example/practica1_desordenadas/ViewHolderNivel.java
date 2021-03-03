@@ -1,5 +1,6 @@
 package com.example.practica1_desordenadas;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.View;
 import android.widget.ImageView;
@@ -20,15 +21,14 @@ public class ViewHolderNivel extends RecyclerView.ViewHolder {
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (seleccion[getAdapterPosition()]==true) {
-                    seleccion[getAdapterPosition()] = false;
-                    laimagen.setColorFilter(Color.WHITE);
-                }
-                else{
 
-                    seleccion[getAdapterPosition()]=true;
-                    laimagen.setColorFilter(Color.BLUE);
-                }
+                    seleccion[getAdapterPosition()] = false;
+                    Intent i=new Intent(itemView.getContext(),PantallaJuego.class);
+                    i.putExtra("Letras","eltexto");
+                    i.putExtra("imagen","laimagen");
+                    itemView.getContext().startActivity(i);
+
+
             }
 
         });

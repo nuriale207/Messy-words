@@ -26,9 +26,17 @@ public class MainActivity extends AppCompatActivity implements DialogoSalir.List
         BaseDeDatos GestorDB = new BaseDeDatos (this, "NombreBD", null, 1);
         SQLiteDatabase bd = GestorDB.getWritableDatabase();
 
+        //Paso X: se definen los intent que se van a utilizar despues
+        Intent i=new Intent(this,ActividadSeleccionarNivel.class);
 
         //Paso X: Añadir los listeners de cada boton
+        botonJugar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                startActivity(i);
+            }
+        });
 
 
         botonSalir.setOnClickListener(new View.OnClickListener() {
@@ -39,9 +47,7 @@ public class MainActivity extends AppCompatActivity implements DialogoSalir.List
             }
         });
 
-        Intent i=new Intent(this,ActividadSeleccionarNivel.class);
-        startActivity(i);
-        finish();
+
 
 
 

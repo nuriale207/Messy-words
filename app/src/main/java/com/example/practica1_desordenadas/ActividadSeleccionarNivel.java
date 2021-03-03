@@ -18,15 +18,15 @@ public class ActividadSeleccionarNivel extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_actividad_seleccionar_nivel);
-
+        // CONFIGURACIÓN DE LA VISTA DEL RECYCLER VIEW
         RecyclerView elRecyclerView=findViewById(R.id.recyclerView);
 
+        //Lista con las imágenes y las letras
         ArrayList<Integer> imagenes=new ArrayList<Integer>();
-
         ArrayList<String> letras=new ArrayList<String>();
 
+        //Se obtienen los niveles de la base de datos
         String[] campos = new String[]{"Codigo", "Letras","IdImagen"};
-
         BaseDeDatos GestorDB = new BaseDeDatos (this, "NombreBD", null, 1);
         SQLiteDatabase db = GestorDB.getWritableDatabase();
         Cursor cu = db.query("Niveles", campos, null, null, null, null, null);
@@ -44,12 +44,13 @@ public class ActividadSeleccionarNivel extends AppCompatActivity {
         }
         cu.close();
         db.close();
-        
-        
+        //Se añaden los niveles al recycler view
         AdaptadorRecyclerNivel elAdaptaador=new AdaptadorRecyclerNivel(letras,imagenes);
         elRecyclerView.setAdapter(elAdaptaador);
         StaggeredGridLayoutManager elLayoutRejillaDesigual =
                 new StaggeredGridLayoutManager(2, GridLayoutManager.VERTICAL);
         elRecyclerView.setLayoutManager(elLayoutRejillaDesigual);
+
+
     }
 }
