@@ -7,15 +7,17 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+
 public class AdaptadorRecyclerNivel extends RecyclerView.Adapter<ViewHolderNivel> {
-    private String[] losnombres;
-    private int[] lasimagenes;
+    private ArrayList<String> losnombres;
+    private ArrayList<Integer> lasimagenes;
     private boolean[] seleccionados;
-    public AdaptadorRecyclerNivel(String[] nombres, int[] imagenes)
+    public AdaptadorRecyclerNivel(ArrayList<String> nombres, ArrayList<Integer> imagenes)
     {
         losnombres=nombres;
         lasimagenes=imagenes;
-        seleccionados=new boolean[nombres.length];
+        seleccionados=new boolean[nombres.size()];
     }
     @NonNull
 
@@ -31,13 +33,13 @@ public class AdaptadorRecyclerNivel extends RecyclerView.Adapter<ViewHolderNivel
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolderNivel holder, int position) {
-        holder.eltexto.setText(losnombres[position]);
-        holder.laimagen.setImageResource(lasimagenes[position]);
+        holder.eltexto.setText(losnombres.get(position));
+        holder.laimagen.setImageResource(lasimagenes.get(position));
     }
 
 
     @Override
     public int getItemCount() {
-        return losnombres.length;
+        return losnombres.size();
     }
 }

@@ -2,6 +2,7 @@ package com.example.practica1_desordenadas;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
@@ -38,8 +39,9 @@ public class MainActivity extends AppCompatActivity implements DialogoSalir.List
             }
         });
 
-
-
+        Intent i=new Intent(this,ActividadSeleccionarNivel.class);
+        startActivity(i);
+        finish();
 
 
 
