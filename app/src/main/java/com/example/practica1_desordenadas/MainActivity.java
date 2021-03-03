@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity implements DialogoSalir.List
 
         //Paso X: se definen los intent que se van a utilizar despues
         Intent i=new Intent(this,ActividadSeleccionarNivel.class);
+        Intent iRanking=new Intent(this,PantallaRanking.class);
 
         //Paso X: Añadir los listeners de cada boton
         botonJugar.setOnClickListener(new View.OnClickListener() {
@@ -38,7 +39,13 @@ public class MainActivity extends AppCompatActivity implements DialogoSalir.List
             }
         });
 
+        botonRanking.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(iRanking);
 
+            }
+        });
         botonSalir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

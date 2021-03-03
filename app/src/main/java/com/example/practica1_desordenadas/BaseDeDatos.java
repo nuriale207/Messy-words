@@ -51,8 +51,19 @@ public class BaseDeDatos extends SQLiteOpenHelper {
             String IdImagen = cu.getString(2);
             Log.i("MYAPP",Cod+" "+Letras+" "+IdImagen);
         }
+
+        ContentValues nuevoUsuario = new ContentValues();
+        nuevoUsuario.put("NombreUsuario", "primero");
+        nuevoUsuario.put("Nombre", "Agustin");
+        nuevoUsuario.put("Email", "agustin@gmail.com");
+        nuevoUsuario.put("Contraseña", "1234");
+        nuevoUsuario.put("Puntuacion", 10000);
+
+        db.insert("Usuarios", null, nuevoUsuario);
+
         cu.close();
-        db.close();
+
+
     }
 
     @Override
