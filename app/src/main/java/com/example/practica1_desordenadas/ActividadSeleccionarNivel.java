@@ -24,6 +24,7 @@ public class ActividadSeleccionarNivel extends AppCompatActivity {
         //Lista con las imágenes y las letras
         ArrayList<Integer> imagenes=new ArrayList<Integer>();
         ArrayList<String> letras=new ArrayList<String>();
+        ArrayList<Integer> ids=new ArrayList<Integer>();
 
         //Se obtienen los niveles de la base de datos
         String[] campos = new String[]{"Codigo", "Letras","IdImagen"};
@@ -34,7 +35,8 @@ public class ActividadSeleccionarNivel extends AppCompatActivity {
         while (cu.moveToNext()) {
             Log.i("MYAPP","Obteniendo elemento");
 
-            int Cod = cu.getInt(0);
+            Integer Cod = cu.getInt(0);
+            ids.add(Cod);
             String letrasNivel = cu.getString(1);
             String idImagen = cu.getString(2);
             Log.i("MYAPP",idImagen);
@@ -45,7 +47,7 @@ public class ActividadSeleccionarNivel extends AppCompatActivity {
         cu.close();
         db.close();
         //Se añaden los niveles al recycler view
-        AdaptadorRecyclerNivel elAdaptaador=new AdaptadorRecyclerNivel(letras,imagenes);
+        AdaptadorRecyclerNivel elAdaptaador=new AdaptadorRecyclerNivel(letras,imagenes,ids);
         elRecyclerView.setAdapter(elAdaptaador);
         StaggeredGridLayoutManager elLayoutRejillaDesigual =
                 new StaggeredGridLayoutManager(2, GridLayoutManager.VERTICAL);

@@ -40,6 +40,11 @@ public class BaseDeDatos extends SQLiteOpenHelper {
         nuevo.put("IdImagen", "letras");
         db.insert("Niveles", null, nuevo);
 
+        ContentValues nuevo2 = new ContentValues();
+        nuevo.put("Letras", "abcd");
+        nuevo.put("IdImagen", "letras2");
+        db.insert("Niveles", null, nuevo);
+
         String[] campos = new String[]{"Codigo", "Letras","IdImagen"};
 
         Cursor cu = db.query("Niveles", campos, null, null, null, null, null);

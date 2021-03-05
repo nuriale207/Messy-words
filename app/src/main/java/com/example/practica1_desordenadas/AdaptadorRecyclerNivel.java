@@ -12,11 +12,14 @@ import java.util.ArrayList;
 public class AdaptadorRecyclerNivel extends RecyclerView.Adapter<ViewHolderNivel> {
     private ArrayList<String> losnombres;
     private ArrayList<Integer> lasimagenes;
+    private ArrayList<Integer> losIds;
+
     private boolean[] seleccionados;
-    public AdaptadorRecyclerNivel(ArrayList<String> nombres, ArrayList<Integer> imagenes)
+    public AdaptadorRecyclerNivel(ArrayList<String> nombres, ArrayList<Integer> imagenes,ArrayList<Integer> ids)
     {
         losnombres=nombres;
         lasimagenes=imagenes;
+        losIds=ids;
         seleccionados=new boolean[nombres.size()];
     }
     @NonNull
@@ -35,6 +38,7 @@ public class AdaptadorRecyclerNivel extends RecyclerView.Adapter<ViewHolderNivel
     public void onBindViewHolder(@NonNull ViewHolderNivel holder, int position) {
         holder.eltexto.setText(losnombres.get(position));
         holder.laimagen.setImageResource(lasimagenes.get(position));
+        holder.id=losIds.get(position);
     }
 
 
