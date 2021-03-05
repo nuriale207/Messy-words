@@ -11,12 +11,14 @@ import android.widget.ImageView;
 public class PantallaJuego extends AppCompatActivity {
     String letras;
     int idImagen;
+    Nivel nivel;
+    JugarPartida jugarPartida=JugarPartida.getPartida();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pantalla_juego);
         Bundle extras=getIntent().getExtras();
-
+        //Coger el nivel que hay que cargar
         if (extras!=null){
 
             if (extras.getInt("id")!=0){
@@ -46,9 +48,15 @@ public class PantallaJuego extends AppCompatActivity {
         cu.close();
         db.close();
 
-
+        //Se dibuja la imagen correspondiente
         ImageView imagen= findViewById(R.id.imageView);
         imagen.setImageResource(getResources().getIdentifier(idImagen,"drawable",getPackageName()));
+        //Se crea el nivel partiendo de los datos obtenidos
+        nivel=new Nivel(letrasNivel);
+
+
+
+
 
     }
 }

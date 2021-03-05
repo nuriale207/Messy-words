@@ -19,9 +19,15 @@ public class Nivel extends Observable {
 		this.nombre=pnombre;
 		listaLetras=new HashSet<Character>();
 		palabrasAcertadas=new HashSet<String>();
+
+		int i=0;
+		while (i<pnombre.length()){
+			anadirLetra(pnombre.charAt(i));
+			i=i+1;
+		}
 	}
 	
-	public void anadirLetra(Character car) {
+	private void anadirLetra(Character car) {
 		listaLetras.add(car);
 	}
 	
