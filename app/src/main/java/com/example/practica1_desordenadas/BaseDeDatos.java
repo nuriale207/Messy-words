@@ -41,7 +41,7 @@ public class BaseDeDatos extends SQLiteOpenHelper {
         db.insert("Niveles", null, nuevo);
 
         ContentValues nuevo2 = new ContentValues();
-        nuevo.put("Letras", "abcd");
+        nuevo.put("Letras", "hola");
         nuevo.put("IdImagen", "letras2");
         db.insert("Niveles", null, nuevo);
 

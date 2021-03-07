@@ -8,25 +8,28 @@
 
     <TextView
         android:id="@+id/tagPuntuacion"
-        android:layout_width="204dp"
+        android:layout_width="187dp"
         android:layout_height="24dp"
+        android:layout_marginEnd="5dp"
         android:text="Puntuación"
         app:layout_constraintBottom_toTopOf="@+id/imageView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/textView2"
+        app:layout_constraintStart_toEndOf="@+id/tagIntentos"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView2"
-        android:layout_width="204dp"
+        android:id="@+id/tagIntentos"
+        android:layout_width="178dp"
         android:layout_height="24dp"
+        android:layout_marginStart="5dp"
         android:text="Intentos"
         app:layout_constraintBottom_toTopOf="@+id/imageView"
         app:layout_constraintEnd_toStartOf="@+id/tagPuntuacion"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -53,6 +56,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <ListView
+        android:id="@+id/lista"
         android:layout_width="352dp"
         android:layout_height="257dp"
         app:layout_constraintBottom_toBottomOf="parent"

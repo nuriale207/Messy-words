@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity implements DialogoSalir.List
         botonSalir=findViewById(R.id.botonSalir);
         BaseDeDatos GestorDB = new BaseDeDatos (this, "NombreBD", null, 1);
         SQLiteDatabase bd = GestorDB.getWritableDatabase();
-
+        Diccionario.getDiccionario().cargar(this);
         //Paso X: se definen los intent que se van a utilizar despues
         Intent i=new Intent(this,ActividadSeleccionarNivel.class);
         Intent iRanking=new Intent(this,PantallaRanking.class);

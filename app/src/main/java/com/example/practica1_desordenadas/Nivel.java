@@ -1,5 +1,8 @@
 package com.example.practica1_desordenadas;
 
+import android.util.Log;
+
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -8,13 +11,16 @@ import java.util.Observable;
 public class Nivel extends Observable {
 	private String nombre;
 	private Collection<Character> listaLetras;
+	private int puntuacion;
 	private int aciertos;
-	private int errores;
 	private HashSet<String> palabrasAcertadas;
 	private static int puntuacionAcierto=4;
 	private static int restaError=2;
-	private static int numeroDeIntentos=10;
-	
+	private int numeroDeIntentos=10;
+	private StringBuilder output = new StringBuilder();
+	private int palabras=0;
+
+
 	public Nivel(String pnombre) {
 		this.nombre=pnombre;
 		listaLetras=new HashSet<Character>();
@@ -25,6 +31,8 @@ public class Nivel extends Observable {
 			anadirLetra(pnombre.charAt(i));
 			i=i+1;
 		}
+		combinarPalabras();
+		numeroDeIntentos=this.palabras*2;
 	}
 	
 	private void anadirLetra(Character car) {
@@ -41,15 +49,23 @@ public class Nivel extends Observable {
 		
 		System.out.println("Suerte! Dispones de 10 intentos");
 	}
-	public void jugar(String palabra) {
+	public String jugar(String palabra) {
 		if(esAcierto(palabra)&& !palabrasAcertadas.contains(palabra)) {
-			JugarPartida.getPartida().cambiarPuntuacion('+', puntuacionAcierto);
+			cambiarPuntuacion('+', puntuacionAcierto);
 			palabrasAcertadas.add(palabra);
+			numeroDeIntentos=numeroDeIntentos-1;
+			aciertos=aciertos+1;
+			return palabra;
 		}
 		else if(!esAcierto(palabra)){
-			JugarPartida.getPartida().cambiarPuntuacion('-', restaError);
+			cambiarPuntuacion('-', restaError);
+			Log.i("MYAPP","noooo es correctaaaa");
+			numeroDeIntentos=numeroDeIntentos-1;
+
+			return null;
 			
 		}
+		return null;
 	}
 
 	public boolean esAcierto(String palabra) {
@@ -57,9 +73,14 @@ public class Nivel extends Observable {
 		// TODO Auto-generated method stub
 		System.out.println(palabra);
 		System.out.println(!(palabra.length()>this.listaLetras.size()));
+		Log.i("MYAPP", String.valueOf(Diccionario.getDiccionario().contiene(palabra)));
 		System.out.println(Diccionario.getDiccionario().contiene(palabra));
-		if(!(palabra.length()>this.listaLetras.size()) || !Diccionario.getDiccionario().contiene(palabra)) {
-			System.out.println("no es correcta");
+		if((palabra.length()>this.nombre.length()) || !Diccionario.getDiccionario().contiene(palabra)) {
+			Log.i("MYAPP", "no es correcta");
+			Log.i("MYAPP", String.valueOf(palabra.length()));
+			Log.i("MYAPP", String.valueOf(nombre.length()));
+
+
 
 			return false;
 		}
@@ -94,6 +115,49 @@ public class Nivel extends Observable {
 		}
 		return letras;
 	}
-	
+
+
+
+	public void combinarPalabras() {combinarPalabras( 0 ); }
+	private void combinarPalabras(int start ){
+		for( int i = start; i < nombre.length(); i++ ){
+			output.append( nombre.charAt(i) );
+			if (Diccionario.getDiccionario().contiene(output.toString())){
+				palabras=palabras+1;
+				Log.i("MYAPP", String.valueOf(output));
+			}
+			if ( i < nombre.length() )
+				combinarPalabras( i + 1);
+			output.setLength( output.length() - 1 );
+		}
+	}
+
+	public int getNumeroPalabras(){
+		return this.palabras;
+	}
+
+	public int getPuntuacion(){
+		return this.puntuacion;
+	}
+
+	public int getIntentos(){
+		return this.numeroDeIntentos;
+	}
+	public void cambiarPuntuacion(char signo, int puntos) {
+		if(signo=='-') {
+			puntuacion=puntuacion-puntos;
+		}
+		else {
+			puntuacion=puntuacion+puntos;
+		}
+
+		setChanged();
+		notifyObservers(puntuacion);
+
+	}
+
+	public int getPalabrasRestantes(){
+		return palabras-aciertos;
+	}
 	
 }

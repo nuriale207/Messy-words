@@ -1,5 +1,9 @@
 package com.example.practica1_desordenadas;
 
+import android.app.Activity;
+import android.content.Context;
+import android.util.Log;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -17,7 +21,7 @@ public class Diccionario {
 	
 	private Diccionario() {
 		palabras=new HashMap<String,Palabra>();
-		cargar();
+
 	}
 	
 	public static Diccionario getDiccionario() {
@@ -42,16 +46,22 @@ public class Diccionario {
 		return this.palabras.containsKey(pPalabra);
 	}
 
-	private void cargar() {
+	public void cargar(Context pContexto) {
 		// TODO Auto-generated method stub
 		System.out.println("Dentro");
+		Log.i("MYAPP","CARGANDO DICCIONARIO");
+
 		String palabra = "lista.txt",line;
 		System.out.println(palabra);
         try {
-        	InputStream in = this.getClass().getResourceAsStream("lista.txt");
-        	//BufferedReader br = new BufferedReader(new FileReader("lista"));
-        	Reader reader = new InputStreamReader(in, "utf-8");
-        	BufferedReader br = new BufferedReader(reader);
+        	//InputStream in =this.getClass().getResourceAsStream("../../../res/raw/diccionario.txt");
+        	//BufferedReader br = new BufferedReader(new FileReader("../../res/raw/diccionario.txt"));
+			InputStream fich = pContexto.getResources().openRawResource(R.raw.diccionario);
+			BufferedReader br = new BufferedReader(new InputStreamReader(fich));
+
+
+			//Reader reader = new InputStreamReader(in, "utf-8");
+        	//BufferedReader br = new BufferedReader(reader);
             while ((line = br.readLine()) != null) {
             	System.out.println(line);
             	line=line.replaceAll("\\s+","");
@@ -64,8 +74,9 @@ public class Diccionario {
  
 
         } catch (FileNotFoundException e) {
-        	System.out.println("File not Found");
-            e.printStackTrace();
+			Log.i("MYAPP","File not Found");
+
+			e.printStackTrace();
         } catch (IOException e) {
         	System.out.println("Couldn't read buffer line");
             e.printStackTrace();

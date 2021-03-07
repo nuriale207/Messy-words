@@ -2,16 +2,30 @@ package com.example.practica1_desordenadas;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
-public class PantallaJuego extends AppCompatActivity {
+import java.util.ArrayList;
+
+public class PantallaJuego extends AppCompatActivity implements DialogoFinNivel.ListenerdelDialogoFinNivel{
     String letras;
     int idImagen;
     Nivel nivel;
+    ArrayAdapter adapter;
+    ArrayList<String> lista=new ArrayList<String>();
+    ListView intentosAnteriores;
     JugarPartida jugarPartida=JugarPartida.getPartida();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,9 +68,68 @@ public class PantallaJuego extends AppCompatActivity {
         //Se crea el nivel partiendo de los datos obtenidos
         nivel=new Nivel(letrasNivel);
 
+        //Se cargan los elementos de la pantalla
+        intentosAnteriores=findViewById(R.id.lista);
+        adapter=new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, lista);
+        intentosAnteriores.setAdapter(adapter);
+        Button boton=findViewById(R.id.botonAñadir);
+        EditText texto=findViewById(R.id.textoPalabra);
+        TextView tagPuntuacion=findViewById(R.id.tagPuntuacion);
+        TextView tagIntentos=findViewById(R.id.tagIntentos);
+        tagPuntuacion.setText("Puntuación: "+nivel.getPuntuacion());
+        tagIntentos.setText("Intentos: "+nivel.getIntentos());
+
+        //listener del boton
+        boton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String palabra=texto.getText().toString();
+                if (nivel.jugar(palabra)!=null){
+                    lista.add(palabra);
+                    ArrayAdapter adapter= (ArrayAdapter) intentosAnteriores.getAdapter();
+                    adapter.notifyDataSetChanged();
+                    Log.i("MYAPP", String.valueOf(nivel.getNumeroPalabras()));
+                    int palabrasRestantes=nivel.getPalabrasRestantes();
+                    if (palabrasRestantes>0){
+                        Toast toast=Toast.makeText(getApplicationContext(),"Te quedan "+palabrasRestantes+" palabras", Toast.LENGTH_LONG);
+                        toast.setGravity(Gravity.BOTTOM| Gravity.CENTER, 0, 0);
+                        toast.show();
+
+                    }
+                    else{
+                        Log.i("MYAPP", "HAS GANADOOO");
+
+                        DialogoFinNivel dialogoFinNivel=new DialogoFinNivel();
+                        dialogoFinNivel.show(getSupportFragmentManager(), "etiqueta");
+                    }
+
+                }
+                else {
+
+                    Toast toast=Toast.makeText(getApplicationContext(),"No has acertado! "+nivel.getPalabrasRestantes()+" palabras", Toast.LENGTH_LONG);
+
+                }
+
+                tagPuntuacion.setText("Puntuación: "+nivel.getPuntuacion());
+                tagIntentos.setText("Intentos: "+nivel.getIntentos());
+            }
+        });
 
 
 
+
+
+    }
+
+    @Override
+    public void alpulsarMenuNiveles() {
+        Intent i =new Intent(this, ActividadSeleccionarNivel.class);
+        startActivity(i);
+        finish();
+    }
+
+    @Override
+    public void alpulsarSiguienteNivel() {
 
     }
 }

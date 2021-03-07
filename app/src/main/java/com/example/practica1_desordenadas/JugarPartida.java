@@ -15,11 +15,12 @@ public class JugarPartida extends Observable {
 	
 	public JugarPartida() {
 		misNiveles=new ArrayList<Nivel>();
-		
+
 		
 	}
 	
-	public void jugarPar() {
+	public void jugarPar(Nivel pnivel) {
+
 		Iterator<Nivel> itr= misNiveles.iterator();
 		int i=misNiveles.size();
 		while(puntuacion>= 0 && intentos>=0 && itr.hasNext()) {
@@ -35,7 +36,7 @@ public class JugarPartida extends Observable {
 		return miPartida;
 	}
 	
-	public void jugar(String palabra) {
+	public void jugar(String palabra,Nivel nivel) {
 		System.out.println(palabra);
 		nivelAct.jugar(palabra);
 		intentos--;
