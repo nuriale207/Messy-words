@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".PantallaRanking"></activity>
+        <activity android:name=".BarraMenu"></activity>
+        <activity android:name=".PantallaRanking" />
         <activity android:name=".PantallaJuego" />
         <activity android:name=".ActividadSeleccionarNivel" />
         <activity android:name=".MainActivity">

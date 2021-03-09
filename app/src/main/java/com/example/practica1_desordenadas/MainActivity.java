@@ -6,11 +6,12 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toolbar;
 
-public class MainActivity extends AppCompatActivity implements DialogoSalir.ListenerdelDialogoSalir {
+public class MainActivity extends BarraMenu implements DialogoSalir.ListenerdelDialogoSalir {
     Button botonJugar;
     Button botonRanking;
     Button botonInstrucciones;
@@ -73,5 +74,19 @@ public class MainActivity extends AppCompatActivity implements DialogoSalir.List
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu_layout,menu);
         return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id=item.getItemId();
+        switch (id){
+            case R.id.opcion1:{
+
+            }
+            case R.id.opcion2:{
+
+            }
+ 
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

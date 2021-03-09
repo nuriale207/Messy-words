@@ -12,7 +12,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
-public class ActividadSeleccionarNivel extends AppCompatActivity {
+public class ActividadSeleccionarNivel extends BarraMenu {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -6,4 +6,10 @@
         android:icon="@android:drawable/picture_frame"
         android:title="Perfil"
         app:showAsAction="ifRoom|withText" />
+
+    <item
+        android:id="@+id/opcion2"
+        android:icon="@android:drawable/picture_frame"
+        android:title="Iniciar Sesión"
+        app:showAsAction="never" />
 </menu>
