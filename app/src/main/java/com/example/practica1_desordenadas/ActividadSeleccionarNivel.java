@@ -50,7 +50,7 @@ public class ActividadSeleccionarNivel extends AppCompatActivity {
         AdaptadorRecyclerNivel elAdaptaador=new AdaptadorRecyclerNivel(letras,imagenes,ids);
         elRecyclerView.setAdapter(elAdaptaador);
         StaggeredGridLayoutManager elLayoutRejillaDesigual =
-                new StaggeredGridLayoutManager(2, GridLayoutManager.VERTICAL);
+                new StaggeredGridLayoutManager(1, GridLayoutManager.VERTICAL);
         elRecyclerView.setLayoutManager(elLayoutRejillaDesigual);
 
 

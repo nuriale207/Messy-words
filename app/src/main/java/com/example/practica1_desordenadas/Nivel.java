@@ -34,6 +34,23 @@ public class Nivel extends Observable {
 		combinarPalabras();
 		numeroDeIntentos=this.palabras*2;
 	}
+	public Nivel(String pnombre, int pPuntuacion,int pAciertos, HashSet<String> palabrasAcertadas,
+				 int numeroDeIntentos) {
+		this.nombre=pnombre;
+		this.puntuacion=pPuntuacion;
+		this.aciertos=pAciertos;
+		this.palabrasAcertadas=palabrasAcertadas;
+		this.numeroDeIntentos=numeroDeIntentos;
+		listaLetras=new HashSet<Character>();
+
+		int i=0;
+		while (i<pnombre.length()){
+			anadirLetra(pnombre.charAt(i));
+			i=i+1;
+		}
+		combinarPalabras();
+
+	}
 	
 	private void anadirLetra(Character car) {
 		listaLetras.add(car);
@@ -159,5 +176,15 @@ public class Nivel extends Observable {
 	public int getPalabrasRestantes(){
 		return palabras-aciertos;
 	}
-	
+
+	public int getAciertos() {
+		return this.aciertos;
+	}
+
+	public ArrayList<String> getPalabrasAcertadas() {
+		ArrayList<String> namesList = new ArrayList<>(this.palabrasAcertadas);
+		Log.i("MYAPP", String.valueOf(namesList));
+
+		return namesList;
+	}
 }

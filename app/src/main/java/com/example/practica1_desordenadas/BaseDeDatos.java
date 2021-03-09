@@ -36,13 +36,25 @@ public class BaseDeDatos extends SQLiteOpenHelper {
                 "PRIMARY KEY ('NombreUsuario','Codigo') )");
         Log.i("MYAPP","Insertando elemento");
         ContentValues nuevo = new ContentValues();
-        nuevo.put("Letras", "abc");
-        nuevo.put("IdImagen", "letras");
+        nuevo.put("Letras", "ivev");
+        nuevo.put("IdImagen", "ivev");
         db.insert("Niveles", null, nuevo);
 
         ContentValues nuevo2 = new ContentValues();
-        nuevo.put("Letras", "hola");
-        nuevo.put("IdImagen", "letras2");
+        nuevo.put("Letras", "hlao");
+        nuevo.put("IdImagen", "hlao");
+        db.insert("Niveles", null, nuevo);
+
+        nuevo.put("Letras", "ilem");
+        nuevo.put("IdImagen", "ilem");
+        db.insert("Niveles", null, nuevo);
+
+        nuevo.put("Letras", "irae");
+        nuevo.put("IdImagen", "irae");
+        db.insert("Niveles", null, nuevo);
+
+        nuevo.put("Letras", "nsio");
+        nuevo.put("IdImagen", "nsio");
         db.insert("Niveles", null, nuevo);
 
         String[] campos = new String[]{"Codigo", "Letras","IdImagen"};

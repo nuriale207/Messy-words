@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Gradle: com.kennycason:kumo-api:1.28">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.kennycason/kumo-api/1.28/bf4cea4f91c9a77435d87ae3031a54484390756a/kumo-api-1.28.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.kennycason/kumo-api/1.28/9012794c3331013985c86dabaf398b3494144fd/kumo-api-1.28-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.kennycason/kumo-api/1.28/d477915c0471f5166a6ea0c9f675fc5cec56c825/kumo-api-1.28-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

@@ -61,6 +61,21 @@
     <orderEntry type="library" name="Gradle: androidx.arch.core:core-common:2.1.0" level="project" />
     <orderEntry type="library" name="Gradle: androidx.annotation:annotation:1.1.0" level="project" />
     <orderEntry type="library" name="Gradle: androidx.constraintlayout:constraintlayout-solver:2.0.4" level="project" />
+    <orderEntry type="library" name="Gradle: com.kennycason:kumo-core:1.28" level="project" />
+    <orderEntry type="library" name="Gradle: com.kennycason:kumo-api:1.28" level="project" />
+    <orderEntry type="library" name="Gradle: org.slf4j:slf4j-api:1.7.30" level="project" />
+    <orderEntry type="library" name="Gradle: org.jsoup:jsoup:1.12.1" level="project" />
+    <orderEntry type="library" name="Gradle: commons-io:commons-io:2.4" level="project" />
+    <orderEntry type="library" name="Gradle: org.apache.commons:commons-lang3:3.4" level="project" />
+    <orderEntry type="library" name="Gradle: com.github.davidmoten:rtree:0.8.6" level="project" />
+    <orderEntry type="library" name="Gradle: com.github.davidmoten:guava-mini:0.1.1" level="project" />
+    <orderEntry type="library" name="Gradle: io.reactivex:rxjava:1.3.8" level="project" />
+    <orderEntry type="library" name="Gradle: com.googlecode.jinahya:ocap:1.2.3" level="project" />
+    <orderEntry type="library" name="Gradle: com.googlecode.jinahya:ocap-api:1.2.3" level="project" />
+    <orderEntry type="library" name="Gradle: com.googlecode.jinahya:ocap-ds:I05" level="project" />
+    <orderEntry type="library" name="Gradle: com.googlecode.jinahya:ocap-dvr:I08" level="project" />
+    <orderEntry type="library" name="Gradle: com.googlecode.jinahya:ocap-fp:I05" level="project" />
+    <orderEntry type="library" name="Gradle: com.googlecode.jinahya:ocap-hn:I09" level="project" />
     <orderEntry type="library" name="Gradle: com.google.android.material:material:1.3.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.constraintlayout:constraintlayout:2.0.4@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.appcompat:appcompat:1.2.0@aar" level="project" />

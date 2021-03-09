@@ -63,7 +63,7 @@ public class Diccionario {
 			//Reader reader = new InputStreamReader(in, "utf-8");
         	//BufferedReader br = new BufferedReader(reader);
             while ((line = br.readLine()) != null) {
-            	System.out.println(line);
+            	//System.out.println(line);
             	line=line.replaceAll("\\s+","");
             	Palabra pal=new Palabra(line);
             	this.palabras.put(pal.getNombre(), pal);

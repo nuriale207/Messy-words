@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class PantallaJuego extends AppCompatActivity implements DialogoFinNivel.ListenerdelDialogoFinNivel{
     String letras;
@@ -40,9 +41,8 @@ public class PantallaJuego extends AppCompatActivity implements DialogoFinNivel.
                 Log.i("MYapp", String.valueOf(idImagen));
 
             }
+
         }
-
-
         //Se obtiene el nivel de la base de datos
         String[] campos = new String[]{"Codigo", "Letras","IdImagen"};
         String[] argumentos = new String[] {String.valueOf(idImagen)};
@@ -61,12 +61,36 @@ public class PantallaJuego extends AppCompatActivity implements DialogoFinNivel.
         Log.i("MYAPP",idImagen);
         cu.close();
         db.close();
+        if (savedInstanceState!=null){
+            String nNivel=savedInstanceState.getString("nombreNivel");
+            int pPuntuacion=savedInstanceState.getInt("nivelPuntuacion");
+            int nAciertos=savedInstanceState.getInt("nivelAciertos");
+            int nIntentos=savedInstanceState.getInt("nivelIntentos");
+            Log.i("MYAPP",
+                    nNivel+pPuntuacion+nAciertos+nIntentos);
+            ArrayList<String> arrayAcertadas=savedInstanceState.getStringArrayList("nivelAcertadas");
+            lista=arrayAcertadas;
+            HashSet<String> acertadas= new HashSet<>(arrayAcertadas);
+            if (acertadas==null){
+                acertadas=new HashSet<String>();
+            }
+            Log.i("MYAPP",
+                    String.valueOf(acertadas));
+            nivel=new Nivel(nNivel,pPuntuacion,
+                   nAciertos,acertadas,nIntentos);
+        }
+        else{
+            nivel=new Nivel(letrasNivel);
+        }
+
+
+
 
         //Se dibuja la imagen correspondiente
         ImageView imagen= findViewById(R.id.imageView);
         imagen.setImageResource(getResources().getIdentifier(idImagen,"drawable",getPackageName()));
         //Se crea el nivel partiendo de los datos obtenidos
-        nivel=new Nivel(letrasNivel);
+
 
         //Se cargan los elementos de la pantalla
         intentosAnteriores=findViewById(R.id.lista);
@@ -118,6 +142,17 @@ public class PantallaJuego extends AppCompatActivity implements DialogoFinNivel.
 
 
 
+
+    }
+    @Override
+    protected void onSaveInstanceState (Bundle savedInstanceState) {
+
+        super.onSaveInstanceState(savedInstanceState);
+            savedInstanceState.putString("nombreNivel",nivel.getNombre());
+            savedInstanceState.putInt("nivelPuntuacion",nivel.getPuntuacion());
+            savedInstanceState.putInt("nivelAciertos",nivel.getAciertos());
+            savedInstanceState.putInt("nivelIntentos",nivel.getIntentos());
+            savedInstanceState.putStringArrayList("nivelAcertadas",nivel.getPalabrasAcertadas());
 
     }
 
