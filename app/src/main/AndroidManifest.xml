@@ -8,7 +8,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Practica1Desordenadas">
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity android:name=".PantallaRanking"></activity>
         <activity android:name=".PantallaJuego" />
         <activity android:name=".ActividadSeleccionarNivel" />

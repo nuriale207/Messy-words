@@ -10,6 +10,8 @@ import java.util.Observable;
 
 public class Nivel extends Observable {
 	private String nombre;
+	private int idImagen;
+	private int id;
 	private Collection<Character> listaLetras;
 	private int puntuacion;
 	private int aciertos;
@@ -21,8 +23,10 @@ public class Nivel extends Observable {
 	private int palabras=0;
 
 
-	public Nivel(String pnombre) {
+	public Nivel(int id,String pnombre, int idImagen) {
+		this.id=id;
 		this.nombre=pnombre;
+		this.idImagen=idImagen;
 		listaLetras=new HashSet<Character>();
 		palabrasAcertadas=new HashSet<String>();
 
@@ -34,13 +38,15 @@ public class Nivel extends Observable {
 		combinarPalabras();
 		numeroDeIntentos=this.palabras*2;
 	}
+
+	public int getIdImagen() {
+		Log.i("MYAPP", String.valueOf(idImagen));
+		return this.idImagen;
+	}
 	public Nivel(String pnombre, int pPuntuacion,int pAciertos, HashSet<String> palabrasAcertadas,
 				 int numeroDeIntentos) {
 		this.nombre=pnombre;
-		this.puntuacion=pPuntuacion;
-		this.aciertos=pAciertos;
-		this.palabrasAcertadas=palabrasAcertadas;
-		this.numeroDeIntentos=numeroDeIntentos;
+
 		listaLetras=new HashSet<Character>();
 
 		int i=0;
@@ -186,5 +192,16 @@ public class Nivel extends Observable {
 		Log.i("MYAPP", String.valueOf(namesList));
 
 		return namesList;
+	}
+
+	public int getId(){
+		return this.id;
+	}
+
+	public void set(int pPuntuacion, int nAciertos, HashSet<String> acertadas, int nIntentos) {
+		this.puntuacion=pPuntuacion;
+		this.aciertos=nAciertos;
+		this.palabrasAcertadas=acertadas;
+		this.numeroDeIntentos=nIntentos;
 	}
 }

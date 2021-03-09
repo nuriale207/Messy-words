@@ -25,8 +25,15 @@ public class ActividadSeleccionarNivel extends AppCompatActivity {
         ArrayList<Integer> imagenes=new ArrayList<Integer>();
         ArrayList<String> letras=new ArrayList<String>();
         ArrayList<Integer> ids=new ArrayList<Integer>();
+        ListaNiveles listaNiveles=new ListaNiveles();
+        Log.i("MYAPP","cargandoNiveles");
+        listaNiveles.cargarNiveles(this);
 
-        //Se obtienen los niveles de la base de datos
+        imagenes=listaNiveles.getImagenesNiveles();
+        letras=listaNiveles.getNombresNiveles();
+        ids=listaNiveles.getIdNiveles();
+
+        /*//Se obtienen los niveles de la base de datos
         String[] campos = new String[]{"Codigo", "Letras","IdImagen"};
         BaseDeDatos GestorDB = new BaseDeDatos (this, "NombreBD", null, 1);
         SQLiteDatabase db = GestorDB.getWritableDatabase();
@@ -45,7 +52,7 @@ public class ActividadSeleccionarNivel extends AppCompatActivity {
 
         }
         cu.close();
-        db.close();
+        db.close();*/
         //Se añaden los niveles al recycler view
         AdaptadorRecyclerNivel elAdaptaador=new AdaptadorRecyclerNivel(letras,imagenes,ids);
         elRecyclerView.setAdapter(elAdaptaador);

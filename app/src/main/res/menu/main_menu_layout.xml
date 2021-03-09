@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_height="20px" android:layout_width="20px">
+    <item
+        android:id="@+id/opcion1"
+        android:icon="@android:drawable/picture_frame"
+        android:title="Perfil"
+        app:showAsAction="ifRoom|withText" />
+</menu>
