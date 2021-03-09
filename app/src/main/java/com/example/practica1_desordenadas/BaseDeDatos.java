@@ -20,10 +20,10 @@ public class BaseDeDatos extends SQLiteOpenHelper {
         Log.i("MYAPP","Creando BD");
 
         db.execSQL("CREATE TABLE Usuarios ('NombreUsuario'  VARCHAR(255) PRIMARY KEY NOT NULL, " +
-                "'Nombre' VARCHAR(255) NOT NULL," +
                 "'Email'VARCHAR(255) NOT NULL," +
                 "'Contraseña'VARCHAR(255) NOT NULL," +
-                "'Puntuacion' INTEGER )");
+                "'Puntuacion' INTEGER," +
+                "'Imagen' BLOB )");
 
 
         db.execSQL("CREATE TABLE Niveles ('Codigo'  INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +

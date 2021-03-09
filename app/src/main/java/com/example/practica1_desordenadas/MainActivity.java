@@ -16,6 +16,7 @@ public class MainActivity extends BarraMenu implements DialogoSalir.ListenerdelD
     Button botonRanking;
     Button botonInstrucciones;
     Button botonSalir;
+
     Toolbar menu;
 
     @Override
@@ -34,6 +35,7 @@ public class MainActivity extends BarraMenu implements DialogoSalir.ListenerdelD
         //Paso X: se definen los intent que se van a utilizar despues
         Intent i=new Intent(this,ActividadSeleccionarNivel.class);
         Intent iRanking=new Intent(this,PantallaRanking.class);
+
 
         //Paso X: Añadir los listeners de cada boton
         botonJugar.setOnClickListener(new View.OnClickListener() {
@@ -83,9 +85,11 @@ public class MainActivity extends BarraMenu implements DialogoSalir.ListenerdelD
 
             }
             case R.id.opcion2:{
+                Intent iRegistro=new Intent(this,Registro.class);
+                startActivity(iRegistro);
 
             }
- 
+
         }
         return super.onOptionsItemSelected(item);
     }
