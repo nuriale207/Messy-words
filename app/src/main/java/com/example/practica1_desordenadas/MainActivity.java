@@ -3,6 +3,7 @@ package com.example.practica1_desordenadas;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.Menu;
@@ -42,14 +43,25 @@ public class MainActivity extends BarraMenu implements DialogoSalir.ListenerdelD
             @Override
             public void onClick(View v) {
 
-                startActivity(i);
+                    startActivity(i);
+
+
             }
         });
-
+        //En el botón ranking en caso de que el dispositivo esté en apaisado el fragment se carga a la derecha
         botonRanking.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(iRanking);
+                int orientation = getResources().getConfiguration().orientation;
+                if (orientation == Configuration. ORIENTATION_LANDSCAPE ){
+                    FragmentRanking fragment= ( FragmentRanking) getSupportFragmentManager().findFragmentById(R.id.fragment);
+                    fragment.cargarRanking();
+                }
+                else{
+                    startActivity(iRanking);
+
+                }
+
 
             }
         });
