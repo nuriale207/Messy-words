@@ -4,11 +4,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.preference.PreferenceManager;
 
 import android.Manifest;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -96,8 +98,12 @@ public class Registro extends AppCompatActivity {
                 byte[] img = bos.toByteArray();
                 nuevo.put("Imagen",img);
                 db.insert("Usuarios",null,nuevo);
-
-
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+                SharedPreferences.Editor editor= prefs.edit();
+                editor.putString("nombreUsuario",nombreUsuario);
+                Intent i =new Intent(this,MostrarPerfil.class);
+                startActivity(i);
+                editor.apply();
             }
 
         }

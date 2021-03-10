@@ -42,7 +42,7 @@
         android:text="Name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.622"
-        app:layout_constraintStart_toEndOf="@+id/textEmail"
+        app:layout_constraintStart_toEndOf="@+id/textEmail2"
         app:layout_constraintTop_toBottomOf="@+id/editNombreUsuario" />
 
     <EditText
@@ -67,7 +67,7 @@
         app:layout_constraintEnd_toStartOf="@+id/editContraseña1"
         app:layout_constraintHorizontal_bias="0.352"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textEmail" />
+        app:layout_constraintTop_toBottomOf="@+id/textEmail2" />
 
     <TextView
         android:id="@+id/textRepContraseña"
@@ -84,7 +84,7 @@
         app:layout_constraintVertical_bias="0.537" />
 
     <TextView
-        android:id="@+id/textEmail"
+        android:id="@+id/textEmail2"
         android:layout_width="114dp"
         android:layout_height="23dp"
         android:layout_marginStart="32dp"

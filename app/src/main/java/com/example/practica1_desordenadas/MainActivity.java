@@ -1,11 +1,15 @@
 package com.example.practica1_desordenadas;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
 
+import android.content.ClipData;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -92,17 +96,27 @@ public class MainActivity extends BarraMenu implements DialogoSalir.ListenerdelD
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id=item.getItemId();
-        switch (id){
-            case R.id.opcion1:{
-
+        Log.i("MYAPP", String.valueOf(id));
+        Log.i("MYAPP", String.valueOf(R.id.opcion1));
+        Log.i("MYAPP", String.valueOf(R.id.opcion2));
+        if(id==R.id.opcion1){
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+            if (prefs.contains("nombreUsuario")){
+                //Se muestra el perfil
+                Intent i=new Intent(this,MostrarPerfil.class);
+                startActivity(i);
+                MenuItem item2=findViewById(id+1);
+                item2.setTitle("Cerrar sesión");
             }
-            case R.id.opcion2:{
-                Intent iRegistro=new Intent(this,Registro.class);
-                startActivity(iRegistro);
-
+            else{
+                //Se muestra la pantalla de inicio de sesión
             }
-
         }
+        else if (id==R.id.opcion2){
+            Intent iRegistro=new Intent(this,Registro.class);
+            startActivity(iRegistro);
+        }
+
         return super.onOptionsItemSelected(item);
     }
 }
