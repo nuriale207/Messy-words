@@ -4,13 +4,13 @@
         app:key="cat_idioma"
         app:title="Idioma">
 
-    <ListPreference
-        app:dialogTitle="Elige un idioma"
-        app:entries="@array/idioma"
-        app:entryValues="@array/idioma"
-        app:key="asigpref"
-        app:summary="Elige un idioma"
-        app:title="Idioma" />
+        <ListPreference
+            app:dialogTitle="Elige un idioma"
+            app:entries="@array/idioma"
+            app:entryValues="@array/idioma"
+            app:key="asigpref"
+            app:summary="Elige un idioma"
+            app:title="Idioma" />
 
     </PreferenceCategory>
 

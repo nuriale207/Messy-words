@@ -60,6 +60,11 @@ public class MainActivity extends BarraMenu implements DialogoSalir.ListenerdelD
                 if (orientation == Configuration. ORIENTATION_LANDSCAPE ){
                     FragmentRanking fragment= ( FragmentRanking) getSupportFragmentManager().findFragmentById(R.id.fragment);
                     fragment.cargarRanking();
+
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.fragment, fragment)
+                            .commit();
                 }
                 else{
                     startActivity(iRanking);
@@ -110,11 +115,19 @@ public class MainActivity extends BarraMenu implements DialogoSalir.ListenerdelD
             }
             else{
                 //Se muestra la pantalla de inicio de sesión
+                Intent iIniciarSesion=new Intent(this,IniciarSesion.class);
+                startActivity(iIniciarSesion);
             }
         }
         else if (id==R.id.opcion2){
-            Intent iRegistro=new Intent(this,Registro.class);
-            startActivity(iRegistro);
+            Intent iIniciarSesion=new Intent(this,IniciarSesion.class);
+            startActivity(iIniciarSesion);
+        }
+
+        else if (id==R.id.preferencias){
+            Intent iPreferencias=new Intent(this,ActividadPreferencias.class);
+            startActivity(iPreferencias);
+
         }
 
         return super.onOptionsItemSelected(item);

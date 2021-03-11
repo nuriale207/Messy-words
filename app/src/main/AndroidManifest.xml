@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".IniciarSesion"></activity>
+        <activity android:name=".ActividadPreferencias"></activity>
+        <activity android:name=".IniciarSesion" />
         <activity android:name=".MostrarPerfil" />
         <activity android:name=".Registro" />
         <activity android:name=".BarraMenu" />
