@@ -8,7 +8,7 @@
             app:dialogTitle="Elige un idioma"
             app:entries="@array/idioma"
             app:entryValues="@array/idioma"
-            app:key="asigpref"
+            app:key="idioma"
             app:summary="Elige un idioma"
             app:title="Idioma" />
 

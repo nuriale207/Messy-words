@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">Practica1-Desordenadas</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="jugar">Jugar</string>
     <!-- Preference Titles -->
-    <string name="messages_header">Messages</string>
+    <string name="messages_header">Ju</string>
     <string name="sync_header">Sync</string>
 
     <!-- Messages Preferences -->
@@ -16,4 +16,13 @@
     <string name="attachment_summary_on">Automatically download attachments for incoming emails
     </string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="ranking">Ranking</string>
+    <string name="instrucciones">Instrucciones</string>
+    <string name="salir">Salir</string>
+    <string name="perfil">Perfil</string>
+    <string name="iniciarSesion">Iniciar Sesión</string>
+    <string name="configuracion">Configuración</string>
+    <string name="seleccionarNivel">Selecciona un nivel</string>
+    <string name="anadirNivel">Añadir Nivel</string>
+    <string name="localizacion">es</string>
 </resources>

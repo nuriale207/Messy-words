@@ -9,9 +9,11 @@ import androidx.preference.PreferenceManager;
 import android.Manifest;
 import android.app.Activity;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
@@ -27,6 +29,7 @@ import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
 import java.sql.Blob;
+import java.util.Locale;
 
 public class Registro extends AppCompatActivity {
 
@@ -48,6 +51,36 @@ public class Registro extends AppCompatActivity {
         añadirImagen=findViewById(R.id.añadirImagen);
         imagen=findViewById(R.id.imageView);
         registrarse=findViewById(R.id.registrarse);
+        //Paso 2: Gestión del idioma
+        //Paso 1: miro el idioma de las preferencias
+        SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(this);
+        String idiomaConfigurado=preferencias.getString("idioma","castellano");
+        String sufijoIdioma="es";
+        if (idiomaConfigurado.equals("Euskera")){
+            sufijoIdioma="eu";
+        }
+        Log.i("MYAPP",sufijoIdioma);
+        //Paso 2: miro la localización del dispositivo
+        String localizacionActual= getResources().getString(R.string.localizacion);
+
+        Log.i("MYAPP",localizacionActual);
+        if(!localizacionActual.equals(sufijoIdioma)){
+            Locale nuevaloc = new Locale(sufijoIdioma);
+
+            Locale.setDefault(nuevaloc);
+            Configuration configuration =
+                    getBaseContext().getResources().getConfiguration();
+            configuration.setLocale(nuevaloc);
+            configuration.setLayoutDirection(nuevaloc);
+            Context context =
+                    getBaseContext().createConfigurationContext(configuration);
+            getBaseContext().getResources().updateConfiguration(configuration, context.getResources().getDisplayMetrics());
+
+            finish();
+            Log.i("MYAPP",Locale.getDefault().getLanguage());
+            startActivity(getIntent());
+
+        }
 
         añadirImagen.setOnClickListener(new View.OnClickListener() {
             @Override

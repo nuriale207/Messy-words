@@ -12,7 +12,7 @@ public class ActividadPreferencias extends AppCompatActivity {
         setContentView(R.layout.activity_actividad_preferencias);
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fragmentPreferencias, new FragmentPreferencias())
+                .replace(R.id.fragmentPreferencias, new Preferencias())
                 .commit();
     }
 }

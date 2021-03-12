@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Practica1-Desordenadas</string>
+    <string name="jugar">Jolastu</string>
+    <string name="ranking">Sailkapena</string>
+    <string name="instrucciones">Argibideak</string>
+    <string name="salir">Irten</string>
+    <string name="perfil">Profila</string>
+    <string name="iniciarSesion">Saioa hasi</string>
+    <string name="configuracion">Itxura aldatu</string>
+    <string name="seleccionarNivel">Aukeratu maila</string>
+    <string name="anadirNivel">Maila berria eratu</string>
+    <string name="localizacion">eu</string>
 </resources>
