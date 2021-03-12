@@ -13,6 +13,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -37,7 +39,10 @@ public class ActividadSeleccionarNivel extends BarraMenu {
         imagenes=listaNiveles.getImagenesNiveles();
         letras=listaNiveles.getNombresNiveles();
         ids=listaNiveles.getIdNiveles();
-
+        TextView idTitulo=findViewById(R.id.idTitulo);
+        idTitulo.setText(R.string.seleccionarNivel);
+        Button boton=findViewById(R.id.botonAnadirNivel);
+        boton.setText(R.string.anadirNivel);
         //Paso 2: Gestión del idioma
         //Paso 1: miro el idioma de las preferencias
         SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(this);

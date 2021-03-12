@@ -64,7 +64,7 @@ public class PantallaRanking extends AppCompatActivity {
             Log.i("MYAPP","Obteniendo elemento");
             String nombreUsuario = cu.getString(0);
             int puntuacion = cu.getInt(1);
-            contenidoLista.add("Usuario: "+nombreUsuario+"\t Puntuación: "+puntuacion);
+            contenidoLista.add(getResources().getString(R.string.usuario)+": "+ nombreUsuario+"\t"+getResources().getString(R.string.puntuacion)+": "+puntuacion);
 
         }
         cu.close();

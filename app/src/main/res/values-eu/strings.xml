@@ -11,4 +11,18 @@
     <string name="seleccionarNivel">Aukeratu maila</string>
     <string name="anadirNivel">Maila berria eratu</string>
     <string name="localizacion">eu</string>
+    <string name="intentos">Saiakerak</string>
+    <string name="puntuacion">Puntuazioa</string>
+    <string name="escribePalabra">Idatzi hitz bat</string>
+    <string name="anadir">Gehitu</string>
+    <string name="nombreUsuario">Erabiltzaile izena</string>
+    <string name="contrasena">Pasahitza</string>
+    <string name="registrarse">Izena eman</string>
+    <string name="email">Email</string>
+    <string name="repetirContrasena">Errepikatu pasahitza</string>
+    <string name="anadirImagen">Irudia gehitu</string>
+    <string name="volver">Atzera</string>
+    <string name="editar">Datuak aldatu</string>
+    <string name="preferencias">Konfigurazioa</string>
+    <string name="usuario">Erabiltzailea</string>
 </resources>

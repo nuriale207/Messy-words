@@ -25,6 +25,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
@@ -45,12 +46,30 @@ public class Registro extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro);
         nombreUsuario=findViewById(R.id.editNombreUsuario);
+
         email=findViewById(R.id.editEmail);
         contraseña1=findViewById(R.id.editContraseña1);
         contraseña2=findViewById(R.id.editContraseña2);
+
         añadirImagen=findViewById(R.id.añadirImagen);
+        añadirImagen.setText(R.string.anadirImagen);
         imagen=findViewById(R.id.imageView);
         registrarse=findViewById(R.id.registrarse);
+
+        registrarse.setText(R.string.registrarse);
+
+        TextView textNombreUsuario=findViewById(R.id.textNombreUsuario);
+        textNombreUsuario.setText(R.string.nombreUsuario);
+        TextView textContraseña=findViewById(R.id.textContraseña);
+        textContraseña.setText(R.string.contrasena);
+
+        TextView textEmail=findViewById(R.id.textEmail2);
+        textEmail.setText(R.string.email);
+
+        TextView textRepContraseña=findViewById(R.id.textRepContraseña);
+        textRepContraseña.setText(R.string.repetirContrasena);
+
+
         //Paso 2: Gestión del idioma
         //Paso 1: miro el idioma de las preferencias
         SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(this);

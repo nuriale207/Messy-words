@@ -133,6 +133,12 @@ public class PantallaJuego extends AppCompatActivity implements DialogoFinNivel.
         tagPuntuacion.setText("Puntuación: "+nivel.getPuntuacion());
         tagIntentos.setText("Intentos: "+nivel.getIntentos());
 
+        tagPuntuacion.setText(R.string.puntuacion);
+        tagIntentos.setText(R.string.intentos);
+
+        texto.setText(R.string.escribePalabra);
+        boton.setText(R.string.anadir);
+
         //listener del boton
         boton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -166,8 +172,8 @@ public class PantallaJuego extends AppCompatActivity implements DialogoFinNivel.
 
                 }
 
-                tagPuntuacion.setText("Puntuación: "+nivel.getPuntuacion());
-                tagIntentos.setText("Intentos: "+nivel.getIntentos());
+                tagPuntuacion.setText(R.string.puntuacion+": "+nivel.getPuntuacion());
+                tagIntentos.setText(R.string.intentos+": "+nivel.getIntentos());
             }
         });
         //listener del edit text

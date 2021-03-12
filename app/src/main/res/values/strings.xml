@@ -25,4 +25,18 @@
     <string name="seleccionarNivel">Selecciona un nivel</string>
     <string name="anadirNivel">Añadir Nivel</string>
     <string name="localizacion">es</string>
+    <string name="intentos">Intentos</string>
+    <string name="puntuacion">Puntuación</string>
+    <string name="escribePalabra">Escribe una palabra</string>
+    <string name="anadir">Añadir</string>
+    <string name="nombreUsuario">Nombre de usuario</string>
+    <string name="contrasena">Contraseña</string>
+    <string name="registrarse">Registrarse</string>
+    <string name="email">Email</string>
+    <string name="repetirContrasena">Repetir contraseña</string>
+    <string name="anadirImagen">Añadir Imagen</string>
+    <string name="volver">Volver</string>
+    <string name="editar">Editar</string>
+    <string name="preferencias">Preferencias</string>
+    <string name="usuario">Usuario</string>
 </resources>

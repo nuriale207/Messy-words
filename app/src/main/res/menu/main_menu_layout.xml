@@ -4,17 +4,17 @@
     <item
         android:id="@+id/opcion1"
         android:icon="@android:drawable/picture_frame"
-        android:title="Perfil"
+        android:title="@string/perfil"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/opcion2"
         android:icon="@android:drawable/picture_frame"
-        android:title="Iniciar Sesión"
+        android:title="@string/iniciarSesion"
         app:showAsAction="never" />
     <item
         android:id="@+id/preferencias"
         android:icon="@android:drawable/picture_frame"
-        android:title="Preferencias"
+        android:title="@string/preferencias"
         app:showAsAction="never" />
 </menu>

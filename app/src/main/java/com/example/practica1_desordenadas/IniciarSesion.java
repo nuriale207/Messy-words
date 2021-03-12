@@ -12,6 +12,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class IniciarSesion extends AppCompatActivity {
@@ -25,7 +26,16 @@ public class IniciarSesion extends AppCompatActivity {
         EditText contraseña=findViewById(R.id.contraseñaEdit);
 
         Button botonIniciarSesion=findViewById(R.id.botonIniciarSesion);
+        botonIniciarSesion.setText(R.string.iniciarSesion);
         Button botonRegistro=findViewById(R.id.botonRegistrarse);
+        botonRegistro.setText(R.string.registrarse);
+
+        TextView tagNombreUsuario=findViewById(R.id.nombreUsuario);
+        TextView tagContraseña=findViewById(R.id.contraseña);
+        tagNombreUsuario.setText(R.string.nombreUsuario);
+        tagContraseña.setText(R.string.contrasena);
+
+
 
         botonIniciarSesion.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -32,6 +32,8 @@ public class MostrarPerfil extends AppCompatActivity {
 
         Button volver=findViewById(R.id.botonVolver);
         Button editar=findViewById(R.id.botonEditar);
+        volver.setText(R.string.volver);
+        editar.setText(R.string.editar);
 
         TextView nombreUsuario=findViewById(R.id.textNombreDeUsuario);
         TextView email=findViewById(R.id.textEmail2);
@@ -81,9 +83,9 @@ public class MostrarPerfil extends AppCompatActivity {
             Cursor cu = db.query("Usuarios", campos, "NombreUsuario=?", argumentos, null, null, null);
             Log.i("MYAPP",nombre);
             if(cu.moveToNext()){
-                nombreUsuario.setText("Nombre de usuario: "+cu.getString(0));
-                email.setText("Email: "+cu.getString(1));
-                puntuacion.setText("Puntuacion: "+cu.getString(2));
+                nombreUsuario.setText(getResources().getString(R.string.nombreUsuario)+": "+cu.getString(0));
+                email.setText(getResources().getString(R.string.email)+": "+cu.getString(1));
+                puntuacion.setText(getResources().getString(R.string.puntuacion)+": "+cu.getString(2));
                 byte[] image=cu.getBlob(3);
                 Bitmap bmp = BitmapFactory.decodeByteArray(image, 0,image.length);
                 imagen.setImageBitmap(bmp);
