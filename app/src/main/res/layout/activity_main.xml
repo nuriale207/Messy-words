@@ -8,10 +8,20 @@
     tools:context=".MainActivity">
 
 
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="452dp"
+        android:layout_height="694dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/labarra"
+        app:srcCompat="@drawable/background" />
+
     <Button
         android:id="@+id/botonJugar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="276dp"
+        android:layout_height="53dp"
         android:text="JUGAR"
         app:layout_constraintBottom_toTopOf="@+id/botonRanking"
         app:layout_constraintEnd_toEndOf="parent"
@@ -22,10 +32,18 @@
 
     <TextView
         android:id="@+id/tagDesordenadas"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="276dp"
+        android:layout_height="53dp"
         android:layout_marginTop="136dp"
+        android:background="#34608D"
+        android:backgroundTint="#34608D"
+        android:gravity="center"
         android:text="DESORDENADAS"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="#A5DB36"
+        android:textColorHighlight="#FFFFFF"
+        android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/botonJugar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.529"
@@ -34,8 +52,8 @@
 
     <Button
         android:id="@+id/botonInstrucciones"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="276dp"
+        android:layout_height="53dp"
         android:text="INSTRUCCIONES"
         app:layout_constraintBottom_toTopOf="@+id/botonSalir"
         app:layout_constraintEnd_toEndOf="parent"
@@ -46,8 +64,8 @@
 
     <Button
         android:id="@+id/botonRanking"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="276dp"
+        android:layout_height="53dp"
         android:text="RANKING"
         app:layout_constraintBottom_toTopOf="@+id/botonInstrucciones"
         app:layout_constraintEnd_toEndOf="parent"

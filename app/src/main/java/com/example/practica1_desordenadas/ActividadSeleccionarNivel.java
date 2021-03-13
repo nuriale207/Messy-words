@@ -7,12 +7,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -27,6 +30,7 @@ public class ActividadSeleccionarNivel extends BarraMenu {
         setContentView(R.layout.activity_actividad_seleccionar_nivel);
         // CONFIGURACIÓN DE LA VISTA DEL RECYCLER VIEW
         RecyclerView elRecyclerView=findViewById(R.id.recyclerView);
+        setSupportActionBar(findViewById(R.id.barraSeleccionarNivel));
 
         //Lista con las imágenes y las letras
         ArrayList<Integer> imagenes=new ArrayList<Integer>();
@@ -41,8 +45,8 @@ public class ActividadSeleccionarNivel extends BarraMenu {
         ids=listaNiveles.getIdNiveles();
         TextView idTitulo=findViewById(R.id.idTitulo);
         idTitulo.setText(R.string.seleccionarNivel);
-        Button boton=findViewById(R.id.botonAnadirNivel);
-        boton.setText(R.string.anadirNivel);
+//        Button boton=findViewById(R.id.botonAnadirNivel);
+//        boton.setText(R.string.anadirNivel);
         //Paso 2: Gestión del idioma
         //Paso 1: miro el idioma de las preferencias
         SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(this);
@@ -80,5 +84,45 @@ public class ActividadSeleccionarNivel extends BarraMenu {
         elRecyclerView.setLayoutManager(elLayoutRejillaDesigual);
 
 
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu_layout,menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id=item.getItemId();
+        Log.i("MYAPP", String.valueOf(id));
+        Log.i("MYAPP", String.valueOf(R.id.opcion1));
+        Log.i("MYAPP", String.valueOf(R.id.opcion2));
+        if(id==R.id.opcion1){
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+            if (prefs.contains("nombreUsuario")){
+                //Se muestra el perfil
+                Intent i=new Intent(this,MostrarPerfil.class);
+                startActivity(i);
+                MenuItem item2=findViewById(id+1);
+                item2.setTitle("Cerrar sesión");
+            }
+            else{
+                //Se muestra la pantalla de inicio de sesión
+                Intent iIniciarSesion=new Intent(this,IniciarSesion.class);
+                startActivity(iIniciarSesion);
+            }
+        }
+        else if (id==R.id.opcion2){
+            Intent iIniciarSesion=new Intent(this,IniciarSesion.class);
+            startActivity(iIniciarSesion);
+        }
+
+        else if (id==R.id.preferencias){
+            Intent iPreferencias=new Intent(this,ActividadPreferencias.class);
+            finish();
+            startActivity(iPreferencias);
+
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="FuenteDAS">
+        <item name="android:fontFamily">sans-serif-smallcaps</item>
+        <item name="android:textColor">#f00350</item>
+    </style>
+    <style name="FuenteDASParaEditText" parent="FuenteDAS">
+        <item name="android:fontFamily">casual</item>
+    </style>
+    <style name="TemaDesordenadas" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorPrimary">#a2f079</item>
+        <item name="colorPrimaryDark">#f4f4f4</item>
+        <item name="colorAccent">#eba154</item>
+        <item name="android:fontFamily">sans-serif-smallcaps</item>
+    </style>
+
+</resources>
