@@ -57,7 +57,14 @@ public class Registro extends AppCompatActivity {
         registrarse=findViewById(R.id.registrarse);
 
         registrarse.setText(R.string.registrarse);
+        if(savedInstanceState!=null){
+            Log.i("MYAPP","cargando lo escrito");
+            nombreUsuario.setText(savedInstanceState.getString("nombreUsuario"));
+            email.setText(savedInstanceState.getString("email"));
+            contraseña1.setText(savedInstanceState.getString("contraseña1"));
+            contraseña2.setText(savedInstanceState.getString("contraseña2"));
 
+        }
         TextView textNombreUsuario=findViewById(R.id.textNombreUsuario);
         textNombreUsuario.setText(R.string.nombreUsuario);
         TextView textContraseña=findViewById(R.id.textContraseña);
@@ -215,5 +222,15 @@ public class Registro extends AppCompatActivity {
             Bitmap photo = (Bitmap) data.getExtras().get("data");
             imagen.setImageBitmap(photo);
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState (Bundle savedInstanceState) {
+
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putString("nombreUsuario",nombreUsuario.getText().toString());
+        savedInstanceState.putString("email",email.getText().toString());
+        savedInstanceState.putString("contraseña1",contraseña1.getText().toString());
+        savedInstanceState.putString("contraseña2",contraseña2.getText().toString());
     }
 }

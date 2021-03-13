@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,6 +41,10 @@ public class MostrarPerfil extends AppCompatActivity {
         TextView puntuacion=findViewById(R.id.textPuntuación);
 
         ImageView imagen=findViewById(R.id.imageView2);
+
+        EditText textNombreUsuario=findViewById(R.id.editTextTextNombresuario);
+        EditText textEmail=findViewById(R.id.editTextTextEmail);
+        EditText textPuntuacion=findViewById(R.id.editTextTextPuntuacion);
 
         //Paso 2: Gestión del idioma
         //Paso 1: miro el idioma de las preferencias
@@ -83,9 +88,15 @@ public class MostrarPerfil extends AppCompatActivity {
             Cursor cu = db.query("Usuarios", campos, "NombreUsuario=?", argumentos, null, null, null);
             Log.i("MYAPP",nombre);
             if(cu.moveToNext()){
-                nombreUsuario.setText(getResources().getString(R.string.nombreUsuario)+": "+cu.getString(0));
-                email.setText(getResources().getString(R.string.email)+": "+cu.getString(1));
-                puntuacion.setText(getResources().getString(R.string.puntuacion)+": "+cu.getString(2));
+                nombreUsuario.setText(getResources().getString(R.string.nombreUsuario));
+                email.setText(getResources().getString(R.string.email));
+                puntuacion.setText(getResources().getString(R.string.puntuacion));
+                textNombreUsuario.setText(nombre);
+                textNombreUsuario.setEnabled(false);
+                textEmail.setText(cu.getString(1));
+                textEmail.setEnabled(false);
+                textPuntuacion.setText(cu.getString(2));
+                textPuntuacion.setEnabled(false);
                 byte[] image=cu.getBlob(3);
                 Bitmap bmp = BitmapFactory.decodeByteArray(image, 0,image.length);
                 imagen.setImageBitmap(bmp);
