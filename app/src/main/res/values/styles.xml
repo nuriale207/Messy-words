@@ -8,10 +8,23 @@
         <item name="android:fontFamily">casual</item>
     </style>
     <style name="TemaDesordenadas" parent="Theme.AppCompat.NoActionBar">
-        <item name="colorPrimary">#a2f079</item>
+        <item name="colorPrimary">@color/green</item>
         <item name="colorPrimaryDark">#f4f4f4</item>
-        <item name="colorAccent">#eba154</item>
+        <item name="colorAccent">@color/blue</item>
+        <item name="android:buttonStyle">@style/Button</item>
+        <item name="android:toolbarStyle">@style/Toolbar</item>
         <item name="android:fontFamily">sans-serif-smallcaps</item>
     </style>
+    <style name="Button" parent="Widget.AppCompat.Button.Colored">
+        <item name="colorButtonNormal">@color/blue</item>
+        <item name="android:textColor">@color/green</item>
+    </style>
+
+    <style name="Toolbar" parent="Widget.AppCompat.Toolbar">
+        <item name="android:textColorPrimary">@color/green</item>
+        <item name="android:textColor">@color/green</item>
+        <item name="android:background">@color/green</item>
+    </style>
+
 
 </resources>

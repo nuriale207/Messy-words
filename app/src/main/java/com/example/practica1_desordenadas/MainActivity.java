@@ -36,6 +36,8 @@ public class MainActivity extends BarraMenu implements DialogoSalir.ListenerdelD
         //Paso 1: Obtener los elementos del layout
         botonJugar=findViewById(R.id.botonJugar);
         setSupportActionBar(findViewById(R.id.labarra));
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
         botonRanking=findViewById(R.id.botonRanking);
         botonInstrucciones=findViewById(R.id.botonInstrucciones);
         botonSalir=findViewById(R.id.botonSalir);

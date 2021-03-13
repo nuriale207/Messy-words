@@ -41,7 +41,7 @@
         android:text="DESORDENADAS"
         android:textAlignment="center"
         android:textAllCaps="false"
-        android:textColor="#A5DB36"
+        android:textColor="#D2E13E"
         android:textColorHighlight="#FFFFFF"
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/botonJugar"

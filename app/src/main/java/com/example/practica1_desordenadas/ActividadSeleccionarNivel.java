@@ -31,6 +31,8 @@ public class ActividadSeleccionarNivel extends BarraMenu {
         // CONFIGURACIÓN DE LA VISTA DEL RECYCLER VIEW
         RecyclerView elRecyclerView=findViewById(R.id.recyclerView);
         setSupportActionBar(findViewById(R.id.barraSeleccionarNivel));
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
 
         //Lista con las imágenes y las letras
         ArrayList<Integer> imagenes=new ArrayList<Integer>();
