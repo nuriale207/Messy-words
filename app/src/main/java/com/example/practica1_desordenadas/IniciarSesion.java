@@ -24,6 +24,15 @@ public class IniciarSesion extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //Paso 0: Mirar el tema que tiene que tener la app
+        SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(this);
+        String tema=preferencias.getString("tema","Greenish blue");
+        if(tema.equals("Greenish blue")){
+            setTheme(R.style.TemaDesordenadasGreen);
+        }
+        else{
+            setTheme(R.style.TemaDesordenadasPurple);
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_iniciar_sesion);
 

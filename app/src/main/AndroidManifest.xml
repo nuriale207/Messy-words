@@ -11,7 +11,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/TemaDesordenadas">
+        android:theme="@style/TemaDesordenadasGreen">
         <activity android:name=".ActividadPreferencias"></activity>
         <activity android:name=".IniciarSesion" />
         <activity android:name=".MostrarPerfil" />

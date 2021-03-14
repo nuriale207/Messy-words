@@ -39,4 +39,12 @@
     <string name="editar">Editar</string>
     <string name="preferencias">Preferencias</string>
     <string name="usuario">Usuario</string>
+    <string name="idioma">Idioma</string>
+    <string name="eligeIdioma">Elige un idioma</string>
+    <string name="apariencia">Apariencia</string>
+    <string name="castellano">Castellano</string>
+    <string name="euskera">Euskera</string>
+    <string name="tema">Tema</string>
+    <string name="elegirApariencia">Elige la apariencia de la aplicación</string>
+    <string name="elegirTema">Elige un tema</string>
 </resources>

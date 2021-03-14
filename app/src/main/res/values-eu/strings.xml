@@ -25,4 +25,12 @@
     <string name="editar">Datuak aldatu</string>
     <string name="preferencias">Konfigurazioa</string>
     <string name="usuario">Erabiltzailea</string>
+    <string name="idioma">Hizkuntza</string>
+    <string name="eligeIdioma">Aukeratu hizkuntza</string>
+    <string name="apariencia">Itxura</string>
+    <string name="castellano">Gaztelania</string>
+    <string name="euskera">Euskara</string>
+    <string name="tema">Itxura mota</string>
+    <string name="elegirApariencia">Aukeratu itxura</string>
+    <string name="elegirTema">Aukeratu itxura</string>
 </resources>

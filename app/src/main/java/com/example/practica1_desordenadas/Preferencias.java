@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import androidx.preference.PreferenceFragmentCompat;
+import androidx.preference.PreferenceManager;
 
 import java.util.Locale;
 
@@ -16,6 +17,15 @@ public class Preferencias extends PreferenceFragmentCompat
 
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+            //Paso 0: Mirar el tema que tiene que tener la app
+            SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(getActivity());
+            String tema=preferencias.getString("tema","Greenish blue");
+            if(tema.equals("Greenish blue")){
+                getActivity().setTheme(R.style.TemaDesordenadasGreen);
+            }
+            else{
+                getActivity().setTheme(R.style.TemaDesordenadasPurple);
+            }
             addPreferencesFromResource(R.xml.root_preferences);
         }
         @Override
@@ -59,6 +69,18 @@ public class Preferencias extends PreferenceFragmentCompat
                 }
 
 
+            }
+            else if(s.equals("tema")){
+                Log.i("MYAPP","CAMBIANDO EL TEMA");
+                String tema=sharedPreferences.getString("tema","Greenish blue");
+
+                Intent i=new Intent(this.getActivity(), MainActivity.class);
+                startActivity(i);
+
+                Log.i("MYAPP",
+                        tema);
+                Log.i("MYAPP",
+                        s);
             }
         }
 

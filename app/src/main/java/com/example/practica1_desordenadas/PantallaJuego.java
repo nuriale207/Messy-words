@@ -36,6 +36,15 @@ public class PantallaJuego extends AppCompatActivity implements DialogoFinNivel.
     ListaNiveles listaNiveles = ListaNiveles.getListaNiveles();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //Paso 0: Mirar el tema que tiene que tener la app
+        SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(this);
+        String tema=preferencias.getString("tema","Greenish blue");
+        if(tema.equals("Greenish blue")){
+            setTheme(R.style.TemaDesordenadasGreen);
+        }
+        else{
+            setTheme(R.style.TemaDesordenadasPurple);
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pantalla_juego);
         Bundle extras=getIntent().getExtras();
@@ -51,7 +60,6 @@ public class PantallaJuego extends AppCompatActivity implements DialogoFinNivel.
         }
         //Paso 2: Gestión del idioma
         //Paso 1: miro el idioma de las preferencias
-        SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(this);
         String idiomaConfigurado=preferencias.getString("idioma","castellano");
         String sufijoIdioma="es";
         if (idiomaConfigurado.equals("Euskera")){

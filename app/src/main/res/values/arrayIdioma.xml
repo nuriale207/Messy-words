@@ -2,8 +2,13 @@
 <resources>
 
     <string-array name="idioma">
-        <item>Castellano</item>
-        <item>Euskera</item>
+        <item>@string/castellano</item>
+        <item>@string/euskera</item>
+    </string-array>
+
+    <string-array name="elegirTema">
+        <item>Greenish blue</item>
+        <item>Pinkish purple</item>
     </string-array>
 
 
