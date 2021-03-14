@@ -40,11 +40,18 @@
     <string name="preferencias">Preferencias</string>
     <string name="usuario">Usuario</string>
     <string name="idioma">Idioma</string>
-    <string name="eligeIdioma">Elige un idioma</string>
+    <string name="eligeIdioma" translatable="false">Elige un idioma</string>
     <string name="apariencia">Apariencia</string>
     <string name="castellano">Castellano</string>
     <string name="euskera">Euskera</string>
     <string name="tema">Tema</string>
     <string name="elegirApariencia">Elige la apariencia de la aplicación</string>
     <string name="elegirTema">Elige un tema</string>
+    <string name="continuar">Continuar</string>
+    <string name="hasGanado">¡Has ganado!</string>
+    <string name="hasPerdido">Has perdido...</string>
+    <string name="finPartida">Fin de la partida</string>
+    <string name="eligeOpcion">¿Quieres seguir jugando?</string>
+    <string name="menuNiveles">Menú de niveles</string>
+    <string name="siguienteNivel">Siguiente nivel</string>
 </resources>

@@ -10,7 +10,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
 public class DialogoFinNivel extends DialogFragment {
-
+    AlertDialog.Builder builder;
     public interface ListenerdelDialogoFinNivel {
         void alpulsarMenuNiveles();
         void alpulsarSiguienteNivel();
@@ -20,19 +20,19 @@ public class DialogoFinNivel extends DialogFragment {
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("Continuar");
-        builder.setMessage("Has ganado!! " );
+        builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle(getString(R.string.finPartida));
+        builder.setMessage(getString(R.string.eligeOpcion));
         DialogoFinNivel.ListenerdelDialogoFinNivel miListener = (DialogoFinNivel.ListenerdelDialogoFinNivel) getActivity();
 
-        builder.setPositiveButton("Siguiente nivel", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(getString(R.string.siguienteNivel), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 miListener.alpulsarSiguienteNivel();
             }
         });
 
-        builder.setNegativeButton("Menú de niveles", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(getString(R.string.menuNiveles), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 miListener.alpulsarMenuNiveles();
@@ -44,4 +44,6 @@ public class DialogoFinNivel extends DialogFragment {
         dialog.setCanceledOnTouchOutside(false);
         return dialog;
     }
+
+
 }

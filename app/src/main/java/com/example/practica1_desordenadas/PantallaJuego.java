@@ -157,17 +157,26 @@ public class PantallaJuego extends AppCompatActivity implements DialogoFinNivel.
                     adapter.notifyDataSetChanged();
                     Log.i("MYAPP", String.valueOf(nivel.getNumeroPalabras()));
                     int palabrasRestantes=nivel.getPalabrasRestantes();
-                    if (palabrasRestantes>0){
+                    Log.i("MYAPP", String.valueOf(nivel.getIntentos()));
+                    if (palabrasRestantes>0 && nivel.getIntentos()>0){
                         Toast toast=Toast.makeText(getApplicationContext(),"Te quedan "+palabrasRestantes+" palabras", Toast.LENGTH_LONG);
                         toast.setGravity(Gravity.BOTTOM| Gravity.CENTER, 0, 0);
                         toast.show();
 
                     }
-                    else{
+                    else if (palabrasRestantes==0){
                         Log.i("MYAPP", "HAS GANADOOO");
+                        Toast toastGanado=Toast.makeText(getApplicationContext(),getString(R.string.hasGanado), Toast.LENGTH_LONG);
+                        toastGanado.setGravity(Gravity.CENTER| Gravity.CENTER, 0, 0);
 
                         DialogoFinNivel dialogoFinNivel=new DialogoFinNivel();
                         dialogoFinNivel.show(getSupportFragmentManager(), "etiqueta");
+                    }
+
+                    else if (nivel.getIntentos()<=0){
+                        DialogoFinNivel dialogoFinNivel2=new DialogoFinNivel();
+                        dialogoFinNivel2.show(getSupportFragmentManager(), "etiqueta");
+                        //dialogoFinNivel.cambiarTexto("Has perdido...","Continuar");
                     }
 
                 }
@@ -176,6 +185,16 @@ public class PantallaJuego extends AppCompatActivity implements DialogoFinNivel.
                     Toast toast=Toast.makeText(getApplicationContext(),"No has acertado! "+nivel.getPalabrasRestantes()+" palabras", Toast.LENGTH_LONG);
                     toast.setGravity(Gravity.BOTTOM| Gravity.CENTER, 0, 0);
                     toast.show();
+                    if (nivel.getIntentos()<=0){
+                        Toast toastPerdido=Toast.makeText(getApplicationContext(),"Has perdido!!", Toast.LENGTH_LONG);
+                        toast.setGravity(Gravity.CENTER| Gravity.CENTER, 0, 0);
+                        toast.show();
+                        DialogoFinNivel dialogoFinNivel=new DialogoFinNivel();
+
+
+                        dialogoFinNivel.show(getSupportFragmentManager(), "etiqueta");
+                    }
+
 
                 }
 

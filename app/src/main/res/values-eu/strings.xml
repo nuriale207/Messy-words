@@ -33,4 +33,11 @@
     <string name="tema">Itxura mota</string>
     <string name="elegirApariencia">Aukeratu itxura</string>
     <string name="elegirTema">Aukeratu itxura</string>
+    <string name="continuar">Jarraitu</string>
+    <string name="hasGanado">Irabazi duzu!</string>
+    <string name="hasPerdido">Galdu duzu...</string>
+    <string name="eligeOpcion">Jolasten jarraitu nahi duzu?</string>
+    <string name="menuNiveles">Mailen menua</string>
+    <string name="siguienteNivel">Hurrengo maila</string>
+    <string name="finPartida">Partida amaiera</string>
 </resources>

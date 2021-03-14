@@ -1,5 +1,6 @@
 package com.example.practica1_desordenadas;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.util.Log;
@@ -28,6 +29,8 @@ public class ViewHolderNivel extends RecyclerView.ViewHolder {
                     Intent i=new Intent(itemView.getContext(),PantallaJuego.class);
                     i.putExtra("id",id);
                     Log.i("MYAPP", String.valueOf(laimagen.getId()));
+                    Activity actividad=(Activity)itemView.getContext();
+                    actividad.finish();
                     itemView.getContext().startActivity(i);
 
             }
