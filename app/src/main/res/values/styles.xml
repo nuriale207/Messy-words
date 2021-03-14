@@ -27,13 +27,14 @@
     </style>
 
     <style name="TemaDesordenadasPurple" parent="Theme.AppCompat.NoActionBar">
-        <item name="android:background">@color/white</item>
         <item name="colorPrimary">@color/purple</item>
         <item name="colorPrimaryDark">@color/aqua</item>
         <item name="colorAccent">@color/purple</item>
         <item name="android:buttonStyle">@style/ButtonPurple</item>
         <item name="android:toolbarStyle">@style/ToolbarPurple</item>
         <item name="android:fontFamily">sans-serif-condensed-medium</item>
+        <item name="android:textColor">@color/aqua</item>
+
     </style>
     <style name="ButtonPurple" parent="Widget.AppCompat.Button.Colored">
         <item name="colorAccent">@color/purple</item>
@@ -41,9 +42,9 @@
     </style>
 
     <style name="ToolbarPurple" parent="Widget.AppCompat.Toolbar">
-        <item name="android:textColorPrimary">@color/purple_200</item>
-        <item name="android:textColor">@color/purple_200</item>
-        <item name="android:background">@color/purple_200</item>
+        <item name="android:textColorPrimary">@color/purple</item>
+        <item name="android:textColor">@color/purple</item>
+        <item name="android:background">@color/purple</item>
     </style>
 
 
