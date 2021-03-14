@@ -9,6 +9,8 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -167,8 +169,8 @@ public class PantallaJuego extends AppCompatActivity implements DialogoFinNivel.
                     else if (palabrasRestantes==0){
                         Log.i("MYAPP", "HAS GANADOOO");
                         Toast toastGanado=Toast.makeText(getApplicationContext(),getString(R.string.hasGanado), Toast.LENGTH_LONG);
-                        toastGanado.setGravity(Gravity.CENTER| Gravity.CENTER, 0, 0);
-
+                        toastGanado.setGravity(Gravity.TOP| Gravity.CENTER, 0, 0);
+                        //registrarPuntuacion();
                         DialogoFinNivel dialogoFinNivel=new DialogoFinNivel();
                         dialogoFinNivel.show(getSupportFragmentManager(), "etiqueta");
                     }
@@ -187,8 +189,10 @@ public class PantallaJuego extends AppCompatActivity implements DialogoFinNivel.
                     toast.show();
                     if (nivel.getIntentos()<=0){
                         Toast toastPerdido=Toast.makeText(getApplicationContext(),"Has perdido!!", Toast.LENGTH_LONG);
-                        toast.setGravity(Gravity.CENTER| Gravity.CENTER, 0, 0);
+                        toast.setGravity(Gravity.TOP| Gravity.CENTER, 0, 0);
                         toast.show();
+                        //registrarPuntuacion();
+
                         DialogoFinNivel dialogoFinNivel=new DialogoFinNivel();
 
 
@@ -213,7 +217,28 @@ public class PantallaJuego extends AppCompatActivity implements DialogoFinNivel.
 
 
 
-
+//        public void registrarPuntuacion(){
+//
+//            String nombre=preferencias.getString("nombreUsuario",null);
+//            if (nombre !=null){
+//                //Si hay un usuario registrado se almacena su puntuación
+//                BaseDeDatos GestorDB = new BaseDeDatos (this, "NombreBD", null, 1);
+//                String[] campos = new String[]{"Puntuacion"};
+//                String[] argumentos = new String[] {nombre};
+//                SQLiteDatabase db = GestorDB.getWritableDatabase();
+//                Cursor cu = db.query("Usuarios", campos, "NombreUsuario=?", argumentos, null, null, null);
+//                Log.i("MYAPP",nombre);
+//                if(cu.moveToNext()){
+//                    int puntuacion=cu.getInt(0);
+//                    byte[] image=cu.getBlob(3);
+//                    Bitmap bmp = BitmapFactory.decodeByteArray(image, 0,image.length);
+//                    imagen.setImageBitmap(bmp);
+//            }
+//
+//
+//
+//            }
+//        }
 
     }
     @Override

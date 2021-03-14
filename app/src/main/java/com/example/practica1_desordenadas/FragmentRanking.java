@@ -20,13 +20,11 @@ import java.util.ArrayList;
 
 
 public class FragmentRanking extends Fragment {
-    TextView etiquetaRanking;
     ListView listaRanking;
 
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         Log.i("MYAPP","actividad creadaaaaa");
-        etiquetaRanking= getView().findViewById(R.id.Ranking);
         listaRanking= getView().findViewById(R.id.listaRanking);
     }
 

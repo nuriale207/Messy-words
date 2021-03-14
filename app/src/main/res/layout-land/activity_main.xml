@@ -8,103 +8,83 @@
     tools:context=".MainActivity">
 
 
-    <Button
-        android:id="@+id/botonIdioma"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Idioma"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.149"
-        app:layout_constraintStart_toEndOf="@+id/botonSalir"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.933" />
-
-    <Button
-        android:id="@+id/botonJugar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:text="JUGAR"
-        app:layout_constraintBottom_toTopOf="@+id/botonRanking"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.205"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tagDesordenadas"
-        app:layout_constraintVertical_bias="0.555" />
-
-    <Button
-        android:id="@+id/botonInstrucciones"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="96dp"
-        android:text="INSTRUCCIONES"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.186"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/tagDesordenadas"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="72dp"
-        android:layout_marginBottom="20dp"
-        android:text="DESORDENADAS"
-        app:layout_constraintBottom_toTopOf="@+id/botonJugar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.195"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/botonRanking"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:text="RANKING"
-        app:layout_constraintBottom_toTopOf="@+id/botonInstrucciones"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.205"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/botonSalir"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="44dp"
-        android:text="Salir"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.933" />
-
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/labarra"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="112dp"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
-        app:layout_constraintBottom_toTopOf="@+id/tagDesordenadas"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.125" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout4"
+        android:layout_width="313dp"
+        android:layout_height="381dp"
+        android:layout_marginEnd="30dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/fragment"
+        app:layout_constraintHorizontal_bias="0.122"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tagDesordenadas"
+            android:layout_width="304dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="72dp"
+
+            android:layout_marginBottom="20dp"
+            android:background="@color/blue"
+            android:backgroundTint="@color/blue"
+            android:gravity="center"
+            android:text="DESORDENADAS"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="@color/green" />
+
+        <Button
+            android:id="@+id/botonJugar"
+            android:layout_width="304dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="20dp"
+            android:text="JUGAR" />
+
+        <Button
+            android:id="@+id/botonRanking"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:text="RANKING" />
+
+        <Button
+            android:id="@+id/botonInstrucciones"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:text="INSTRUCCIONES" />
+
+        <Button
+            android:id="@+id/botonSalir"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:text="Salir" />
+
+    </LinearLayout>
 
     <fragment
         android:id="@+id/fragment"
         android:name="com.example.practica1_desordenadas.FragmentRanking"
-        android:layout_width="266dp"
-        android:layout_height="314dp"
+        android:layout_width="336dp"
+        android:layout_height="354dp"
+        android:layout_marginTop="19dp"
+        android:layout_marginEnd="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.824"
-        app:layout_constraintStart_toEndOf="@+id/botonJugar"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.639" />
+        app:layout_constraintTop_toBottomOf="@+id/labarra"
+        app:layout_constraintVertical_bias="1.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
