@@ -9,6 +9,7 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
         android:layout_width="414dp"
         android:layout_height="667dp"
         android:layout_marginTop="5dp"
@@ -20,98 +21,83 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <Button
-        android:id="@+id/botonJugar"
-        android:layout_width="276dp"
-        android:layout_height="53dp"
-        android:text="JUGAR"
-        app:layout_constraintBottom_toTopOf="@+id/botonRanking"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.529"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tagDesordenadas"
-        app:layout_constraintVertical_bias="0.587" />
-
-    <TextView
-        android:id="@+id/tagDesordenadas"
-        android:layout_width="276dp"
-        android:layout_height="53dp"
-        android:layout_marginTop="136dp"
-        android:background="#34608D"
-        android:backgroundTint="#34608D"
-        android:gravity="center"
-        android:text="DESORDENADAS"
-        android:textAlignment="center"
-        android:textAllCaps="false"
-        android:textColor="#D2E13E"
-        android:textColorHighlight="#FFFFFF"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/botonJugar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.529"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/botonInstrucciones"
-        android:layout_width="276dp"
-        android:layout_height="53dp"
-        android:text="INSTRUCCIONES"
-        app:layout_constraintBottom_toTopOf="@+id/botonSalir"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.536"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/botonRanking"
-        app:layout_constraintVertical_bias="0.142" />
-
-    <Button
-        android:id="@+id/botonRanking"
-        android:layout_width="276dp"
-        android:layout_height="53dp"
-        android:text="RANKING"
-        app:layout_constraintBottom_toTopOf="@+id/botonInstrucciones"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.527"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/botonJugar" />
-
-    <Button
-        android:id="@+id/botonSalir"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
-        android:text="Salir"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.904" />
-
-    <Button
-        android:id="@+id/botonIdioma"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Idioma"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.773"
-        app:layout_constraintStart_toEndOf="@+id/botonSalir"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.904" />
-
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/labarra"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="112dp"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
-        app:layout_constraintBottom_toTopOf="@+id/tagDesordenadas"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.125" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:layout_width="320dp"
+        android:layout_height="411dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/labarra"
+        tools:gravity="center">
+
+        <TextView
+            android:id="@+id/tagDesordenadas"
+            android:layout_width="276dp"
+            android:layout_height="53dp"
+            android:background="#34608D"
+            android:backgroundTint="#34608D"
+            android:gravity="center"
+            android:text="DESORDENADAS"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="#D2E13E"
+            android:textColorHighlight="#FFFFFF"
+            android:textSize="24sp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="17dp" />
+
+        <Button
+            android:id="@+id/botonJugar"
+            android:layout_width="276dp"
+            android:layout_height="53dp"
+            android:text="JUGAR" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="17dp" />
+
+        <Button
+            android:id="@+id/botonInstrucciones"
+            android:layout_width="276dp"
+            android:layout_height="53dp"
+            android:text="INSTRUCCIONES" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="17dp" />
+
+        <Button
+            android:id="@+id/botonRanking"
+            android:layout_width="276dp"
+            android:layout_height="53dp"
+            android:text="RANKING" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="17dp" />
+
+        <Button
+            android:id="@+id/botonSalir"
+            android:layout_width="276dp"
+            android:layout_height="53dp"
+            android:text="Salir" />
+
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

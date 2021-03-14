@@ -18,7 +18,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class IniciarSesion extends AppCompatActivity {
+public class IniciarSesion extends AppCompatActivity implements DialogoIniciarSesion.ListenerdelDialogoIniciarSesion {
     EditText nombreUsuario;
     EditText contraseña;
 
@@ -128,27 +128,50 @@ public class IniciarSesion extends AppCompatActivity {
                 //Se muestra el perfil
                 Intent i=new Intent(this,MostrarPerfil.class);
                 startActivity(i);
-                MenuItem item2=findViewById(id+1);
-                item2.setTitle("Cerrar sesión");
+
             }
             else{
-                //Se muestra la pantalla de inicio de sesión
+                //Se abre el diálogo
+
+
+
+
+
                 Intent iIniciarSesion=new Intent(this,IniciarSesion.class);
                 startActivity(iIniciarSesion);
             }
         }
         else if (id==R.id.opcion2){
-            Intent iIniciarSesion=new Intent(this,IniciarSesion.class);
-            startActivity(iIniciarSesion);
+            DialogoIniciarSesion dialogoIniciarSesion=new DialogoIniciarSesion();
+            dialogoIniciarSesion.show(getSupportFragmentManager(), "etiqueta");
+//            Intent iIniciarSesion=new Intent(this,IniciarSesion.class);
+//            startActivity(iIniciarSesion);
         }
 
         else if (id==R.id.preferencias){
             Intent iPreferencias=new Intent(this,ActividadPreferencias.class);
-
+            finish();
             startActivity(iPreferencias);
 
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void alpulsarCerrarSesion() {
+        //Se elimina el usuario logeado de las preferencias
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        prefs.edit().remove("nombreUsuario").apply();
+    }
+
+    @Override
+    public void alpulsarCambiarUsuario() {
+        //Se abre la ventana de inicio de sesión
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        prefs.edit().remove("nombreUsuario").apply();
+        Intent i=new Intent(this,IniciarSesion.class);
+        startActivity(i);
+
     }
 }

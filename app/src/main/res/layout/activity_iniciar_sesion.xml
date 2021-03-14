@@ -88,7 +88,6 @@
         android:id="@+id/toolbar4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
         android:layout_marginBottom="160dp"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
