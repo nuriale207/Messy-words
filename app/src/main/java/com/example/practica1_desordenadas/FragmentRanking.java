@@ -25,6 +25,7 @@ public class FragmentRanking extends Fragment {
 
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        Log.i("MYAPP","actividad creadaaaaa");
         etiquetaRanking= getView().findViewById(R.id.Ranking);
         listaRanking= getView().findViewById(R.id.listaRanking);
     }
@@ -35,6 +36,7 @@ public class FragmentRanking extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
         return inflater.inflate(R.layout.fragment_ranking, container, false);
     }
 

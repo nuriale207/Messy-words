@@ -74,8 +74,7 @@
             android:layout_width="204dp"
             android:layout_height="41dp"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name" />
+            android:inputType="textPersonName" />
 
         <TextView
             android:id="@+id/textEmail2"
@@ -88,8 +87,7 @@
             android:layout_width="204dp"
             android:layout_height="41dp"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name" />
+            android:inputType="textPersonName" />
 
         <TextView
             android:id="@+id/textContraseña"
@@ -102,8 +100,7 @@
             android:layout_width="204dp"
             android:layout_height="41dp"
             android:ems="10"
-            android:inputType="textPassword"
-            android:text="Name" />
+            android:inputType="textPassword" />
 
         <TextView
             android:id="@+id/textRepContraseña"
@@ -116,8 +113,7 @@
             android:layout_width="204dp"
             android:layout_height="41dp"
             android:ems="10"
-            android:inputType="textPassword"
-            android:text="Name" />
+            android:inputType="textPassword" />
 
         <Button
             android:id="@+id/registrarse"
