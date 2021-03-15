@@ -17,16 +17,20 @@ public class PantallaRanking extends AppCompatActivity implements DialogoIniciar
         setContentView(R.layout.activity_pantalla_ranking);
         setSupportActionBar(findViewById(R.id.toolbar6));
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        FragmentRanking fragment= ( FragmentRanking) getSupportFragmentManager().findFragmentById(R.id.fragmento);
+        FragmentRanking fragmento= ( FragmentRanking) getSupportFragmentManager().findFragmentById(R.id.fragmento);
+        fragmento.cargarRanking();
 
-        if (fragment==null){
-            Log.i("MYAPP","añadiendo el fragmento");
-            fragment=new FragmentRanking();
-            getSupportFragmentManager().beginTransaction().add(R.id.fragmento,fragment).commit();
-        }
-        fragment= ( FragmentRanking) getSupportFragmentManager().findFragmentById(R.id.fragmento);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragmento, fragmento)
+                .commit();
+//        if (fragment==null){
+//            Log.i("MYAPP","añadiendo el fragmento");
+//            fragment=new FragmentRanking();
+//            getSupportFragmentManager().beginTransaction().add(R.id.fragmento,fragment).commit();
+//        }
 
-        fragment.cargarRanking();
+        //fragment.cargarRanking();
 
 //        getSupportFragmentManager()
 //                .beginTransaction()

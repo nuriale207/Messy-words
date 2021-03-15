@@ -1,9 +1,13 @@
 package com.example.practica1_desordenadas;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 import androidx.preference.PreferenceManager;
 
 import android.app.Activity;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +17,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -39,7 +44,7 @@ public class PantallaJuego extends AppCompatActivity implements DialogoFinNivel.
     ListView intentosAnteriores;
     ListaNiveles listaNiveles = ListaNiveles.getListaNiveles();
     BaseDeDatos GestorDB = new BaseDeDatos (this, "NombreBD", null, 1);
-
+    int puntuacion;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //Paso 0: Mirar el tema que tiene que tener la app
@@ -174,9 +179,26 @@ public class PantallaJuego extends AppCompatActivity implements DialogoFinNivel.
                         Log.i("MYAPP", "HAS GANADOOO");
                         Toast toastGanado=Toast.makeText(getApplicationContext(),getString(R.string.hasGanado), Toast.LENGTH_LONG);
                         toastGanado.setGravity(Gravity.TOP| Gravity.CENTER, 0, 0);
-                        registrarPuntuacion();
+                        int puntuacion=registrarPuntuacion();
                         DialogoFinNivel dialogoFinNivel=new DialogoFinNivel();
                         dialogoFinNivel.show(getSupportFragmentManager(), "etiqueta");
+
+                        NotificationManager elManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+                        NotificationCompat.Builder elBuilder = new NotificationCompat.Builder(v.getContext(), "IdCanal");
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                            NotificationChannel elCanal = new NotificationChannel("IdCanal", "NombreCanal",
+                                    NotificationManager.IMPORTANCE_DEFAULT);
+                            Intent i = new Intent(v.getContext(),ActividadSeleccionarNivel.class);
+                            PendingIntent intentEnNot = PendingIntent.getActivity(v.getContext(), 0, i, PendingIntent.FLAG_CANCEL_CURRENT);
+                            elManager.createNotificationChannel(elCanal);
+                            elBuilder.setSmallIcon(android.R.drawable.star_big_on)
+                                    .setContentTitle("¡HAS GANADO!")
+                                    .setContentText("Tu puntuación es:"+puntuacion)
+                                    .setSubText("¡Pulsa para mejorarla!")
+                                    .setVibrate(new long[]{0, 1000, 500, 1000})
+                                    .setAutoCancel(true).setContentIntent(intentEnNot);
+                            elManager.notify(1, elBuilder.build());
+                        }
                     }
 
                     else if (nivel.getIntentos()<=0){
@@ -192,7 +214,7 @@ public class PantallaJuego extends AppCompatActivity implements DialogoFinNivel.
                     toast.setGravity(Gravity.BOTTOM| Gravity.CENTER, 0, 0);
                     toast.show();
                     if (nivel.getIntentos()<=0){
-                        Toast toastPerdido=Toast.makeText(getApplicationContext(),"Has perdido!!", Toast.LENGTH_LONG);
+                        Toast toastPerdido=Toast.makeText(getApplicationContext(),"Has perdido...", Toast.LENGTH_LONG);
                         toast.setGravity(Gravity.TOP| Gravity.CENTER, 0, 0);
                         toast.show();
                         registrarPuntuacion();
@@ -209,7 +231,7 @@ public class PantallaJuego extends AppCompatActivity implements DialogoFinNivel.
                 tagPuntuacion.setText(getString(R.string.puntuacion)+": "+nivel.getPuntuacion());
                 tagIntentos.setText(getString(R.string.intentos)+": "+nivel.getIntentos());
             }
-            public void registrarPuntuacion() {
+            public int registrarPuntuacion() {
 
                 String nombre=preferencias.getString("nombreUsuario",null);
                 if (nombre !=null){
@@ -230,10 +252,9 @@ public class PantallaJuego extends AppCompatActivity implements DialogoFinNivel.
 
                     cv.put("Puntuacion",puntuacion);
                     db.update("Usuarios",cv,"NombreUsuario=?",argumentos);
-
-
-
-                }
+                    return puntuacion;
+                                    }
+                return 0;
             }
         });
         //listener del edit text
@@ -268,8 +289,9 @@ public class PantallaJuego extends AppCompatActivity implements DialogoFinNivel.
     @Override
     public void alpulsarMenuNiveles() {
         Intent i =new Intent(this, ActividadSeleccionarNivel.class);
-        startActivity(i);
         finish();
+        startActivity(i);
+
     }
 
     @Override
