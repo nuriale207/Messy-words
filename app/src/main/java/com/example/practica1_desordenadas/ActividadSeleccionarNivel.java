@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -56,7 +57,13 @@ public class ActividadSeleccionarNivel extends BarraMenu implements DialogoInici
         ids=listaNiveles.getIdNiveles();
         TextView idTitulo=findViewById(R.id.idTitulo);
         idTitulo.setText(R.string.seleccionarNivel);
-//        Button boton=findViewById(R.id.botonAnadirNivel);
+        Button boton=findViewById(R.id.botonVolver2);
+        boton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 //        boton.setText(R.string.anadirNivel);
         //Paso 2: Gestión del idioma
         //Paso 1: miro el idioma de las preferencias
