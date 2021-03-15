@@ -8,16 +8,17 @@
 
     <LinearLayout
         android:id="@+id/linearLayout3"
-        android:layout_width="294dp"
-        android:layout_height="232dp"
-        android:layout_marginTop="30dp"
+        android:layout_width="316dp"
+        android:layout_height="271dp"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="60dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.512"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2">
+        app:layout_constraintTop_toBottomOf="@+id/imageView2"
+        app:layout_constraintVertical_bias="0.104">
 
         <TextView
             android:id="@+id/textNombreDeUsuario"
@@ -87,27 +88,27 @@
         android:layout_marginStart="64dp"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="114dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="20dp"
         android:text="Volver"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/botonEditar"
-        app:layout_constraintHorizontal_bias="0.666"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.397" />
 
     <Button
         android:id="@+id/botonEditar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:layout_marginEnd="64dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginEnd="56dp"
+        android:layout_marginBottom="20dp"
         android:text="Editar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.397" />
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar2"

@@ -44,7 +44,8 @@ public class FragmentRanking extends Fragment {
         String[] campos = new String[]{"NombreUsuario", "Puntuacion"};
         BaseDeDatos GestorDB = new BaseDeDatos (this.getActivity(), "NombreBD", null, 1);
         SQLiteDatabase db = GestorDB.getWritableDatabase();
-        Cursor cu = db.query("Usuarios", campos, null, null, null, null, null);
+        String orderBy="Puntuacion DESC";
+        Cursor cu = db.query("Usuarios", campos, null, null, null, null, orderBy);
         int i=0;
         while (cu.moveToNext()) {
             Log.i("MYAPP","Obteniendo elemento");
