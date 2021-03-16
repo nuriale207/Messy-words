@@ -263,14 +263,7 @@ public class PantallaJuego extends AppCompatActivity implements DialogoFinNivel.
                 return 0;
             }
         });
-        //listener del edit text
-        texto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.i("MYAPP","clicado edittext");
-                texto.getText().clear();
-            }
-        });
+
 
 
 
@@ -310,7 +303,7 @@ public class PantallaJuego extends AppCompatActivity implements DialogoFinNivel.
     //Se implementan las interfaces del diálogo fin de nivel
     @Override
     public void alpulsarMenuNiveles() {
-        //Se abre la actividad de menú niveles
+ListaNiveles.getListaNiveles().resetNivel(idNivel);        //Se abre la actividad de menú niveles
         Intent i =new Intent(this, ActividadSeleccionarNivel.class);
         finish();
         startActivity(i);
@@ -319,6 +312,8 @@ public class PantallaJuego extends AppCompatActivity implements DialogoFinNivel.
 
     @Override
     public void alpulsarSiguienteNivel() {
+        ListaNiveles.getListaNiveles().resetNivel(idNivel);
+
         //Se carga el siguiente nivel en caso de no haber más se vuelve a la pantalla de inicio
         Intent i=new Intent(this,PantallaJuego.class);
         int idNivel=ListaNiveles.getListaNiveles().getSiguienteNivel();

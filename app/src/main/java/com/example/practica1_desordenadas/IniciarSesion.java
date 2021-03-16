@@ -119,14 +119,19 @@ public class IniciarSesion extends AppCompatActivity implements DialogoIniciarSe
         getMenuInflater().inflate(R.menu.main_menu_layout,menu);
         return true;
     }
+
+    //La clase iniciar sesión implementa los métodos de la barra de tareas
+    //Se comentan en esta clase, las demás también los implementan de la misma manera.
+    //La excepción es la clase pantalla juego que implementa una barra de tareas diferente
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id=item.getItemId();
-        Log.i("MYAPP", String.valueOf(id));
-        Log.i("MYAPP", String.valueOf(R.id.opcion1));
-        Log.i("MYAPP", String.valueOf(R.id.opcion2));
+        //Si se elige la primera opción (mostrar perfil) en caso de que haya un usuario registrado
+        //Se muestra su información
+        //En caso contrario se abre la actividad de iniciar sesión
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
         if(id==R.id.opcion1){
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
             if (prefs.contains("nombreUsuario")){
                 //Se muestra el perfil
                 Intent i=new Intent(this,MostrarPerfil.class);
@@ -134,33 +139,38 @@ public class IniciarSesion extends AppCompatActivity implements DialogoIniciarSe
 
             }
             else{
-                //Se abre el diálogo
-
-
-
-
-
+                //Se abre la actividad de iniciar sesión
                 Intent iIniciarSesion=new Intent(this,IniciarSesion.class);
                 startActivity(iIniciarSesion);
             }
         }
+        //Si se pulsa sobre iniciar sesión, en caso de que haya un usuario registrado se muestra el
+        //diálogo de inicio de sesión
+        //En caso contrario se abre la actividad de inicio de sesión
         else if (id==R.id.opcion2){
-            DialogoIniciarSesion dialogoIniciarSesion=new DialogoIniciarSesion();
-            dialogoIniciarSesion.show(getSupportFragmentManager(), "etiqueta");
-//            Intent iIniciarSesion=new Intent(this,IniciarSesion.class);
-//            startActivity(iIniciarSesion);
-        }
 
+            if (prefs.contains("nombreUsuario")){
+                DialogoIniciarSesion dialogoIniciarSesion=new DialogoIniciarSesion();
+                dialogoIniciarSesion.show(getSupportFragmentManager(), "etiqueta");
+
+            }
+            else{
+                //Se abre la actividad de iniciar sesión
+                Intent iIniciarSesion=new Intent(this,IniciarSesion.class);
+                startActivity(iIniciarSesion);
+            }
+        }
+        //En este caso se abre la actividad de las preferencias
         else if (id==R.id.preferencias){
             Intent iPreferencias=new Intent(this,ActividadPreferencias.class);
             finish();
             startActivity(iPreferencias);
-
         }
 
         return super.onOptionsItemSelected(item);
     }
 
+    //Se implementan los métodos de la interfaz del diálogo de iniciar sesión
     @Override
     public void alpulsarCerrarSesion() {
         //Se elimina el usuario logeado de las preferencias

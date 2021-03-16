@@ -39,9 +39,7 @@ public class  ListaNiveles extends Observable {
 	public void resetNivel(int idNivel){
 		//Resetea el nivel
 		Nivel nivel=getNivel(idNivel);
-		this.misNiveles.remove(nivel);
 		nivel=new Nivel(idNivel,nivel.getLetras(),nivel.getIdImagen());
-		this.misNiveles.add(nivel);
 	}
 
 	public void cargarNiveles(Context contexto){

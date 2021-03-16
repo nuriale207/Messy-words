@@ -29,8 +29,7 @@ public class ViewHolderNivel extends RecyclerView.ViewHolder {
                     Intent i=new Intent(itemView.getContext(),PantallaJuego.class);
                     i.putExtra("id",id);
                     Log.i("MYAPP", String.valueOf(laimagen.getId()));
-                    Activity actividad=(Activity)itemView.getContext();
-                    actividad.finish();
+                    ((Activity)view.getContext()).finish();
                     itemView.getContext().startActivity(i);
 
             }
