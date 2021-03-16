@@ -33,8 +33,11 @@ public class ActividadSeleccionarNivel extends BarraMenu implements DialogoInici
         if(tema.equals("Greenish blue")){
             setTheme(R.style.TemaDesordenadasGreen);
         }
-        else{
+        else if(tema.equals("Pinkish purple")){
             setTheme(R.style.TemaDesordenadasPurple);
+        }
+        else{
+            setTheme(R.style.TemaDesordenadasHighContrast);
         }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_actividad_seleccionar_nivel);

@@ -38,8 +38,11 @@ public class MainActivity extends BarraMenu implements DialogoSalir.ListenerdelD
         if(tema.equals("Greenish blue")){
             setTheme(R.style.TemaDesordenadasGreen);
         }
-        else{
+        else if(tema.equals("Pinkish purple")){
             setTheme(R.style.TemaDesordenadasPurple);
+        }
+        else{
+            setTheme(R.style.TemaDesordenadasHighContrast);
         }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);

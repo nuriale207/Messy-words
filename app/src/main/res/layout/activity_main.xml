@@ -5,21 +5,10 @@
     android:id="@+id/id"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
+    android:background="@drawable/fondo_principal"
     tools:context=".MainActivity">
 
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout2"
-        android:layout_width="414dp"
-        android:layout_height="667dp"
-        android:layout_marginTop="5dp"
-        android:background="@drawable/background"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/labarra">
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
         android:id="@+id/botonRanking"
@@ -45,33 +34,16 @@
         app:layout_constraintTop_toBottomOf="@+id/botonInstrucciones"
         app:layout_constraintVertical_bias="0.071" />
 
-    <TextView
-        android:id="@+id/tagDesordenadas"
-        android:layout_width="276dp"
-        android:layout_height="53dp"
-        android:layout_marginTop="100dp"
-        android:background="#34608D"
-        android:backgroundTint="#34608D"
-        android:gravity="center"
-        android:text="DESORDENADAS"
-        android:textAlignment="center"
-        android:textAllCaps="false"
-        android:textColor="#D2E13E"
-        android:textColorHighlight="#FFFFFF"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/constraintLayout2" />
-
     <Button
         android:id="@+id/botonJugar"
         android:layout_width="276dp"
         android:layout_height="53dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="68dp"
         android:text="JUGAR"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tagDesordenadas" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView5" />
 
     <Button
         android:id="@+id/botonInstrucciones"
@@ -94,6 +66,17 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="384dp"
+        android:layout_height="82dp"
+        android:layout_marginTop="56dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.592"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/labarra"
+        app:srcCompat="@drawable/nombre_app" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

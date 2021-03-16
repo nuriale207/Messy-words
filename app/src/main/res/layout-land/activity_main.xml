@@ -5,6 +5,7 @@
     android:id="@+id/id"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/fondo_principal"
     tools:context=".MainActivity">
 
 
@@ -32,25 +33,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/tagDesordenadas"
-            android:layout_width="304dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="72dp"
-
-            android:layout_marginBottom="20dp"
-            android:background="@color/blue"
-            android:backgroundTint="@color/blue"
-            android:gravity="center"
-            android:text="DESORDENADAS"
-            android:textAlignment="center"
-            android:textAllCaps="false"
-            android:textColor="@color/green" />
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/nombre_app" />
 
         <Button
             android:id="@+id/botonJugar"
             android:layout_width="304dp"
-            android:layout_height="50dp"
+            android:layout_height="63dp"
             android:layout_marginBottom="20dp"
             android:text="JUGAR" />
 
@@ -77,8 +69,8 @@
 
     <ScrollView
         android:id="@+id/scroll"
-        android:layout_width="365dp"
-        android:layout_height="334dp"
+        android:layout_width="362dp"
+        android:layout_height="318dp"
         android:layout_marginStart="61dp"
         android:layout_marginTop="5dp"
         app:layout_constraintBottom_toBottomOf="parent"

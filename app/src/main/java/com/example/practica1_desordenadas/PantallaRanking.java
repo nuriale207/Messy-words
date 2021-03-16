@@ -24,8 +24,11 @@ public class PantallaRanking extends AppCompatActivity implements DialogoIniciar
         if(tema.equals("Greenish blue")){
             setTheme(R.style.TemaDesordenadasGreen);
         }
-        else{
+        else if(tema.equals("Pinkish purple")){
             setTheme(R.style.TemaDesordenadasPurple);
+        }
+        else{
+            setTheme(R.style.TemaDesordenadasHighContrast);
         }
 
         super.onCreate(savedInstanceState);
