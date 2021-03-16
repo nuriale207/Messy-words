@@ -74,32 +74,30 @@
 
     </LinearLayout>
 
-    
-
-    <fragment
-        android:id="@+id/fragment"
-        android:name="com.example.practica1_desordenadas.FragmentRanking"
-        android:layout_width="336dp"
-        android:layout_height="354dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="4dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/labarra"
-        app:layout_constraintVertical_bias="0.0" />
 
     <ScrollView
-        android:layout_width="357dp"
-        android:layout_height="369dp"
+        android:layout_width="365dp"
+        android:layout_height="334dp"
+        android:layout_marginStart="61dp"
         android:layout_marginTop="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/linearLayout4"
         app:layout_constraintTop_toBottomOf="@+id/labarra">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" />
+            android:orientation="vertical">
+
+            <fragment
+                android:id="@+id/fragment"
+                android:name="com.example.practica1_desordenadas.FragmentRanking"
+                android:layout_width="336dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="4dp" />
+        </LinearLayout>
     </ScrollView>
 
 
