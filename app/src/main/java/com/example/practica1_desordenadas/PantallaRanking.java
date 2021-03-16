@@ -3,16 +3,31 @@ package com.example.practica1_desordenadas;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
+
+import java.util.Locale;
 
 public class PantallaRanking extends AppCompatActivity implements DialogoIniciarSesion.ListenerdelDialogoIniciarSesion {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //Paso 0: Se mira el tema que tiene que tener la actividad
+        SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(this);
+        String tema=preferencias.getString("tema","Greenish blue");
+        if(tema.equals("Greenish blue")){
+            setTheme(R.style.TemaDesordenadasGreen);
+        }
+        else{
+            setTheme(R.style.TemaDesordenadasPurple);
+        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pantalla_ranking);
         setSupportActionBar(findViewById(R.id.toolbar6));
@@ -26,71 +41,50 @@ public class PantallaRanking extends AppCompatActivity implements DialogoIniciar
 
 
         fragmento.cargarRanking();
+        int orientation = getResources().getConfiguration().orientation;
 
+        if (orientation == Configuration. ORIENTATION_LANDSCAPE ){
+            Intent iMainActivity=new Intent(this,MainActivity.class);
+            iMainActivity.putExtra("ranking",true);
+            startActivity(iMainActivity);
 
-//        if (fragment==null){
-//            Log.i("MYAPP","añadiendo el fragmento");
-//            fragment=new FragmentRanking();
-//            getSupportFragmentManager().beginTransaction().add(R.id.fragmento,fragment).commit();
-//        }
+        }
+        //Paso 2: Gestión del idioma
+        //Paso 1: miro el idioma de las preferencias
+        String idiomaConfigurado=preferencias.getString("idioma","castellano");
+        String sufijoIdioma="es";
+        if (idiomaConfigurado.equals("Euskera")){
+            sufijoIdioma="eu";
+        }
 
-        //fragment.cargarRanking();
+        //Paso 2: miro la localización del dispositivo
+        String localizacionActual= getResources().getString(R.string.localizacion);
 
-//        getSupportFragmentManager()
-//                .beginTransaction()
-//                .replace(R.id.fragmento, fragment)
-//                .commit();
+        //Paso 3: si la localización no coincide con el idioma de las preferencias se
+        //cambia al idioma correspondiente
+        if(!localizacionActual.equals(sufijoIdioma)){
+            Locale nuevaloc = new Locale(sufijoIdioma);
 
-//        setContentView(R.layout.activity_pantalla_ranking);
-//        ListView lista=findViewById(R.id.listaRanking);
-//        ArrayList<String> contenidoLista=new ArrayList<String>();
-//        //Paso 2: Gestión del idioma
-//        //Paso 1: miro el idioma de las preferencias
-//        SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(this);
-//        String idiomaConfigurado=preferencias.getString("idioma","castellano");
-//        String sufijoIdioma="es";
-//        if (idiomaConfigurado.equals("Euskera")){
-//            sufijoIdioma="eu";
-//        }
-//        Log.i("MYAPP",sufijoIdioma);
-//        //Paso 2: miro la localización del dispositivo
-//        String localizacionActual= getResources().getString(R.string.localizacion);
-//
-//        Log.i("MYAPP",localizacionActual);
-//        if(!localizacionActual.equals(sufijoIdioma)){
-//            Locale nuevaloc = new Locale(sufijoIdioma);
-//
-//            Locale.setDefault(nuevaloc);
-//            Configuration configuration =
-//                    getBaseContext().getResources().getConfiguration();
-//            configuration.setLocale(nuevaloc);
-//            configuration.setLayoutDirection(nuevaloc);
-//            Context context =
-//                    getBaseContext().createConfigurationContext(configuration);
-//            getBaseContext().getResources().updateConfiguration(configuration, context.getResources().getDisplayMetrics());
-//
-//            finish();
-//            Log.i("MYAPP",Locale.getDefault().getLanguage());
-//            startActivity(getIntent());
-//
-//        }
-//        //Se obtienen los usuarios de la base de datos
-//        String[] campos = new String[]{"NombreUsuario", "Puntuacion"};
-//        BaseDeDatos GestorDB = new BaseDeDatos (this, "NombreBD", null, 1);
-//        SQLiteDatabase db = GestorDB.getWritableDatabase();
-//        Cursor cu = db.query("Usuarios", campos, null, null, null, null, null);
-//        int i=0;
-//        while (cu.moveToNext()) {
-//            Log.i("MYAPP","Obteniendo elemento");
-//            String nombreUsuario = cu.getString(0);
-//            int puntuacion = cu.getInt(1);
-//            contenidoLista.add(getResources().getString(R.string.usuario)+": "+ nombreUsuario+"\t"+getResources().getString(R.string.puntuacion)+": "+puntuacion);
-//
-//        }
-//        cu.close();
-//        db.close();
-//        lista.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, contenidoLista));
+            Locale.setDefault(nuevaloc);
+            Configuration configuration =
+                    getBaseContext().getResources().getConfiguration();
+            configuration.setLocale(nuevaloc);
+            configuration.setLayoutDirection(nuevaloc);
+            Context context =
+                    getBaseContext().createConfigurationContext(configuration);
+            getBaseContext().getResources().updateConfiguration(configuration, context.getResources().getDisplayMetrics());
 
+            finish();
+            Log.i("MYAPP",Locale.getDefault().getLanguage());
+            startActivity(getIntent());
+
+        }
+
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu_layout,menu);
+        return true;
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

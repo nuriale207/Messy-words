@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ScrollView;
 import android.widget.Toolbar;
 
 import java.util.Locale;
@@ -43,6 +44,24 @@ public class MainActivity extends BarraMenu implements DialogoSalir.ListenerdelD
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        int orientation = getResources().getConfiguration().orientation;
+        if (orientation == Configuration. ORIENTATION_LANDSCAPE ){
+            ScrollView scroll=findViewById(R.id.scroll);
+            scroll.setVerticalScrollBarEnabled(false);
+
+        }
+        Bundle extras=getIntent().getExtras();
+        if (extras!=null){
+            if(extras.getBoolean("ranking")){
+                FragmentRanking fragment= ( FragmentRanking) getSupportFragmentManager().findFragmentById(R.id.fragment);
+                fragment.cargarRanking();
+
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment, fragment)
+                        .commit();
+            }
+        }
         //Paso 1: Se obtienen los elementos del layout
         botonJugar=findViewById(R.id.botonJugar);
         setSupportActionBar(findViewById(R.id.labarra));
