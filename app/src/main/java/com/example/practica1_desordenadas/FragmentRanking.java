@@ -39,6 +39,8 @@ public class FragmentRanking extends Fragment {
     }
 
     public void cargarRanking() {
+        listaRanking= getView().findViewById(R.id.listaRanking);
+
         ArrayList<String> contenidoLista=new ArrayList<String>();
         //Se obtienen los usuarios de la base de datos
         String[] campos = new String[]{"NombreUsuario", "Puntuacion"};
@@ -51,7 +53,7 @@ public class FragmentRanking extends Fragment {
             Log.i("MYAPP","Obteniendo elemento");
             String nombreUsuario = cu.getString(0);
             int puntuacion = cu.getInt(1);
-            contenidoLista.add("Usuario: "+nombreUsuario+"\t Puntuación: "+puntuacion);
+            contenidoLista.add(getString(R.string.usuario)+": "+nombreUsuario+"\t"+ getString(R.string.puntuacion)+": "+puntuacion);
 
         }
 

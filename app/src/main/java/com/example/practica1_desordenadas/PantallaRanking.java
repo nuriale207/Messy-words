@@ -18,12 +18,16 @@ public class PantallaRanking extends AppCompatActivity implements DialogoIniciar
         setSupportActionBar(findViewById(R.id.toolbar6));
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         FragmentRanking fragmento= ( FragmentRanking) getSupportFragmentManager().findFragmentById(R.id.fragmento);
-        fragmento.cargarRanking();
 
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragmento, fragmento)
                 .commit();
+
+
+        fragmento.cargarRanking();
+
+
 //        if (fragment==null){
 //            Log.i("MYAPP","añadiendo el fragmento");
 //            fragment=new FragmentRanking();
