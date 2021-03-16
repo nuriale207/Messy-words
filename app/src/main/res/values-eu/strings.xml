@@ -40,4 +40,9 @@
     <string name="menuNiveles">Mailen menua</string>
     <string name="siguienteNivel">Hurrengo maila</string>
     <string name="finPartida">Partida amaiera</string>
+    <string name="seguroDeSalir">Ziur zaude irten nahi duzula?</string>
+    <string name="cancelar">Utzi</string>
+    <string name="seguroDeCerrarSesion">Saioa itxi nahi al duzu?</string>
+    <string name="cerrarSesion">Saioa itxi</string>
+    <string name="cambiarUsuario">Erabiltzailea aldatu</string>
 </resources>

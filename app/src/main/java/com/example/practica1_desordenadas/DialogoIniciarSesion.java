@@ -21,25 +21,25 @@ public class DialogoIniciarSesion extends DialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("¿Seguro que quieres cerrar sesión?");
+        builder.setTitle(getString(R.string.seguroDeCerrarSesion));
         //builder.setMessage("Has ganado!! " );
         DialogoIniciarSesion.ListenerdelDialogoIniciarSesion miListener = (DialogoIniciarSesion.ListenerdelDialogoIniciarSesion) getActivity();
 
-        builder.setPositiveButton("Cerrar sesión", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(getString(R.string.cerrarSesion), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 miListener.alpulsarCerrarSesion();
             }
         });
 
-        builder.setNeutralButton("Cambiar usuario", new DialogInterface.OnClickListener() {
+        builder.setNeutralButton(getString(R.string.cambiarUsuario), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 miListener.alpulsarCambiarUsuario();
             }
         });
 
-        builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(getString(R.string.cancelar), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();

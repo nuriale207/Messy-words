@@ -16,6 +16,9 @@ import java.util.Iterator;
 
 
 public class Diccionario {
+	//Partiendo de un fichero de texto realiza la carga del diccionario utilizado
+	// para comprobar las palabras del juego. Su finalidad es encargarse de comprobar
+	// si realmente existen las palabras escritas por el jugador.
 	private HashMap<String,Palabra> palabras;
 	private static Diccionario miListaPalabras=new Diccionario();
 	
@@ -31,47 +34,33 @@ public class Diccionario {
 	}
 	
 	public void anadirPalabra(String pal) {
+		//Añade palabras nuevas al diccionario
 		Palabra p=new Palabra(pal);
 		palabras.put(pal,p);
 	}
 	
 	public boolean contiene(String pPalabra) {
-		/*
-		 * System.out.println(this.palabras.get(pPalabra)); Iterator<String>
-		 * itr=this.palabras.keySet().iterator(); while(itr.hasNext()) {
-		 * System.out.println(itr.next());
-		 * 
-		 * }
-		 */
+		//Comprueba si la palabra pasada como parámetro está en el diccionario
 		return this.palabras.containsKey(pPalabra);
 	}
 
 	public void cargar(Context pContexto) {
-		// TODO Auto-generated method stub
-		System.out.println("Dentro");
-		Log.i("MYAPP","CARGANDO DICCIONARIO");
+		// Realiza la carga del diccionario
+
 
 		String palabra = "lista.txt",line;
 		System.out.println(palabra);
         try {
-        	//InputStream in =this.getClass().getResourceAsStream("../../../res/raw/diccionario.txt");
-        	//BufferedReader br = new BufferedReader(new FileReader("../../res/raw/diccionario.txt"));
-			InputStream fich = pContexto.getResources().openRawResource(R.raw.diccionario);
+        	InputStream fich = pContexto.getResources().openRawResource(R.raw.diccionario);
 			BufferedReader br = new BufferedReader(new InputStreamReader(fich));
 
-
-			//Reader reader = new InputStreamReader(in, "utf-8");
-        	//BufferedReader br = new BufferedReader(reader);
             while ((line = br.readLine()) != null) {
-            	//System.out.println(line);
             	line=line.replaceAll("\\s+","");
-            	Palabra pal=new Palabra(line);
-            	this.palabras.put(pal.getNombre(), pal);
-            	//System.out.println(pal.getNombre());
+            	this.anadirPalabra(line);
+
             }
             br.close();
-            //System.out.println("CARGA DE PALABRAS [OK]");
- 
+
 
         } catch (FileNotFoundException e) {
 			Log.i("MYAPP","File not Found");

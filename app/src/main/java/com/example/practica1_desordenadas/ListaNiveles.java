@@ -11,7 +11,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Observable;
 
-public class ListaNiveles extends Observable {
+public class  ListaNiveles extends Observable {
 	private Collection<Nivel> misNiveles;
 	private Collection<Integer> imagenesNiveles;
 	private Collection<String> nombresNiveles;
@@ -27,29 +27,25 @@ public class ListaNiveles extends Observable {
 		
 	}
 	
-//	public void jugarPar(Nivel pnivel) {
-//
-//		Iterator<Nivel> itr= misNiveles.iterator();
-//		int i=misNiveles.size();
-//		while(puntuacion>= 0 && intentos>=0 && itr.hasNext()) {
-//			Nivel lv=itr.next();
-//			nivelAct= lv;
-//			intentos=10;
-//			setChanged();
-//			notifyObservers(nivelAct);
-//		}
-//	}
-	
 	public static ListaNiveles getListaNiveles() {
 		return miListaNiveles;
 	}
 
 	public void setNivel(int idNivel, int pPuntuacion, int nAciertos, HashSet<String> acertadas, int nIntentos) {
+		//Cambia los atributos del nivel indicado
 		Nivel nivel =getNivel(idNivel);
 		nivel.set(pPuntuacion, nAciertos, acertadas, nIntentos);
 	}
+	public void resetNivel(int idNivel){
+		//Resetea el nivel
+		Nivel nivel=getNivel(idNivel);
+		this.misNiveles.remove(nivel);
+		nivel=new Nivel(idNivel,nivel.getLetras(),nivel.getIdImagen());
+		this.misNiveles.add(nivel);
+	}
 
 	public void cargarNiveles(Context contexto){
+		//Realiza la carga de los niveles de la base de datos
 		if (misNiveles.isEmpty()){
 			//Lista con las imágenes y las letras
 			ArrayList<Integer> imagenes=new ArrayList<Integer>();
@@ -88,18 +84,22 @@ public class ListaNiveles extends Observable {
 	}
 
 	public ArrayList<Integer> getImagenesNiveles(){
+		//Obtiene las imágenes del nivel
 		return (ArrayList<Integer>) this.imagenesNiveles;
 	}
 
 	public ArrayList<Integer> getIdNiveles(){
+		//Obtiene los ids de los niveles
 		return (ArrayList<Integer>) this.idNiveles;
 	}
 
 	public ArrayList<String> getNombresNiveles(){
+		//Devuelve la lista con los nombres de los niveles
 		return (ArrayList<String>) this.nombresNiveles;
 	}
 
 	public int  getSiguienteNivel(){
+		//Devuelve el id del siguiente nivel
 		int idNivel=this.nivelAct.getId();
 		Iterator<Nivel> itr=this.misNiveles.iterator();
 		Nivel actual;
@@ -117,6 +117,7 @@ public class ListaNiveles extends Observable {
 	}
 
 	public Nivel getNivel(int idNivel){
+		//Devuelve el nivel con el id indicado
 		Iterator<Nivel> itr=this.misNiveles.iterator();
 		Nivel actual;
 		while (itr.hasNext()){
@@ -131,54 +132,23 @@ public class ListaNiveles extends Observable {
 
 
 	public String jugar(String palabra, Nivel nivel) {
-//		System.out.println(palabra);
-//		nivelAct.jugar(palabra);
-//		intentos--;
-//		setChanged();
-//		notifyObservers(1);
-//
-//		if(intentos==0) {
-//			System.out.println("dentro");
-//			Iterator<Nivel> itr= misNiveles.iterator();
-//			if(itr.hasNext()) {
-//				nivelAct=itr.next();
-//				intentos=10;
-//				setChanged();
-//				notifyObservers(nivelAct);
-//
-//			}
-//		}
-//		if(puntuacion==0) {
-//			return;
-//		}
+		//Juega una palabra en un nivel
 		return nivel.jugar(palabra);
 	}
 	public void setNivelAct(Nivel pNivel){
+		//Modifica el nivel actual
 		this.nivelAct=pNivel;
 	}
 	public void anadirNivel(Nivel lvl) {
 		misNiveles.add(lvl);
-//		nivelAct=lvl;
-//		setChanged();
-//		notifyObservers(nivelAct);
+
 	}
 	
 	public int obtenerIntentos(Nivel pNivel) {
 		return pNivel.getIntentos();
 	}
 	
-//	public void cambiarPuntuacion(char signo, int puntos) {
-//		if(signo=='-') {
-//			puntuacion=puntuacion-puntos;
-//		}
-//		else {
-//			puntuacion=puntuacion+puntos;
-//		}
-//
-//		setChanged();
-//		notifyObservers(puntuacion);
-//
-//	}
+
 	public String getNombreNivel(Nivel pNivel) {
 		return pNivel.getNombre();
 	}

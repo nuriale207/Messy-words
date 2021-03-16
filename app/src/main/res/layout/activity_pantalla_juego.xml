@@ -10,6 +10,7 @@
         android:id="@+id/tagPuntuacion"
         android:layout_width="187dp"
         android:layout_height="24dp"
+        android:layout_marginTop="76dp"
         android:layout_marginEnd="5dp"
         android:text="Puntuación"
         app:layout_constraintBottom_toTopOf="@+id/imageView"
@@ -23,6 +24,7 @@
         android:layout_width="178dp"
         android:layout_height="24dp"
         android:layout_marginStart="5dp"
+        android:layout_marginTop="76dp"
         android:text="Intentos"
         app:layout_constraintBottom_toTopOf="@+id/imageView"
         app:layout_constraintEnd_toStartOf="@+id/tagPuntuacion"
@@ -51,7 +53,6 @@
         android:text="Escribe una palabra"
         app:layout_constraintBottom_toTopOf="@+id/botonAñadir"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
@@ -72,7 +73,20 @@
         android:text="Añadir"
         app:layout_constraintBottom_toTopOf="@+id/_dynamic"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textoPalabra" />
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarJuego"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintBottom_toTopOf="@+id/tagPuntuacion"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

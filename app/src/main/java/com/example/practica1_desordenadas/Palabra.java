@@ -20,6 +20,7 @@ public class Palabra {
 	}
 	
 	public String getNombre() {
+		//Devuelve el nombre de las palabras
 		return this.nombre;
 	}
 	

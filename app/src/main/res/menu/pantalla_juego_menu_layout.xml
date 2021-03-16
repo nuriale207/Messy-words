@@ -4,17 +4,7 @@
     <item
         android:id="@+id/opcion1"
         android:icon="@android:drawable/picture_frame"
-        android:title="@string/perfil"
-        app:showAsAction="ifRoom|withText" />
-
-    <item
-        android:id="@+id/opcion2"
-        android:icon="@android:drawable/picture_frame"
-        android:title="@string/iniciarSesion"
+        android:title="@string/salir"
         app:showAsAction="never" />
-    <item
-        android:id="@+id/preferencias"
-        android:icon="@android:drawable/ic_menu_manage"
-        android:title="@string/preferencias"
-        app:showAsAction="ifRoom|withText" />
+
 </menu>

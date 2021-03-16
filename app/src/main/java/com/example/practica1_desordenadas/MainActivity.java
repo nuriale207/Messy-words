@@ -31,7 +31,7 @@ public class MainActivity extends BarraMenu implements DialogoSalir.ListenerdelD
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //Paso 0: Mirar el tema que tiene que tener la app
+        //Paso 0: Se mira el tema que tiene que tener la actividad
         SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(this);
         String tema=preferencias.getString("tema","Greenish blue");
         if(tema.equals("Greenish blue")){
@@ -40,21 +40,17 @@ public class MainActivity extends BarraMenu implements DialogoSalir.ListenerdelD
         else{
             setTheme(R.style.TemaDesordenadasPurple);
         }
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //Paso 1: Obtener los elementos del layout
+
+        //Paso 1: Se obtienen los elementos del layout
         botonJugar=findViewById(R.id.botonJugar);
         setSupportActionBar(findViewById(R.id.labarra));
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-
         botonRanking=findViewById(R.id.botonRanking);
         botonInstrucciones=findViewById(R.id.botonInstrucciones);
         botonSalir=findViewById(R.id.botonSalir);
-        BaseDeDatos GestorDB = new BaseDeDatos (this, "NombreBD", null, 1);
-        SQLiteDatabase bd = GestorDB.getWritableDatabase();
         Diccionario.getDiccionario().cargar(this);
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         //Paso 2: Gestión del idioma
                 //Paso 1: miro el idioma de las preferencias
@@ -63,11 +59,12 @@ public class MainActivity extends BarraMenu implements DialogoSalir.ListenerdelD
                     if (idiomaConfigurado.equals("Euskera")){
                         sufijoIdioma="eu";
                     }
-                    Log.i("MYAPP",sufijoIdioma);
+
                     //Paso 2: miro la localización del dispositivo
                     String localizacionActual= getResources().getString(R.string.localizacion);
 
-                    Log.i("MYAPP",localizacionActual);
+                    //Paso 3: si la localización no coincide con el idioma de las preferencias se
+                    //cambia al idioma correspondiente
                     if(!localizacionActual.equals(sufijoIdioma)){
                         Locale nuevaloc = new Locale(sufijoIdioma);
 
@@ -86,64 +83,25 @@ public class MainActivity extends BarraMenu implements DialogoSalir.ListenerdelD
 
                     }
 
-
-
-
-
-
-//        Bundle extras=getIntent().getExtras();
-//        boolean cambiado=false;
-//        if(extras!=null){
-//            cambiado= extras.getBoolean("IdiomaCambiado");
-//            Log.i("MYAPP","hay que cambiar el idioma");
-//
-//        }
-//        idioma=prefs.getString("idioma","castellano");
-//        if (idioma.equals("Euskera") && !cambiado){
-//            Locale nuevaloc = new Locale("eu");
-//            Log.i("MYAPP","cambiando idioma");
-//
-//            Locale.setDefault(nuevaloc);
-//            Configuration configuration =
-//                    getBaseContext().getResources().getConfiguration();
-//            configuration.setLocale(nuevaloc);
-//            configuration.ge
-//            configuration.setLayoutDirection(nuevaloc);
-//            Context context =
-//                    getBaseContext().createConfigurationContext(configuration);
-//            getBaseContext().getResources().updateConfiguration(configuration, context.getResources().getDisplayMetrics());
-//            finish();
-//            Intent i=new Intent(this,MainActivity.class);
-//            i.putExtra("IdiomaCambiado",true);
-//            startActivity(i);
-//        }
-
+        //Se establece el texto de los elementos de la actividad
         botonJugar.setText(R.string.jugar);
         botonRanking.setText(R.string.ranking);
         botonInstrucciones.setText(R.string.instrucciones);
         botonSalir.setText(R.string.salir);
 
 
-
-
-        //Paso X: se definen los intent que se van a utilizar despues
-        Intent i=new Intent(this,ActividadSeleccionarNivel.class);
-        Intent iRanking=new Intent(this,PantallaRanking.class);
-
-
-
-
-        //Paso X: Añadir los listeners de cada boton
+        //Paso 3: Añadir los listeners de cada boton
         botonJugar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                    startActivity(i);
+                Intent i=new Intent(v.getContext(),ActividadSeleccionarNivel.class);
+                startActivity(i);
 
 
             }
         });
         //En el botón ranking en caso de que el dispositivo esté en apaisado el fragment se carga a la derecha
+        //En caso contrario se llama a una nueva actividad
         botonRanking.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -158,13 +116,14 @@ public class MainActivity extends BarraMenu implements DialogoSalir.ListenerdelD
                             .commit();
                 }
                 else{
+                    Intent iRanking=new Intent(v.getContext(),PantallaRanking.class);
                     startActivity(iRanking);
-
                 }
 
 
             }
         });
+        //Botón que genera el diálogo de salir al pulsarlo
         botonSalir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -178,7 +137,7 @@ public class MainActivity extends BarraMenu implements DialogoSalir.ListenerdelD
 
 
     }
-
+    //La clase main activity implementa los métodos de la interfaz de DialogoSalir
     @Override
     public void alpulsarOK() {
         finish();
@@ -189,14 +148,18 @@ public class MainActivity extends BarraMenu implements DialogoSalir.ListenerdelD
         getMenuInflater().inflate(R.menu.main_menu_layout,menu);
         return true;
     }
+    //La clase main activity implementa los métodos de la barra de tareas
+    //Se comentan en esta clase, las demás también los implementan de la misma manera.
+    //La excepción es la clase pantalla juego que implementa una barra de tareas diferente
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id=item.getItemId();
-        Log.i("MYAPP", String.valueOf(id));
-        Log.i("MYAPP", String.valueOf(R.id.opcion1));
-        Log.i("MYAPP", String.valueOf(R.id.opcion2));
+        //Si se elige la primera opción (mostrar perfil) en caso de que haya un usuario registrado
+        //Se muestra su información
+        //En caso contrario se abre la actividad de iniciar sesión
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
         if(id==R.id.opcion1){
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
             if (prefs.contains("nombreUsuario")){
                 //Se muestra el perfil
                 Intent i=new Intent(this,MostrarPerfil.class);
@@ -204,42 +167,38 @@ public class MainActivity extends BarraMenu implements DialogoSalir.ListenerdelD
 
             }
             else{
-                //Se abre el diálogo
-
-
-
-
-
+                //Se abre la actividad de iniciar sesión
                 Intent iIniciarSesion=new Intent(this,IniciarSesion.class);
                 startActivity(iIniciarSesion);
             }
         }
+        //Si se pulsa sobre iniciar sesión, en caso de que haya un usuario registrado se muestra el
+        //diálogo de inicio de sesión
+        //En caso contrario se abre la actividad de inicio de sesión
         else if (id==R.id.opcion2){
-            DialogoIniciarSesion dialogoIniciarSesion=new DialogoIniciarSesion();
-            dialogoIniciarSesion.show(getSupportFragmentManager(), "etiqueta");
-//            Intent iIniciarSesion=new Intent(this,IniciarSesion.class);
-//            startActivity(iIniciarSesion);
-        }
 
+            if (prefs.contains("nombreUsuario")){
+                DialogoIniciarSesion dialogoIniciarSesion=new DialogoIniciarSesion();
+                dialogoIniciarSesion.show(getSupportFragmentManager(), "etiqueta");
+
+            }
+            else{
+                //Se abre la actividad de iniciar sesión
+                Intent iIniciarSesion=new Intent(this,IniciarSesion.class);
+                startActivity(iIniciarSesion);
+            }
+        }
+        //En este caso se abre la actividad de las preferencias
         else if (id==R.id.preferencias){
             Intent iPreferencias=new Intent(this,ActividadPreferencias.class);
             finish();
             startActivity(iPreferencias);
-
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    protected void onSaveInstanceState(Bundle savedInstanceState) {
-        super.onSaveInstanceState(savedInstanceState);
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-
-
-        savedInstanceState.putString("idioma",idioma);
-
-    }
-
+    //Se implementan los métodos de la interfaz del diálogo de iniciar sesión
     @Override
     public void alpulsarCerrarSesion() {
         //Se elimina el usuario logeado de las preferencias
@@ -254,6 +213,12 @@ public class MainActivity extends BarraMenu implements DialogoSalir.ListenerdelD
         prefs.edit().remove("nombreUsuario").apply();
         Intent i=new Intent(this,IniciarSesion.class);
         startActivity(i);
+
+    }
+    protected void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        savedInstanceState.putString("idioma",idioma);
 
     }
 }

@@ -21,6 +21,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -34,8 +36,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Locale;
 
-public class PantallaJuego extends AppCompatActivity implements DialogoFinNivel.ListenerdelDialogoFinNivel{
-    String letras;
+public class PantallaJuego extends AppCompatActivity implements DialogoFinNivel.ListenerdelDialogoFinNivel, DialogoSalir.ListenerdelDialogoSalir{
+    //Se establecen las variables que se van a emplear durante la partida
     int idNivel;
     int idImagen;
     Nivel nivel;
@@ -44,7 +46,6 @@ public class PantallaJuego extends AppCompatActivity implements DialogoFinNivel.
     ListView intentosAnteriores;
     ListaNiveles listaNiveles = ListaNiveles.getListaNiveles();
     BaseDeDatos GestorDB = new BaseDeDatos (this, "NombreBD", null, 1);
-    int puntuacion;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //Paso 0: Mirar el tema que tiene que tener la app
@@ -59,28 +60,24 @@ public class PantallaJuego extends AppCompatActivity implements DialogoFinNivel.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pantalla_juego);
         Bundle extras=getIntent().getExtras();
-        //Coger el nivel que hay que cargar
+        setSupportActionBar(findViewById(R.id.toolbarJuego));
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        //Paso 1: se gestiona el nivel que hay que cargar cuyo id es proporcionado por la actividad
+        //precedente
         if (extras!=null){
-
             if (extras.getInt("id")!=0){
-                idNivel=extras.getInt("id");
-
-
-            }
-
+                idNivel=extras.getInt("id"); }
         }
-        //Paso 2: Gestión del idioma
+
+        //Paso 2: Gestión del idioma tal y como se realiza en la actividad principal
         //Paso 1: miro el idioma de las preferencias
         String idiomaConfigurado=preferencias.getString("idioma","castellano");
         String sufijoIdioma="es";
         if (idiomaConfigurado.equals("Euskera")){
             sufijoIdioma="eu";
         }
-        Log.i("MYAPP",sufijoIdioma);
         //Paso 2: miro la localización del dispositivo
         String localizacionActual= getResources().getString(R.string.localizacion);
-
-        Log.i("MYAPP",localizacionActual);
         if(!localizacionActual.equals(sufijoIdioma)){
             Locale nuevaloc = new Locale(sufijoIdioma);
 
@@ -99,26 +96,25 @@ public class PantallaJuego extends AppCompatActivity implements DialogoFinNivel.
 
         };
 
-
+        //Paso3: Gestión de la pérdida de información. En caso de que en el medio de la partida se
+        //gire la pantalla o algo interrumpa la actividad esta se almacena
+        //Se emplean distintos métodos de la clase nivel y listaNiveles para establecer el nivel con
+        //los parámetros que se quiere
         if (savedInstanceState!=null){
             ListaNiveles.getListaNiveles().cargarNiveles(this);
-
             String nNivel=savedInstanceState.getString("nombreNivel");
             int idNivel=savedInstanceState.getInt("idNivel");
             int pPuntuacion=savedInstanceState.getInt("nivelPuntuacion");
             int nAciertos=savedInstanceState.getInt("nivelAciertos");
             int nIntentos=savedInstanceState.getInt("nivelIntentos");
-            Log.i("MYAPP",
-                    nNivel+pPuntuacion+nAciertos+nIntentos);
+
             ArrayList<String> arrayAcertadas=savedInstanceState.getStringArrayList("nivelAcertadas");
             lista=arrayAcertadas;
             HashSet<String> acertadas= new HashSet<>(arrayAcertadas);
             if (acertadas==null){
                 acertadas=new HashSet<String>();
             }
-            Log.i("MYAPP",
-                    String.valueOf(acertadas));
-            //nivel=new Nivel(nNivel,pPuntuacion,nAciertos,acertadas,nIntentos);
+
             ListaNiveles.getListaNiveles().setNivel(idNivel,pPuntuacion,nAciertos,acertadas,nIntentos);
             nivel=ListaNiveles.getListaNiveles().getNivel(idNivel);
             ListaNiveles.getListaNiveles().setNivelAct(nivel);
@@ -126,6 +122,7 @@ public class PantallaJuego extends AppCompatActivity implements DialogoFinNivel.
 
         }
         else{
+            //Si la partida no se había iniciado previamente se obtiene el nivel directamente
             ListaNiveles.getListaNiveles().cargarNiveles(this);
             nivel=ListaNiveles.getListaNiveles().getNivel(idNivel);
             ListaNiveles.getListaNiveles().setNivelAct(nivel);
@@ -138,10 +135,8 @@ public class PantallaJuego extends AppCompatActivity implements DialogoFinNivel.
         //Se dibuja la imagen correspondiente
         ImageView imagen= findViewById(R.id.imageView);
         imagen.setImageResource(idImagen);
-        //Se crea el nivel partiendo de los datos obtenidos
 
-
-        //Se cargan los elementos de la pantalla
+        //Se cargan los elementos de la pantalla y se establecen sus textos
         intentosAnteriores=findViewById(R.id.lista);
         adapter=new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, lista);
         intentosAnteriores.setAdapter(adapter);
@@ -152,37 +147,42 @@ public class PantallaJuego extends AppCompatActivity implements DialogoFinNivel.
         tagPuntuacion.setText(getString(R.string.puntuacion)+": "+nivel.getPuntuacion());
         tagIntentos.setText(getString(R.string.intentos)+": "+nivel.getIntentos());
 
-
-
         texto.setText(R.string.escribePalabra);
         boton.setText(R.string.anadir);
 
-        //listener del boton
+        //Listeners del boton añadir palabra
         boton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String palabra=texto.getText().toString();
+                texto.getText().clear();
+
+                //El botón comprueba dicha palabra empleando el nivel y actua en base de si ha sido un
+                //acierto o no
                 if (nivel.jugar(palabra)!=null){
                     lista.add(palabra);
                     ArrayAdapter adapter= (ArrayAdapter) intentosAnteriores.getAdapter();
                     adapter.notifyDataSetChanged();
-                    Log.i("MYAPP", String.valueOf(nivel.getNumeroPalabras()));
                     int palabrasRestantes=nivel.getPalabrasRestantes();
-                    Log.i("MYAPP", String.valueOf(nivel.getIntentos()));
                     if (palabrasRestantes>0 && nivel.getIntentos()>0){
+                        //Si la palabra ha sido un acierto muestra un toast con las palabras que quedan
+                        //por acertar
                         Toast toast=Toast.makeText(getApplicationContext(),"Te quedan "+palabrasRestantes+" palabras", Toast.LENGTH_LONG);
                         toast.setGravity(Gravity.BOTTOM| Gravity.CENTER, 0, 0);
                         toast.show();
-
                     }
                     else if (palabrasRestantes==0){
-                        Log.i("MYAPP", "HAS GANADOOO");
+                        //Si ha sifo acertada y no quedan más palabras se termina la partida y se muestra
+                        //tanto un toast como una notificación
                         Toast toastGanado=Toast.makeText(getApplicationContext(),getString(R.string.hasGanado), Toast.LENGTH_LONG);
                         toastGanado.setGravity(Gravity.TOP| Gravity.CENTER, 0, 0);
                         int puntuacion=registrarPuntuacion();
+
+                        //Se genera el diálogo de fin de nivel
                         DialogoFinNivel dialogoFinNivel=new DialogoFinNivel();
                         dialogoFinNivel.show(getSupportFragmentManager(), "etiqueta");
 
+                        //La notificación muestra la puntuación del jugador
                         NotificationManager elManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
                         NotificationCompat.Builder elBuilder = new NotificationCompat.Builder(v.getContext(), "IdCanal");
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -202,37 +202,40 @@ public class PantallaJuego extends AppCompatActivity implements DialogoFinNivel.
                     }
 
                     else if (nivel.getIntentos()<=0){
+                        //Si no quedan más intentos se llama al diálogo de fin de nivel
                         DialogoFinNivel dialogoFinNivel2=new DialogoFinNivel();
                         dialogoFinNivel2.show(getSupportFragmentManager(), "etiqueta");
-                        //dialogoFinNivel.cambiarTexto("Has perdido...","Continuar");
                     }
 
                 }
                 else {
 
+
+                    //En caso de no acertar se informa al usuario de ello
                     Toast toast=Toast.makeText(getApplicationContext(),"No has acertado! "+nivel.getPalabrasRestantes()+" palabras", Toast.LENGTH_LONG);
                     toast.setGravity(Gravity.BOTTOM| Gravity.CENTER, 0, 0);
                     toast.show();
                     if (nivel.getIntentos()<=0){
+                        //Si se han agotado los intentos se informa de que ha perdido y se genera
+                        //el diálogo correspondiente
                         Toast toastPerdido=Toast.makeText(getApplicationContext(),"Has perdido...", Toast.LENGTH_LONG);
                         toast.setGravity(Gravity.TOP| Gravity.CENTER, 0, 0);
                         toast.show();
                         registrarPuntuacion();
 
                         DialogoFinNivel dialogoFinNivel=new DialogoFinNivel();
-
-
                         dialogoFinNivel.show(getSupportFragmentManager(), "etiqueta");
                     }
 
 
                 }
-
+                //Se actualiza la puntuación y los intentos
                 tagPuntuacion.setText(getString(R.string.puntuacion)+": "+nivel.getPuntuacion());
                 tagIntentos.setText(getString(R.string.intentos)+": "+nivel.getIntentos());
             }
-            public int registrarPuntuacion() {
 
+            //Método que actualiza la puntuación del usuario en la base de datos
+            public int registrarPuntuacion() {
                 String nombre=preferencias.getString("nombreUsuario",null);
                 if (nombre !=null){
                     Log.i("MYAPP","registrando puntuación");
@@ -271,6 +274,8 @@ public class PantallaJuego extends AppCompatActivity implements DialogoFinNivel.
 
 
     }
+
+    //En caso de que la aplicación se cierre inseperadamente se almacenan los datos del momento
     @Override
     protected void onSaveInstanceState (Bundle savedInstanceState) {
 
@@ -286,8 +291,23 @@ public class PantallaJuego extends AppCompatActivity implements DialogoFinNivel.
 
     }
 
+    //Implementación de los métodos para gestionar la toolbar
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.pantalla_juego_menu_layout,menu);
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        DialogoSalir dialogoSalir=new DialogoSalir();
+        dialogoSalir.show(getSupportFragmentManager(), "etiqueta");
+        return super.onOptionsItemSelected(item);
+    }
+
+    //Se implementan las interfaces del diálogo fin de nivel
     @Override
     public void alpulsarMenuNiveles() {
+        //Se abre la actividad de menú niveles
         Intent i =new Intent(this, ActividadSeleccionarNivel.class);
         finish();
         startActivity(i);
@@ -296,6 +316,7 @@ public class PantallaJuego extends AppCompatActivity implements DialogoFinNivel.
 
     @Override
     public void alpulsarSiguienteNivel() {
+        //Se carga el siguiente nivel en caso de no haber más se vuelve a la pantalla de inicio
         Intent i=new Intent(this,PantallaJuego.class);
         int idNivel=ListaNiveles.getListaNiveles().getSiguienteNivel();
         if (idNivel!=0){
@@ -311,5 +332,11 @@ public class PantallaJuego extends AppCompatActivity implements DialogoFinNivel.
             startActivity(i2);
         }
 
+    }
+
+    @Override
+    public void alpulsarOK() {
+        Intent i=new Intent(this,MainActivity.class);
+        startActivity(i);
     }
 }

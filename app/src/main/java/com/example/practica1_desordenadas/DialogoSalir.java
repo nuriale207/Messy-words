@@ -20,18 +20,18 @@ public class DialogoSalir extends DialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         super.onCreateDialog(savedInstanceState);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("Salir");
-        builder.setMessage("¿Estas seguro de querer salir?" );
+        builder.setTitle(getString(R.string.salir));
+        builder.setMessage(getString(R.string.seguroDeSalir) );
         ListenerdelDialogoSalir miListener = (ListenerdelDialogoSalir) getActivity();
 
-        builder.setPositiveButton("Salir", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(getString(R.string.salir), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 miListener.alpulsarOK();
             }
         });
 
-        builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(R.string.cancelar, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();

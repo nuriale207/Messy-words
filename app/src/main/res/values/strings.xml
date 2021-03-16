@@ -54,4 +54,9 @@
     <string name="eligeOpcion">¿Quieres seguir jugando?</string>
     <string name="menuNiveles">Menú de niveles</string>
     <string name="siguienteNivel">Siguiente nivel</string>
+    <string name="seguroDeSalir">¿Estás segur@ de querer salir?</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="seguroDeCerrarSesion">¿Seguro que quieres cerrar sesión?</string>
+    <string name="cerrarSesion">Cerrar sesión</string>
+    <string name="cambiarUsuario">Cambiar usuario</string>
 </resources>

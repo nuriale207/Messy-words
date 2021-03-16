@@ -38,6 +38,7 @@ public class ActividadSeleccionarNivel extends BarraMenu implements DialogoInici
         }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_actividad_seleccionar_nivel);
+
         // CONFIGURACIÓN DE LA VISTA DEL RECYCLER VIEW
         RecyclerView elRecyclerView=findViewById(R.id.recyclerView);
         setSupportActionBar(findViewById(R.id.barraSeleccionarNivel));
@@ -48,34 +49,31 @@ public class ActividadSeleccionarNivel extends BarraMenu implements DialogoInici
         ArrayList<Integer> imagenes=new ArrayList<Integer>();
         ArrayList<String> letras=new ArrayList<String>();
         ArrayList<Integer> ids=new ArrayList<Integer>();
+
+        //Carga de los niveles haciendo uso de la clase ListaNiveles
         ListaNiveles listaNiveles=new ListaNiveles();
         Log.i("MYAPP","cargandoNiveles");
         listaNiveles.cargarNiveles(this);
 
+        //Se obtienen de los niveles las listas necesarias para el correcto funcionamiento de la app
         imagenes=listaNiveles.getImagenesNiveles();
         letras=listaNiveles.getNombresNiveles();
         ids=listaNiveles.getIdNiveles();
         TextView idTitulo=findViewById(R.id.idTitulo);
         idTitulo.setText(R.string.seleccionarNivel);
         Button boton=findViewById(R.id.botonVolver2);
-        boton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-//        boton.setText(R.string.anadirNivel);
+
+
         //Paso 2: Gestión del idioma
-        //Paso 1: miro el idioma de las preferencias
+        //Se realiza tal y como está comentado en la actividad principal
         String idiomaConfigurado=preferencias.getString("idioma","castellano");
         String sufijoIdioma="es";
         if (idiomaConfigurado.equals("Euskera")){
             sufijoIdioma="eu";
         }
         Log.i("MYAPP",sufijoIdioma);
-        //Paso 2: miro la localización del dispositivo
+        //Miro la localización del dispositivo
         String localizacionActual= getResources().getString(R.string.localizacion);
-
         Log.i("MYAPP",localizacionActual);
         if(!localizacionActual.equals(sufijoIdioma)){
             Locale nuevaloc = new Locale(sufijoIdioma);
@@ -94,27 +92,41 @@ public class ActividadSeleccionarNivel extends BarraMenu implements DialogoInici
             startActivity(getIntent());
 
         }
+
+        //Se añade el listener del boton
+        boton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        //Se configura el recycler view incluyendo los datos que necesita para el correcto funcionamiento
         AdaptadorRecyclerNivel elAdaptaador=new AdaptadorRecyclerNivel(letras,imagenes,ids);
         elRecyclerView.setAdapter(elAdaptaador);
         StaggeredGridLayoutManager elLayoutRejillaDesigual =
                 new StaggeredGridLayoutManager(1, GridLayoutManager.VERTICAL);
         elRecyclerView.setLayoutManager(elLayoutRejillaDesigual);
 
-
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+
         getMenuInflater().inflate(R.menu.main_menu_layout,menu);
         return true;
     }
+    //La clase actividad seleccionar nivel implementa los métodos de la barra de tareas
+    //Se comentan en esta clase, las demás también los implementan de la misma manera.
+    //La excepción es la clase pantalla juego que implementa una barra de tareas diferente
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id=item.getItemId();
-        Log.i("MYAPP", String.valueOf(id));
-        Log.i("MYAPP", String.valueOf(R.id.opcion1));
-        Log.i("MYAPP", String.valueOf(R.id.opcion2));
+        //Si se elige la primera opción (mostrar perfil) en caso de que haya un usuario registrado
+        //Se muestra su información
+        //En caso contrario se abre la actividad de iniciar sesión
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
         if(id==R.id.opcion1){
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
             if (prefs.contains("nombreUsuario")){
                 //Se muestra el perfil
                 Intent i=new Intent(this,MostrarPerfil.class);
@@ -122,32 +134,38 @@ public class ActividadSeleccionarNivel extends BarraMenu implements DialogoInici
 
             }
             else{
-                //Se abre el diálogo
-
-
-
-
-
+                //Se abre la actividad de iniciar sesión
                 Intent iIniciarSesion=new Intent(this,IniciarSesion.class);
                 startActivity(iIniciarSesion);
             }
         }
+        //Si se pulsa sobre iniciar sesión, en caso de que haya un usuario registrado se muestra el
+        //diálogo de inicio de sesión
+        //En caso contrario se abre la actividad de inicio de sesión
         else if (id==R.id.opcion2){
-            DialogoIniciarSesion dialogoIniciarSesion=new DialogoIniciarSesion();
-            dialogoIniciarSesion.show(getSupportFragmentManager(), "etiqueta");
-//            Intent iIniciarSesion=new Intent(this,IniciarSesion.class);
-//            startActivity(iIniciarSesion);
-        }
 
+            if (prefs.contains("nombreUsuario")){
+                DialogoIniciarSesion dialogoIniciarSesion=new DialogoIniciarSesion();
+                dialogoIniciarSesion.show(getSupportFragmentManager(), "etiqueta");
+
+            }
+            else{
+                //Se abre la actividad de iniciar sesión
+                Intent iIniciarSesion=new Intent(this,IniciarSesion.class);
+                startActivity(iIniciarSesion);
+            }
+        }
+        //En este caso se abre la actividad de las preferencias
         else if (id==R.id.preferencias){
             Intent iPreferencias=new Intent(this,ActividadPreferencias.class);
+            finish();
             startActivity(iPreferencias);
-
         }
 
         return super.onOptionsItemSelected(item);
     }
 
+    //Se implementan los métodos de la interfaz del diálogo de iniciar sesión
     @Override
     public void alpulsarCerrarSesion() {
         //Se elimina el usuario logeado de las preferencias
@@ -164,4 +182,5 @@ public class ActividadSeleccionarNivel extends BarraMenu implements DialogoInici
         startActivity(i);
 
     }
-}
+
+    }
