@@ -157,7 +157,7 @@ public class Nivel extends Observable {
 		for( int i = start; i < nombre.length(); i++ ){
 			output.append( nombre.charAt(i) );
 			if (Diccionario.getDiccionario().contiene(output.toString())){
-				palabras=palabras+1;
+				this.palabras=this.palabras+1;
 			}
 			if ( i < nombre.length() )
 				combinarPalabras( i + 1);

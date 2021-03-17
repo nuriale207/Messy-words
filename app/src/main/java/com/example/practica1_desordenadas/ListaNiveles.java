@@ -12,7 +12,7 @@ import java.util.Iterator;
 import java.util.Observable;
 
 public class  ListaNiveles extends Observable {
-	private Collection<Nivel> misNiveles;
+	private ArrayList<Nivel> misNiveles;
 	private Collection<Integer> imagenesNiveles;
 	private Collection<String> nombresNiveles;
 	private Collection<Integer> idNiveles;
@@ -39,7 +39,12 @@ public class  ListaNiveles extends Observable {
 	public void resetNivel(int idNivel){
 		//Resetea el nivel
 		Nivel nivel=getNivel(idNivel);
-		nivel=new Nivel(idNivel,nivel.getLetras(),nivel.getIdImagen());
+		int index=misNiveles.indexOf(nivel);
+		misNiveles.remove(nivel);
+		nivel=new Nivel(idNivel,nivel.getNombre(),nivel.getIdImagen());
+		misNiveles.add(index,nivel);
+		Log.i("MYAPP",nivel.getLetras());
+		Log.i("MYAPP", String.valueOf(nivel.getNumeroPalabras()));
 	}
 
 	public void cargarNiveles(Context contexto){
@@ -65,7 +70,10 @@ public class  ListaNiveles extends Observable {
 				String idImagen = cu.getString(2);
 				int idInteger=contexto.getResources().getIdentifier(idImagen,"drawable",contexto.getPackageName());
 				imagenes.add(idInteger);
-				this.misNiveles.add(new Nivel(Cod,letrasNivel,idInteger));
+				Nivel nivel=new Nivel(Cod,letrasNivel,idInteger);
+				this.misNiveles.add(nivel);
+				Log.i("MYAPP",nivel.getLetras());
+				Log.i("MYAPP", String.valueOf(nivel.getNumeroPalabras()));
 
 				Log.i("MYAPP", String.valueOf(idInteger));
 				letras.add(letrasNivel);

@@ -150,7 +150,6 @@ public class ActividadSeleccionarNivel extends BarraMenu implements DialogoInici
             if (prefs.contains("nombreUsuario")){
                 DialogoIniciarSesion dialogoIniciarSesion=new DialogoIniciarSesion();
                 dialogoIniciarSesion.show(getSupportFragmentManager(), "etiqueta");
-
             }
             else{
                 //Se abre la actividad de iniciar sesión
