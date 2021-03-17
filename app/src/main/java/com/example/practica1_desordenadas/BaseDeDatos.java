@@ -59,6 +59,53 @@ public class BaseDeDatos extends SQLiteOpenHelper {
         nuevo.put("IdImagen", "nsio");
         db.insert("Niveles", null, nuevo);
 
+        nuevo.put("Letras", "bcoa");
+        nuevo.put("IdImagen", "bcoa");
+        db.insert("Niveles", null, nuevo);
+
+        nuevo.put("Letras", "eiad");
+        nuevo.put("IdImagen", "eiad");
+        db.insert("Niveles", null, nuevo);
+
+        nuevo = new ContentValues();
+        nuevo.put("Letras", "oorj");
+        nuevo.put("IdImagen", "oorj");
+        db.insert("Niveles", null, nuevo);
+
+        nuevo = new ContentValues();
+        nuevo.put("Letras", "sdio");
+        nuevo.put("IdImagen", "sdio");
+        db.insert("Niveles", null, nuevo);
+
+        nuevo = new ContentValues();
+        nuevo.put("Letras", "sqeuo");
+        nuevo.put("IdImagen", "sqeuo");
+        db.insert("Niveles", null, nuevo);
+
+        nuevo = new ContentValues();
+        nuevo.put("Letras", "ysou");
+        nuevo.put("IdImagen", "ysou");
+        db.insert("Niveles", null, nuevo);
+
+        nuevo = new ContentValues();
+        nuevo.put("Letras", "haroa");
+        nuevo.put("IdImagen", "hraoa");
+        db.insert("Niveles", null, nuevo);
+
+        nuevo = new ContentValues();
+        nuevo.put("Letras", "modun");
+        nuevo.put("IdImagen", "modun");
+        db.insert("Niveles", null, nuevo);
+
+        nuevo = new ContentValues();
+        nuevo.put("Letras", "mxtoi");
+        nuevo.put("IdImagen", "mxtoi");
+        db.insert("Niveles", null, nuevo);
+
+
+
+
+
         String[] campos = new String[]{"Codigo", "Letras","IdImagen"};
 
         Cursor cu = db.query("Niveles", campos, null, null, null, null, null);
