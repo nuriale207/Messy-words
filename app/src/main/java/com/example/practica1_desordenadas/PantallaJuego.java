@@ -170,7 +170,7 @@ public class PantallaJuego extends AppCompatActivity implements DialogoFinNivel.
                     if (palabrasRestantes>0 && nivel.getIntentos()>0){
                         //Si la palabra ha sido un acierto muestra un toast con las palabras que quedan
                         //por acertar
-                        Toast toast=Toast.makeText(getApplicationContext(),"Te quedan "+palabrasRestantes+" palabras", Toast.LENGTH_LONG);
+                        Toast toast=Toast.makeText(getApplicationContext(),getString(R.string.palabrasRestantes)+": "+palabrasRestantes, Toast.LENGTH_LONG);
                         toast.setGravity(Gravity.BOTTOM| Gravity.CENTER, 0, 0);
                         toast.show();
                     }
@@ -184,24 +184,45 @@ public class PantallaJuego extends AppCompatActivity implements DialogoFinNivel.
                         //Se genera el diálogo de fin de nivel
                         DialogoFinNivel dialogoFinNivel=new DialogoFinNivel();
                         dialogoFinNivel.show(getSupportFragmentManager(), "etiqueta");
-
-                        //La notificación muestra la puntuación del jugador
-                        NotificationManager elManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
-                        NotificationCompat.Builder elBuilder = new NotificationCompat.Builder(v.getContext(), "IdCanal");
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                            NotificationChannel elCanal = new NotificationChannel("IdCanal", "NombreCanal",
-                                    NotificationManager.IMPORTANCE_DEFAULT);
-                            Intent i = new Intent(v.getContext(),ActividadSeleccionarNivel.class);
-                            PendingIntent intentEnNot = PendingIntent.getActivity(v.getContext(), 0, i, PendingIntent.FLAG_CANCEL_CURRENT);
-                            elManager.createNotificationChannel(elCanal);
-                            elBuilder.setSmallIcon(android.R.drawable.star_big_on)
-                                    .setContentTitle("¡HAS GANADO!")
-                                    .setContentText("Tu puntuación es:"+puntuacion)
-                                    .setSubText("¡Pulsa para mejorarla!")
-                                    .setVibrate(new long[]{0, 1000, 500, 1000})
-                                    .setAutoCancel(true).setContentIntent(intentEnNot);
-                            elManager.notify(1, elBuilder.build());
+                        String nombre=preferencias.getString("nombreUsuario",null);
+                        if (nombre!=null){
+                            //La notificación muestra la puntuación del jugador
+                            NotificationManager elManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+                            NotificationCompat.Builder elBuilder = new NotificationCompat.Builder(v.getContext(), "IdCanal");
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                NotificationChannel elCanal = new NotificationChannel("IdCanal", "NombreCanal",
+                                        NotificationManager.IMPORTANCE_DEFAULT);
+                                Intent i = new Intent(v.getContext(),ActividadSeleccionarNivel.class);
+                                PendingIntent intentEnNot = PendingIntent.getActivity(v.getContext(), 0, i, PendingIntent.FLAG_CANCEL_CURRENT);
+                                elManager.createNotificationChannel(elCanal);
+                                elBuilder.setSmallIcon(android.R.drawable.star_big_on)
+                                        .setContentTitle(getString(R.string.hasGanado))
+                                        .setContentText(getString(R.string.puntuacionEs)+puntuacion)
+                                        .setSubText(getString(R.string.pulsaMejora))
+                                        .setVibrate(new long[]{0, 1000, 500, 1000})
+                                        .setAutoCancel(true).setContentIntent(intentEnNot);
+                                elManager.notify(1, elBuilder.build());
+                            }
                         }
+                        else{
+                            NotificationManager elManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+                            NotificationCompat.Builder elBuilder = new NotificationCompat.Builder(v.getContext(), "IdCanal");
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                NotificationChannel elCanal = new NotificationChannel("IdCanal", "NombreCanal",
+                                        NotificationManager.IMPORTANCE_DEFAULT);
+                                Intent i = new Intent(v.getContext(),ActividadSeleccionarNivel.class);
+                                PendingIntent intentEnNot = PendingIntent.getActivity(v.getContext(), 0, i, PendingIntent.FLAG_CANCEL_CURRENT);
+                                elManager.createNotificationChannel(elCanal);
+                                elBuilder.setSmallIcon(android.R.drawable.star_big_on)
+                                        .setContentTitle(getString(R.string.hasGanado))
+                                        .setContentText(getString(R.string.puntuacionEs)+" "+nivel.getPuntuacion())
+                                        .setSubText(getString(R.string.registrateParaRanking))
+                                        .setVibrate(new long[]{0, 1000, 500, 1000})
+                                        .setAutoCancel(true).setContentIntent(intentEnNot);
+                                elManager.notify(1, elBuilder.build());
+                            }
+                        }
+
                     }
 
                     else if (nivel.getIntentos()<=0){
@@ -215,13 +236,13 @@ public class PantallaJuego extends AppCompatActivity implements DialogoFinNivel.
 
 
                     //En caso de no acertar se informa al usuario de ello
-                    Toast toast=Toast.makeText(getApplicationContext(),"No has acertado! "+nivel.getPalabrasRestantes()+" palabras", Toast.LENGTH_LONG);
+                    Toast toast=Toast.makeText(getApplicationContext(),getString(R.string.palabraErronea)+" "+getString(R.string.palabrasRestantes)+": "+nivel.getPalabrasRestantes(), Toast.LENGTH_LONG);
                     toast.setGravity(Gravity.BOTTOM| Gravity.CENTER, 0, 0);
                     toast.show();
                     if (nivel.getIntentos()<=0){
                         //Si se han agotado los intentos se informa de que ha perdido y se genera
                         //el diálogo correspondiente
-                        Toast toastPerdido=Toast.makeText(getApplicationContext(),"Has perdido...", Toast.LENGTH_LONG);
+                        Toast toastPerdido=Toast.makeText(getApplicationContext(),getString(R.string.hasPerdido)+"...", Toast.LENGTH_LONG);
                         toast.setGravity(Gravity.TOP| Gravity.CENTER, 0, 0);
                         toast.show();
                         registrarPuntuacion();

@@ -59,4 +59,9 @@
     <string name="seguroDeCerrarSesion">¿Seguro que quieres cerrar sesión?</string>
     <string name="cerrarSesion">Cerrar sesión</string>
     <string name="cambiarUsuario">Cambiar usuario</string>
+    <string name="puntuacionEs">Tu puntuación es:</string>
+    <string name="registrateParaRanking">Regístrate para formar parte del ranking</string>
+    <string name="pulsaMejora">Pulsa para mejorarla</string>
+    <string name="palabrasRestantes">Palabras restantes</string>
+    <string name="palabraErronea">No has acertado</string>
 </resources>

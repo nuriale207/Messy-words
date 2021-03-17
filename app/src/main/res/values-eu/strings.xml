@@ -45,4 +45,9 @@
     <string name="seguroDeCerrarSesion">Saioa itxi nahi al duzu?</string>
     <string name="cerrarSesion">Saioa itxi</string>
     <string name="cambiarUsuario">Erabiltzailea aldatu</string>
+    <string name="puntuacionEs">Zure puntuazioa</string>
+    <string name="registrateParaRanking">Izena eman sailkapenean sartzeko</string>
+    <string name="pulsaMejora">Ukitu hobetzeko</string>
+    <string name="palabrasRestantes">Geratzen diren hitzak</string>
+    <string name="palabraErronea">Ez duzu hitza asmatu</string>
 </resources>
