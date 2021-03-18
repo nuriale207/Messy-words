@@ -197,8 +197,8 @@ public class PantallaJuego extends AppCompatActivity implements DialogoFinNivel.
                                 elManager.createNotificationChannel(elCanal);
                                 elBuilder.setSmallIcon(android.R.drawable.star_big_on)
                                         .setContentTitle(getString(R.string.hasGanado))
-                                        .setContentText(getString(R.string.puntuacionEs)+puntuacion)
-                                        .setSubText(getString(R.string.pulsaMejora))
+                                        .setContentText(getString(R.string.puntuacionEs)+puntuacion+" "+getString(R.string.pulsaMejora))
+                                        .setSubText(getString(R.string.hasGanado))
                                         .setVibrate(new long[]{0, 1000, 500, 1000})
                                         .setAutoCancel(true).setContentIntent(intentEnNot);
                                 elManager.notify(1, elBuilder.build());
@@ -210,13 +210,13 @@ public class PantallaJuego extends AppCompatActivity implements DialogoFinNivel.
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                                 NotificationChannel elCanal = new NotificationChannel("IdCanal", "NombreCanal",
                                         NotificationManager.IMPORTANCE_DEFAULT);
-                                Intent i = new Intent(v.getContext(),ActividadSeleccionarNivel.class);
+                                Intent i = new Intent(v.getContext(),Registro.class);
                                 PendingIntent intentEnNot = PendingIntent.getActivity(v.getContext(), 0, i, PendingIntent.FLAG_CANCEL_CURRENT);
                                 elManager.createNotificationChannel(elCanal);
                                 elBuilder.setSmallIcon(android.R.drawable.star_big_on)
                                         .setContentTitle(getString(R.string.hasGanado))
-                                        .setContentText(getString(R.string.puntuacionEs)+" "+nivel.getPuntuacion())
-                                        .setSubText(getString(R.string.registrateParaRanking))
+                                        .setContentText(getString(R.string.puntuacionEs)+" "+nivel.getPuntuacion()+". "+getString(R.string.registrateParaRanking))
+                                        .setSubText(getString(R.string.hasGanado))
                                         .setVibrate(new long[]{0, 1000, 500, 1000})
                                         .setAutoCancel(true).setContentIntent(intentEnNot);
                                 elManager.notify(1, elBuilder.build());

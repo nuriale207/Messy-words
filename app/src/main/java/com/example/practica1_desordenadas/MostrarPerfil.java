@@ -51,9 +51,7 @@ public class MostrarPerfil extends AppCompatActivity implements DialogoIniciarSe
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         Button volver=findViewById(R.id.botonVolver);
-        Button editar=findViewById(R.id.botonEditar);
         volver.setText(R.string.volver);
-        editar.setText(R.string.editar);
 
         TextView nombreUsuario=findViewById(R.id.textNombreDeUsuario);
         TextView email=findViewById(R.id.textEmail2);
@@ -91,11 +89,19 @@ public class MostrarPerfil extends AppCompatActivity implements DialogoIniciarSe
             startActivity(getIntent());
 
         }
+        Bundle extras=getIntent().getExtras();
+        String nombre="";
+        if(extras!=null){
+            nombre=extras.getString("usuario");
+        }
+        else{
+            //Si el intent no tiene extras se coge de las preferencias
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+            nombre=prefs.getString("nombreUsuario",null);
+        }
 
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         //Se obtienen de la base de datos los datos del usuario a mostrar
-        if (prefs.contains("nombreUsuario")){
-            String nombre=prefs.getString("nombreUsuario",null);
+//        if (prefs.contains("nombreUsuario")){
             BaseDeDatos GestorDB = new BaseDeDatos (this, "NombreBD", null, 1);
             String[] campos = new String[]{"NombreUsuario","Email","Puntuacion","Imagen"};
             String[] argumentos = new String[] {nombre};
@@ -115,10 +121,9 @@ public class MostrarPerfil extends AppCompatActivity implements DialogoIniciarSe
                 byte[] image=cu.getBlob(3);
                 Bitmap bmp = BitmapFactory.decodeByteArray(image, 0,image.length);
                 imagen.setImageBitmap(bmp);
-
             }
 
-        }
+  //      }
 
         volver.setOnClickListener(new View.OnClickListener() {
             @Override

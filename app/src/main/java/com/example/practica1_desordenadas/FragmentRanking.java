@@ -1,5 +1,6 @@
 package com.example.practica1_desordenadas;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -41,7 +43,9 @@ public class FragmentRanking extends Fragment {
     public void cargarRanking() {
         listaRanking= getView().findViewById(R.id.listaRanking);
 
-        ArrayList<String> contenidoLista=new ArrayList<String>();
+        ArrayList<String> listaNombreUsuario=new ArrayList<String>();
+        ArrayList<String> listaPuntuacion=new ArrayList<String>();
+
         //Se obtienen los usuarios de la base de datos
         String[] campos = new String[]{"NombreUsuario", "Puntuacion"};
         BaseDeDatos GestorDB = new BaseDeDatos (this.getActivity(), "NombreBD", null, 1);
@@ -53,14 +57,48 @@ public class FragmentRanking extends Fragment {
             Log.i("MYAPP","Obteniendo elemento");
             String nombreUsuario = cu.getString(0);
             int puntuacion = cu.getInt(1);
-            contenidoLista.add(getString(R.string.usuario)+": "+nombreUsuario+"\t"+ getString(R.string.puntuacion)+": "+puntuacion);
 
+                //listaNombreUsuario.add(getString(R.string.usuario)+": "+nombreUsuario+" \t "+ getString(R.string.puntuacion)+": "+puntuacion);
+            listaNombreUsuario.add(getString(R.string.usuario)+": "+nombreUsuario);
+            listaPuntuacion.add(getString(R.string.puntuacion)+": "+puntuacion);
         }
 
         cu.close();
         db.close();
-        listaRanking.setAdapter(new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_list_item_1, contenidoLista));
 
+        //listaRanking.setAdapter(new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_list_item_2,listaNombreUsuario));
+
+        ArrayAdapter eladaptador =
+                new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_list_item_2,android.R.id.text1,listaNombreUsuario){
+                    @Override
+                    public View getView(int position, View convertView, ViewGroup parent) {
+                        View vista= super.getView(position, convertView, parent);
+                        TextView lineaprincipal=(TextView) vista.findViewById(android.R.id.text1);
+                        TextView lineasecundaria=(TextView) vista.findViewById(android.R.id.text2);
+                        lineaprincipal.setText(listaNombreUsuario.get(position));
+                        lineasecundaria.setText(listaPuntuacion.get(position));
+                        return vista;
+                    }
+                };
+        listaRanking.setAdapter(eladaptador);
+
+        listaRanking.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id){
+                String texto=((TextView)view.findViewById(android.R.id.text1)).getText().toString();
+                texto=texto.split(" ")[1];
+                Log.d("etiqueta", texto);
+
+                Intent i=new Intent(view.getContext(),MostrarPerfil.class );
+                i.putExtra("usuario",texto);
+
+                startActivity(i);
+
+
+
+
+            }
+        });
 
     }
 }
