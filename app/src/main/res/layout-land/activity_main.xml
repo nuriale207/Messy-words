@@ -15,68 +15,72 @@
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:theme="?attr/actionBarTheme" />
 
-    <LinearLayout
-        android:id="@+id/linearLayout4"
-        android:layout_width="313dp"
-        android:layout_height="381dp"
-        android:layout_marginEnd="30dp"
-        android:gravity="center"
-        android:orientation="vertical"
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="348dp"
+        android:layout_height="66dp"
+        app:layout_constraintBottom_toTopOf="@+id/botonJugar"
+        app:layout_constraintEnd_toStartOf="@+id/scroll"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/labarra"
+        app:srcCompat="@drawable/nombre_app" />
+
+    <Button
+        android:id="@+id/botonJugar"
+        android:layout_width="304dp"
+        android:layout_height="63dp"
+        android:text="JUGAR"
+        app:layout_constraintBottom_toTopOf="@+id/botonRanking"
+        app:layout_constraintEnd_toStartOf="@+id/scroll"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+
+    <Button
+        android:id="@+id/botonRanking"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:text="RANKING"
+        app:layout_constraintBottom_toTopOf="@+id/botonInstrucciones"
+        app:layout_constraintEnd_toStartOf="@+id/scroll"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/botonJugar" />
+
+    <Button
+        android:id="@+id/botonInstrucciones"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:text="INSTRUCCIONES"
+        app:layout_constraintBottom_toTopOf="@+id/botonSalir"
+        app:layout_constraintEnd_toStartOf="@+id/scroll"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/botonRanking" />
+
+    <Button
+        android:id="@+id/botonSalir"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:text="Salir"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/fragment"
-        app:layout_constraintHorizontal_bias="0.122"
+        app:layout_constraintEnd_toStartOf="@+id/scroll"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:id="@+id/imageView4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/nombre_app" />
-
-        <Button
-            android:id="@+id/botonJugar"
-            android:layout_width="304dp"
-            android:layout_height="63dp"
-            android:layout_marginBottom="20dp"
-            android:text="JUGAR" />
-
-        <Button
-            android:id="@+id/botonRanking"
-            android:layout_width="300dp"
-            android:layout_height="50dp"
-            android:text="RANKING" />
-
-        <Button
-            android:id="@+id/botonInstrucciones"
-            android:layout_width="300dp"
-            android:layout_height="50dp"
-            android:text="INSTRUCCIONES" />
-
-        <Button
-            android:id="@+id/botonSalir"
-            android:layout_width="300dp"
-            android:layout_height="50dp"
-            android:text="Salir" />
-
-    </LinearLayout>
-
+        app:layout_constraintTop_toBottomOf="@+id/botonInstrucciones" />
 
     <ScrollView
         android:id="@+id/scroll"
         android:layout_width="362dp"
         android:layout_height="318dp"
-        android:layout_marginStart="61dp"
-        android:layout_marginTop="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/linearLayout4"
-        app:layout_constraintTop_toBottomOf="@+id/labarra">
+        app:layout_constraintTop_toBottomOf="@+id/labarra"
+        app:layout_constraintVertical_bias="0.444">
 
         <LinearLayout
             android:layout_width="match_parent"

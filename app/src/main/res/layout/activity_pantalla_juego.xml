@@ -6,32 +6,41 @@
     android:layout_height="match_parent"
     tools:context=".PantallaJuego">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarJuego"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintBottom_toTopOf="@+id/tagPuntuacion"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/tagPuntuacion"
         android:layout_width="187dp"
         android:layout_height="24dp"
-        android:layout_marginTop="76dp"
-        android:layout_marginEnd="5dp"
         android:text="Puntuación"
         app:layout_constraintBottom_toTopOf="@+id/imageView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/tagIntentos"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbarJuego" />
 
     <TextView
         android:id="@+id/tagIntentos"
         android:layout_width="178dp"
         android:layout_height="24dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="76dp"
         android:text="Intentos"
         app:layout_constraintBottom_toTopOf="@+id/imageView"
         app:layout_constraintEnd_toStartOf="@+id/tagPuntuacion"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbarJuego"
+        app:layout_constraintVertical_bias="0.47" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -53,6 +62,7 @@
         android:text="Escribe una palabra"
         app:layout_constraintBottom_toTopOf="@+id/botonAñadir"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
@@ -71,22 +81,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Añadir"
-        app:layout_constraintBottom_toTopOf="@+id/_dynamic"
+        app:layout_constraintBottom_toTopOf="@+id/lista"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textoPalabra" />
-
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbarJuego"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        app:layout_constraintBottom_toTopOf="@+id/tagPuntuacion"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

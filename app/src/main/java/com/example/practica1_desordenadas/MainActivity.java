@@ -21,7 +21,7 @@ import android.widget.Toolbar;
 
 import java.util.Locale;
 
-public class MainActivity extends BarraMenu implements DialogoSalir.ListenerdelDialogoSalir, DialogoIniciarSesion.ListenerdelDialogoIniciarSesion {
+public class MainActivity extends  AppCompatActivity implements DialogoSalir.ListenerdelDialogoSalir, DialogoIniciarSesion.ListenerdelDialogoIniciarSesion {
     Button botonJugar;
     Button botonRanking;
     Button botonInstrucciones;

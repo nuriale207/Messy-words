@@ -10,21 +10,20 @@
         android:id="@+id/tagPuntuacion"
         android:layout_width="369dp"
         android:layout_height="28dp"
-        android:layout_marginTop="60dp"
         android:text="Puntuación"
+        app:layout_constraintBottom_toTopOf="@+id/lista"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.783"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/tagIntentos"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbarJuego" />
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="219dp"
         android:layout_height="135dp"
-        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toTopOf="@+id/textoPalabra"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.103"
+        app:layout_constraintEnd_toStartOf="@+id/lista"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tagIntentos"
         app:srcCompat="@drawable/letras" />
@@ -33,24 +32,23 @@
         android:id="@+id/tagIntentos"
         android:layout_width="204dp"
         android:layout_height="24dp"
-        android:layout_marginStart="52dp"
-        android:layout_marginTop="50dp"
         android:text="Intentos"
         app:layout_constraintBottom_toTopOf="@+id/imageView"
+        app:layout_constraintEnd_toStartOf="@+id/tagPuntuacion"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbarJuego" />
 
     <EditText
         android:id="@+id/textoPalabra"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Escribe una palabra"
         app:layout_constraintBottom_toTopOf="@+id/botonAñadir"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.111"
+        app:layout_constraintEnd_toStartOf="@+id/lista"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
@@ -58,11 +56,10 @@
         android:id="@+id/botonAñadir"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
         android:text="Añadir"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.184"
+        app:layout_constraintEnd_toStartOf="@+id/lista"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textoPalabra" />
 
@@ -70,26 +67,18 @@
         android:id="@+id/lista"
         android:layout_width="362dp"
         android:layout_height="259dp"
-        android:layout_marginEnd="4dp"
-        android:layout_marginBottom="40dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.72"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toBottomOf="@+id/tagPuntuacion"
-        app:layout_constraintVertical_bias="0.775" />
+        app:layout_constraintTop_toBottomOf="@+id/tagPuntuacion" />
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarJuego"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        app:layout_constraintBottom_toTopOf="@+id/tagPuntuacion"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:theme="?attr/actionBarTheme" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,28 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".Registro">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="20dp" />
-
     <LinearLayout
+        android:id="@+id/linearLayout7"
         android:layout_width="282dp"
         android:layout_height="303dp"
-        android:layout_marginStart="29dp"
-        android:layout_marginTop="38dp"
-        android:layout_marginEnd="62dp"
-        android:layout_marginBottom="10dp"
         android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/linearLayout"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintTop_toBottomOf="@+id/toolbar3">
 
         <ImageView
             android:id="@+id/imageView"
@@ -48,18 +37,13 @@
         android:id="@+id/linearLayout"
         android:layout_width="320dp"
         android:layout_height="309dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="38dp"
-        android:layout_marginEnd="27dp"
-        android:layout_marginBottom="10dp"
         android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.988"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/linearLayout7"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar3">
 
         <Space
             android:layout_width="355dp"
@@ -129,7 +113,6 @@
         android:id="@+id/toolbar3"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:layout_marginBottom="21dp"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
@@ -137,7 +120,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.666" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

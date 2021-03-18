@@ -7,11 +7,11 @@
     tools:context=".MostrarPerfil">
 
     <LinearLayout
-        android:id="@+id/linearLayout3"
-        android:layout_width="316dp"
-        android:layout_height="271dp"
+        android:id="@+id/linearLayout4"
+        android:layout_width="335dp"
+        android:layout_height="63dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/botonVolver"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -31,48 +31,13 @@
             android:inputType="textPersonName"
             android:text="Name" />
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="29dp" />
-
-        <TextView
-            android:id="@+id/textEmail2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Email" />
-
-        <EditText
-            android:id="@+id/editTextTextEmail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="29dp" />
-
-        <TextView
-            android:id="@+id/textPuntuación"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Puntuación" />
-
-        <EditText
-            android:id="@+id/editTextTextPuntuacion"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name" />
     </LinearLayout>
 
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="211dp"
         android:layout_height="229dp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -88,7 +53,59 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout6" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout5"
+        android:layout_width="335dp"
+        android:layout_height="60dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout4">
+
+        <TextView
+            android:id="@+id/textEmail2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Email" />
+
+        <EditText
+            android:id="@+id/editTextTextEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Name" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout6"
+        android:layout_width="332dp"
+        android:layout_height="67dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/botonVolver"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout5">
+
+        <TextView
+            android:id="@+id/textPuntuación"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Puntuación" />
+
+        <EditText
+            android:id="@+id/editTextTextPuntuacion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Name" />
+    </LinearLayout>
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar2"

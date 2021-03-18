@@ -23,7 +23,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Locale;
 
-public class ActividadSeleccionarNivel extends BarraMenu implements DialogoIniciarSesion.ListenerdelDialogoIniciarSesion{
+public class ActividadSeleccionarNivel extends  AppCompatActivity implements DialogoIniciarSesion.ListenerdelDialogoIniciarSesion{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -16,7 +16,6 @@
         <activity android:name=".IniciarSesion" />
         <activity android:name=".MostrarPerfil" />
         <activity android:name=".Registro" />
-        <activity android:name=".BarraMenu" />
         <activity android:name=".PantallaRanking" />
         <activity android:name=".PantallaJuego" />
         <activity android:name=".ActividadSeleccionarNivel" />
