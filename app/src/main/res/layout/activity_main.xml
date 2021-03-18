@@ -14,9 +14,10 @@
         android:id="@+id/botonRanking"
         android:layout_width="276dp"
         android:layout_height="53dp"
-        android:layout_marginTop="30dp"
         android:text="RANKING"
+        app:layout_constraintBottom_toTopOf="@+id/botonSalir"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/botonJugar" />
 
@@ -24,36 +25,23 @@
         android:id="@+id/botonSalir"
         android:layout_width="276dp"
         android:layout_height="53dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="100dp"
         android:text="Salir"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/botonInstrucciones"
-        app:layout_constraintVertical_bias="0.071" />
+        app:layout_constraintTop_toBottomOf="@+id/botonRanking" />
 
     <Button
         android:id="@+id/botonJugar"
         android:layout_width="276dp"
         android:layout_height="53dp"
-        android:layout_marginTop="68dp"
         android:text="JUGAR"
+        app:layout_constraintBottom_toTopOf="@+id/botonRanking"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView5" />
-
-    <Button
-        android:id="@+id/botonInstrucciones"
-        android:layout_width="276dp"
-        android:layout_height="53dp"
-        android:layout_marginTop="30dp"
-        android:text="INSTRUCCIONES"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/botonRanking" />
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/labarra"
@@ -63,7 +51,6 @@
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -71,9 +58,9 @@
         android:id="@+id/imageView5"
         android:layout_width="384dp"
         android:layout_height="82dp"
-        android:layout_marginTop="56dp"
+        app:layout_constraintBottom_toTopOf="@+id/botonJugar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.592"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/labarra"
         app:srcCompat="@drawable/nombre_app" />

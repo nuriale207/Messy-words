@@ -70,7 +70,6 @@ public class MainActivity extends BarraMenu implements DialogoSalir.ListenerdelD
         setSupportActionBar(findViewById(R.id.labarra));
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         botonRanking=findViewById(R.id.botonRanking);
-        botonInstrucciones=findViewById(R.id.botonInstrucciones);
         botonSalir=findViewById(R.id.botonSalir);
         Diccionario.getDiccionario().cargar(this);
 
@@ -108,7 +107,6 @@ public class MainActivity extends BarraMenu implements DialogoSalir.ListenerdelD
         //Se establece el texto de los elementos de la actividad
         botonJugar.setText(R.string.jugar);
         botonRanking.setText(R.string.ranking);
-        botonInstrucciones.setText(R.string.instrucciones);
         botonSalir.setText(R.string.salir);
 
 
@@ -153,6 +151,7 @@ public class MainActivity extends BarraMenu implements DialogoSalir.ListenerdelD
                 dialogoSalir.show(getSupportFragmentManager(), "etiqueta");
             }
         });
+
 
 
 

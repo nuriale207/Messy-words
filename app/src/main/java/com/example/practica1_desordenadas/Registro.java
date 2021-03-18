@@ -17,7 +17,9 @@ import android.content.res.Configuration;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -31,7 +33,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
-import java.sql.Blob;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.Locale;
 
 public class Registro extends AppCompatActivity implements DialogoIniciarSesion.ListenerdelDialogoIniciarSesion {
@@ -76,10 +79,8 @@ public class Registro extends AppCompatActivity implements DialogoIniciarSesion.
 
         registrarse.setText(R.string.registrarse);
         if(savedInstanceState!=null){
-            Log.i("MYAPP","cargando lo escrito");
             EditText nUsuario=(EditText)findViewById(R.id.editNombreUsuario);
             nUsuario.setText(savedInstanceState.getString("nombreUsuario"));
-            Log.i("MYAPP",nombreUsuario.getText().toString());
             email.setText(savedInstanceState.getString("email"));
             contraseña1.setText(savedInstanceState.getString("contraseña1"));
             contraseña2.setText(savedInstanceState.getString("contraseña2"));
@@ -131,7 +132,8 @@ public class Registro extends AppCompatActivity implements DialogoIniciarSesion.
             @Override
             public void onClick(View v) {
                 Log.i("MYAPP","CLICADO");
-                solicitarPermiso();
+                solicitarPermisoGaleria();
+
             }});
         registrarse.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,8 +143,43 @@ public class Registro extends AppCompatActivity implements DialogoIniciarSesion.
             }
         });
 
+        imagen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                solicitarPermisoCamara();
+
+            }
+        });
 
 
+
+    }
+
+    private void solicitarPermisoGaleria() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) !=
+                PackageManager.PERMISSION_GRANTED) {
+            //EL PERMISO NO ESTÁ CONCEDIDO, PEDIRLO
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                // MOSTRAR AL USUARIO UNA EXPLICACIÓN DE POR QUÉ ES NECESARIO EL PERMISO
+
+
+            } else {
+                //EL PERMISO NO ESTÁ CONCEDIDO TODAVÍA O EL USUARIO HA INDICADO
+                //QUE NO QUIERE QUE SE LE VUELVA A SOLICITAR
+
+            }
+            //PEDIR EL PERMISO
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                    1);
+
+        } else {
+            //EL PERMISO ESTÁ CONCEDIDO, EJECUTAR LA FUNCIONALIDAD
+
+            Intent galleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            galleryIntent.setType("image/*");
+            startActivityForResult(galleryIntent, 2);
+
+        }
     }
 
     private void añadirUsuario(String nombreUsuario, String email, String  contraseña1,String  contraseña2) {
@@ -191,7 +228,7 @@ public class Registro extends AppCompatActivity implements DialogoIniciarSesion.
 
     }
 
-    public void solicitarPermiso(){
+    public void solicitarPermisoCamara(){
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) !=
                 PackageManager.PERMISSION_GRANTED) {
             //EL PERMISO NO ESTÁ CONCEDIDO, PEDIRLO
@@ -232,6 +269,7 @@ public class Registro extends AppCompatActivity implements DialogoIniciarSesion.
                 }
                 return;
             }
+
         }
     }
     @Override
@@ -240,6 +278,18 @@ public class Registro extends AppCompatActivity implements DialogoIniciarSesion.
         if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
             Bitmap photo = (Bitmap) data.getExtras().get("data");
             imagen.setImageBitmap(photo);
+        }
+        else{
+            final Uri imageUri = data.getData();
+            final InputStream imageStream;
+            try {
+                imageStream = getContentResolver().openInputStream(imageUri);
+                final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+                imagen.setImageBitmap(selectedImage);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+
         }
     }
 

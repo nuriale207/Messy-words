@@ -50,4 +50,5 @@
     <string name="pulsaMejora">Ukitu hobetzeko</string>
     <string name="palabrasRestantes">Geratzen diren hitzak</string>
     <string name="palabraErronea">Ez duzu hitza asmatu</string>
+    <string name="instruccionesTexto">Messy Words hitzak eratzeko jolasa da. 14 maila desberdin ditu eta bakoitzean ahalik eta gaztelaniazko hitz kantitate handiena eratu behar da emandako letrekin. Hitzak idaztean jolasa irabazteko asmatu behar den hitz kopurua esaten da.  Gainera, ranking bat barne hartzen du erabiltzaile desberdinen puntuazioak alderatzeko eta erabiltzaileak sailkapeneko lehenengo postua lortzen saiatzeko.</string>
 </resources>
