@@ -358,4 +358,13 @@ ListaNiveles.getListaNiveles().resetNivel(idNivel);        //Se abre la activida
         Intent i=new Intent(this,MainActivity.class);
         startActivity(i);
     }
+
+    @Override
+    public void onBackPressed() {
+        //Fuente:https://es.stackoverflow.com/questions/15925/como-hacer-para-bloquear-al-usario-el-bot%C3%B3n-atr%C3%A1s-en-mi-app/15975
+        //Al pulsar el botón atras se resetea el nivel
+        ListaNiveles.getListaNiveles().resetNivel(idNivel);
+        finish();
+
+    }
 }
