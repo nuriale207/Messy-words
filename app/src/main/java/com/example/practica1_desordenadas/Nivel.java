@@ -46,20 +46,7 @@ public class Nivel extends Observable {
 	//Devuelve el id de la imagen del nivel
 		return this.idImagen;
 	}
-//	public Nivel(String pnombre, int pPuntuacion,int pAciertos, HashSet<String> palabrasAcertadas,
-//				 int numeroDeIntentos) {
-//		this.nombre=pnombre;
-//
-//		listaLetras=new HashSet<Character>();
-//
-//		int i=0;
-//		while (i<pnombre.length()){
-//			anadirLetra(pnombre.charAt(i));
-//			i=i+1;
-//		}
-//		combinarPalabras();
-//
-//	}
+
 	
 	private void anadirLetra(Character car) {
 		//Añade una letra a la colección de letras del nivel

@@ -3,6 +3,7 @@ package com.example.practica1_desordenadas;
 import java.util.HashSet;
 
 public class Palabra {
+	//Clase que almacena las palabras junto a sus letras
 	private String nombre;
 	private HashSet<Character> letras;
 	

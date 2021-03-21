@@ -37,6 +37,7 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.Locale;
 
+
 public class Registro extends AppCompatActivity implements DialogoIniciarSesion.ListenerdelDialogoIniciarSesion {
 
     EditText nombreUsuario;
@@ -276,6 +277,7 @@ public class Registro extends AppCompatActivity implements DialogoIniciarSesion.
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
+            //Código de:https://stackoverflow.com/questions/5991319/capture-image-from-camera-and-display-in-activity
             Bitmap photo = (Bitmap) data.getExtras().get("data");
             imagen.setImageBitmap(photo);
         }
@@ -283,6 +285,7 @@ public class Registro extends AppCompatActivity implements DialogoIniciarSesion.
             final Uri imageUri = data.getData();
             final InputStream imageStream;
             try {
+                //Código de:https://stackoverflow.com/questions/38352148/get-image-from-the-gallery-and-show-in-imageview
                 imageStream = getContentResolver().openInputStream(imageUri);
                 final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
                 imagen.setImageBitmap(selectedImage);

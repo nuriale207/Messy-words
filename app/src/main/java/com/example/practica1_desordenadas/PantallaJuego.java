@@ -150,7 +150,7 @@ public class PantallaJuego extends AppCompatActivity implements DialogoFinNivel.
         tagPuntuacion.setText(getString(R.string.puntuacion)+": "+nivel.getPuntuacion());
         tagIntentos.setText(getString(R.string.intentos)+": "+nivel.getIntentos());
 
-        texto.setText(R.string.escribePalabra);
+
         boton.setText(R.string.anadir);
 
         //Listeners del boton añadir palabra

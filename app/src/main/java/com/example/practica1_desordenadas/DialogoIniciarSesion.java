@@ -10,7 +10,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
 public class DialogoIniciarSesion extends DialogFragment {
-
+    //Diálogo que pregunta al usuario si realmente quiere cerrar sesión
     public interface ListenerdelDialogoIniciarSesion {
         void alpulsarCerrarSesion();
         void alpulsarCambiarUsuario();
@@ -22,7 +22,6 @@ public class DialogoIniciarSesion extends DialogFragment {
         super.onCreateDialog(savedInstanceState);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(getString(R.string.seguroDeCerrarSesion));
-        //builder.setMessage("Has ganado!! " );
         DialogoIniciarSesion.ListenerdelDialogoIniciarSesion miListener = (DialogoIniciarSesion.ListenerdelDialogoIniciarSesion) getActivity();
 
         builder.setPositiveButton(getString(R.string.cerrarSesion), new DialogInterface.OnClickListener() {

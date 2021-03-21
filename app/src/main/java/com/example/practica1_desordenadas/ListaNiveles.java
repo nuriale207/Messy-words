@@ -20,11 +20,12 @@ public class  ListaNiveles extends Observable {
 	private int puntuacion=50 ;
 	private int intentos=10;
 	private Nivel nivelAct;
-	
+
+
+	//Clase que se encarga de la gestión de niveles
 	public ListaNiveles() {
 		misNiveles=new ArrayList<Nivel>();
 
-		
 	}
 	
 	public static ListaNiveles getListaNiveles() {

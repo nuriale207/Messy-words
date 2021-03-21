@@ -25,8 +25,8 @@ public class FragmentRanking extends Fragment {
     ListView listaRanking;
 
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        //al crear la actividad se carga la lista de ranking
         super.onActivityCreated(savedInstanceState);
-        Log.i("MYAPP","actividad creadaaaaa");
         listaRanking= getView().findViewById(R.id.listaRanking);
     }
 
@@ -41,6 +41,7 @@ public class FragmentRanking extends Fragment {
     }
 
     public void cargarRanking() {
+        //Método que carga el ranking en la list view
         listaRanking= getView().findViewById(R.id.listaRanking);
 
         ArrayList<String> listaNombreUsuario=new ArrayList<String>();
@@ -57,8 +58,7 @@ public class FragmentRanking extends Fragment {
             Log.i("MYAPP","Obteniendo elemento");
             String nombreUsuario = cu.getString(0);
             int puntuacion = cu.getInt(1);
-
-                //listaNombreUsuario.add(getString(R.string.usuario)+": "+nombreUsuario+" \t "+ getString(R.string.puntuacion)+": "+puntuacion);
+            //Se añaden los datos a las listas
             listaNombreUsuario.add(getString(R.string.usuario)+": "+nombreUsuario);
             listaPuntuacion.add(getString(R.string.puntuacion)+": "+puntuacion);
         }
@@ -66,7 +66,7 @@ public class FragmentRanking extends Fragment {
         cu.close();
         db.close();
 
-        //listaRanking.setAdapter(new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_list_item_2,listaNombreUsuario));
+        //Configuración del adaptador para incluir los dos elementos
 
         ArrayAdapter eladaptador =
                 new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_list_item_2,android.R.id.text1,listaNombreUsuario){
@@ -81,7 +81,7 @@ public class FragmentRanking extends Fragment {
                     }
                 };
         listaRanking.setAdapter(eladaptador);
-
+        //Al pulsar sobre uno de los usuarios se muestra su perfil
         listaRanking.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id){

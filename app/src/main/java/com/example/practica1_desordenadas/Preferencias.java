@@ -30,7 +30,7 @@ public class Preferencias extends PreferenceFragmentCompat
         }
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
-
+            //Se comprueba el idioma de la app
             if (s.equals("idioma")){
 
                 String idioma=sharedPreferences.getString("idioma","castellano");

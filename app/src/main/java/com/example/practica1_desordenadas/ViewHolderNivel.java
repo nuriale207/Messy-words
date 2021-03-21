@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class ViewHolderNivel extends RecyclerView.ViewHolder {
+    //View holder para mostrar los datos de cada nivel
     public TextView eltexto;
     public ImageView laimagen;
     public boolean[] seleccion;

@@ -19,7 +19,7 @@ public class BaseDeDatos extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        Log.i("MYAPP","Creando BD");
+        //La base de datos se compone de dos tablas una de usuarios y otra de niveles
 
         db.execSQL("CREATE TABLE Usuarios ('NombreUsuario'  VARCHAR(255) PRIMARY KEY NOT NULL, " +
                 "'Email'VARCHAR(255) NOT NULL," +
@@ -32,11 +32,7 @@ public class BaseDeDatos extends SQLiteOpenHelper {
                 "'Letras' VARCHAR(255) NOT NULL," +
                 "'IdImagen' VARCHAR(255) NOT NULL)");
 
-        db.execSQL("CREATE TABLE PuntuacionNivel ('NombreUsuario'  VARCHAR(255) NOT NULL REFERENCES Usuario('NombreUsuario') ," +
-                "'Codigo' INTEGER NOT NULL REFERENCES Niveles('Codigo') ," +
-                "'Puntuacion' INTEGER," +
-                "PRIMARY KEY ('NombreUsuario','Codigo') )");
-        Log.i("MYAPP","Insertando elemento");
+        //Se añaden los niveles
         ContentValues nuevo = new ContentValues();
         nuevo.put("Letras", "ivev");
         nuevo.put("IdImagen", "ivev");
@@ -105,7 +101,7 @@ public class BaseDeDatos extends SQLiteOpenHelper {
 
 
 
-
+        //Pruebas realizadas para comprobar el correcto funcionamiento de la BD
         String[] campos = new String[]{"Codigo", "Letras","IdImagen"};
 
         Cursor cu = db.query("Niveles", campos, null, null, null, null, null);
@@ -118,14 +114,6 @@ public class BaseDeDatos extends SQLiteOpenHelper {
             Log.i("MYAPP",Cod+" "+Letras+" "+IdImagen);
         }
 
-        ContentValues nuevoUsuario = new ContentValues();
-        nuevoUsuario.put("NombreUsuario", "primero");
-        nuevoUsuario.put("Nombre", "Agustin");
-        nuevoUsuario.put("Email", "agustin@gmail.com");
-        nuevoUsuario.put("Contraseña", "1234");
-        nuevoUsuario.put("Puntuacion", 10000);
-
-        db.insert("Usuarios", null, nuevoUsuario);
 
         cu.close();
 

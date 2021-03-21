@@ -10,7 +10,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
 public class DialogoSalir extends DialogFragment {
-
+    //Diálogo que pregunta al usuario si realmente quiere salir
     public interface ListenerdelDialogoSalir {
         void alpulsarOK();
     }

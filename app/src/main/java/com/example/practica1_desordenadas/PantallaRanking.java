@@ -84,6 +84,7 @@ public class PantallaRanking extends AppCompatActivity implements DialogoIniciar
         }
 
     }
+    //Implementa los métodos del nivel
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu_layout,menu);

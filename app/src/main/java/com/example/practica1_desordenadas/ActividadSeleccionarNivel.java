@@ -68,7 +68,6 @@ public class ActividadSeleccionarNivel extends  AppCompatActivity implements Dia
 
 
         //Paso 2: Gestión del idioma
-        //Se realiza tal y como está comentado en la actividad principal
         String idiomaConfigurado=preferencias.getString("idioma","castellano");
         String sufijoIdioma="es";
         if (idiomaConfigurado.equals("Euskera")){
@@ -112,15 +111,15 @@ public class ActividadSeleccionarNivel extends  AppCompatActivity implements Dia
         elRecyclerView.setLayoutManager(elLayoutRejillaDesigual);
 
     }
+    //La clase actividad seleccionar nivel implementa los métodos de la barra de tareas
+    //Se comentan en esta clase, las demás también los implementan de la misma manera.
+    //La excepción es la clase pantalla juego que implementa una barra de tareas diferente
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
         getMenuInflater().inflate(R.menu.main_menu_layout,menu);
         return true;
     }
-    //La clase actividad seleccionar nivel implementa los métodos de la barra de tareas
-    //Se comentan en esta clase, las demás también los implementan de la misma manera.
-    //La excepción es la clase pantalla juego que implementa una barra de tareas diferente
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id=item.getItemId();
@@ -177,7 +176,7 @@ public class ActividadSeleccionarNivel extends  AppCompatActivity implements Dia
 
     @Override
     public void alpulsarCambiarUsuario() {
-        //Se abre la ventana de inicio de sesión
+        //Se abre la ventana de inicio de sesión y se elimina el usuario
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         prefs.edit().remove("nombreUsuario").apply();
         Intent i=new Intent(this,IniciarSesion.class);

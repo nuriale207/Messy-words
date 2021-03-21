@@ -10,6 +10,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
 public class DialogoFinNivel extends DialogFragment {
+    //Dialogo fin de nivel
     AlertDialog.Builder builder;
     public interface ListenerdelDialogoFinNivel {
         void alpulsarMenuNiveles();

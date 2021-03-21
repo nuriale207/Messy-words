@@ -89,6 +89,9 @@ public class MostrarPerfil extends AppCompatActivity implements DialogoIniciarSe
             startActivity(getIntent());
 
         }
+
+        //En caso de que el intent contenga un nombre de usuario se mostrará el indicado, en caso contrario
+        //se mostraŕá el almacenado en las preferencias
         Bundle extras=getIntent().getExtras();
         String nombre="";
         if(extras!=null){
@@ -101,7 +104,6 @@ public class MostrarPerfil extends AppCompatActivity implements DialogoIniciarSe
         }
 
         //Se obtienen de la base de datos los datos del usuario a mostrar
-//        if (prefs.contains("nombreUsuario")){
             BaseDeDatos GestorDB = new BaseDeDatos (this, "NombreBD", null, 1);
             String[] campos = new String[]{"NombreUsuario","Email","Puntuacion","Imagen"};
             String[] argumentos = new String[] {nombre};
@@ -123,8 +125,6 @@ public class MostrarPerfil extends AppCompatActivity implements DialogoIniciarSe
                 imagen.setImageBitmap(bmp);
             }
 
-  //      }
-
         volver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -135,14 +135,14 @@ public class MostrarPerfil extends AppCompatActivity implements DialogoIniciarSe
         });
 
     }
+   //La clase mostrar perfil implementa los métodos de la barra de tareas
+    //Se comentan en esta clase, las demás también los implementan de la misma manera.
+    //La excepción es la clase pantalla juego que implementa una barra de tareas diferente
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu_layout,menu);
         return true;
     }
-    //La clase mostrar perfil implementa los métodos de la barra de tareas
-    //Se comentan en esta clase, las demás también los implementan de la misma manera.
-    //La excepción es la clase pantalla juego que implementa una barra de tareas diferente
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id=item.getItemId();

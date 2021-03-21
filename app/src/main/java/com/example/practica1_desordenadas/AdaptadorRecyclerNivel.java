@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class AdaptadorRecyclerNivel extends RecyclerView.Adapter<ViewHolderNivel> {
+    //El adaptador del recycler view de los niveles contiene los nombres, las imágenes y los ids
     private ArrayList<String> losnombres;
     private ArrayList<Integer> lasimagenes;
     private ArrayList<Integer> losIds;

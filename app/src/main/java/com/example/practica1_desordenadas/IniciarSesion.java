@@ -39,11 +39,13 @@ public class IniciarSesion extends AppCompatActivity implements DialogoIniciarSe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_iniciar_sesion);
 
+        //Se obtienen los elementos de la vista y se configuran sus textos
         nombreUsuario=findViewById(R.id.nombreUsuarioEdit);
         contraseña=findViewById(R.id.contraseñaEdit);
 
         setSupportActionBar(findViewById(R.id.toolbar4));
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+
 
         Button botonIniciarSesion=findViewById(R.id.botonIniciarSesion);
         botonIniciarSesion.setText(R.string.iniciarSesion);
@@ -55,11 +57,15 @@ public class IniciarSesion extends AppCompatActivity implements DialogoIniciarSe
         tagNombreUsuario.setText(R.string.nombreUsuario);
         tagContraseña.setText(R.string.contrasena);
 
+        //En caso de haber girado la pantalla se añaden los valores escritos previamente
         if(savedInstanceState!=null){
             nombreUsuario.setText(savedInstanceState.getString("nombreUsuario"));
             contraseña.setText(savedInstanceState.getString("contraseña"));
         }
 
+        //Al pulsar el botón de inicio de sesión se comprueban con la base de datos los datos introducidos
+        //En caso de haber algun problema se indica mediante toasts
+        //Al iniciar sesión se muestra el perfil del usuario
         botonIniciarSesion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,6 +99,7 @@ public class IniciarSesion extends AppCompatActivity implements DialogoIniciarSe
             }
         });
 
+        //Al pulsar en registro se abre la actividad de registro
         botonRegistro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,6 +113,7 @@ public class IniciarSesion extends AppCompatActivity implements DialogoIniciarSe
 
 
     }
+    //En caso de que la aplicación se detenga se almacenan los nombres escritos hasta el momento
     @Override
     protected void onSaveInstanceState (Bundle savedInstanceState) {
 
@@ -114,15 +122,16 @@ public class IniciarSesion extends AppCompatActivity implements DialogoIniciarSe
         savedInstanceState.putString("contraseña",contraseña.getText().toString());
     }
 
+    //La clase iniciar sesión implementa los métodos de la barra de tareas
+    //Se comentan en esta clase, las demás también los implementan de la misma manera.
+    //La excepción es la clase pantalla juego que implementa una barra de tareas diferente
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu_layout,menu);
         return true;
     }
 
-    //La clase iniciar sesión implementa los métodos de la barra de tareas
-    //Se comentan en esta clase, las demás también los implementan de la misma manera.
-    //La excepción es la clase pantalla juego que implementa una barra de tareas diferente
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id=item.getItemId();
@@ -180,7 +189,7 @@ public class IniciarSesion extends AppCompatActivity implements DialogoIniciarSe
 
     @Override
     public void alpulsarCambiarUsuario() {
-        //Se abre la ventana de inicio de sesión
+        //Se abre la ventana de inicio de sesión y se elimina el usuario logeado actualmente
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         prefs.edit().remove("nombreUsuario").apply();
         Intent i=new Intent(this,IniciarSesion.class);
