@@ -340,6 +340,7 @@ ListaNiveles.getListaNiveles().resetNivel(idNivel);        //Se abre la activida
         int idNivel=ListaNiveles.getListaNiveles().getSiguienteNivel();
         if (idNivel!=0){
             i.putExtra("id",idNivel);
+            ListaNiveles.getListaNiveles().resetNivel(idNivel);
             startActivity(i);
             finish();
         }

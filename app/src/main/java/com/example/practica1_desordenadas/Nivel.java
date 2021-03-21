@@ -6,7 +6,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Observable;
+import java.util.stream.Stream;
 
 public class Nivel extends Observable {
 	//Contiene todos los atributos del nivel necesarios para el correcto funcionamiento del juego
@@ -135,22 +137,77 @@ public class Nivel extends Observable {
 	}
 
 
+//
+//	public void combinarPalabras() {
 
-	public void combinarPalabras() {
+//		combinarPalabras( 0 ); }
+//	private void combinarPalabras(int start ){
+//		for( int i = start; i < nombre.length(); i++ ){
+//			output.append( nombre.charAt(i) );
+//			Log.i("MYAPP",output.toString());
+//			if (Diccionario.getDiccionario().contiene(output.toString())){
+//				//Log.i("MYAPP",output.toString());
+//				this.palabras=this.palabras+1;
+//			}
+//			if ( i < nombre.length() )
+//				combinarPalabras( i + 1);
+//			output.setLength( output.length() - 1 );
+//		}
+//	}
+	//Codigo de :https://stackoverflow.com/questions/31816647/how-do-i-get-not-just-all-substrings-but-all-possible-substrings-of-a-string
+	public void combinarPalabras(){
 		//Método que realiza todas las combinaciones posibles de las letras para obtener qué palabras
 		//incluye el nivel
-		combinarPalabras( 0 ); }
-	private void combinarPalabras(int start ){
-		for( int i = start; i < nombre.length(); i++ ){
-			output.append( nombre.charAt(i) );
-			if (Diccionario.getDiccionario().contiene(output.toString())){
-				this.palabras=this.palabras+1;
-			}
-			if ( i < nombre.length() )
-				combinarPalabras( i + 1);
-			output.setLength( output.length() - 1 );
+		List<String> combinaciones= substrings(this.nombre);
+		List<String> palabras=new ArrayList<String>();
+		ArrayList<String> palabrasDic=new ArrayList<String>();
+		for(int i=0;i<combinaciones.size();i++){
+			palabras.addAll(permutation(combinaciones.get(i)));
 		}
+		Log.i("MYAPP", String.valueOf(palabras.size()));
+		for(int i=0;i<palabras.size();i++){
+			if (Diccionario.getDiccionario().contiene(palabras.get(i))){
+				Log.i("MYAPP",output.toString());
+				this.palabras=this.palabras+1;
+				palabrasDic.add(palabras.get(i));
+			}
+
+		}
+
 	}
+
+
+	public List<String> permutation(String s) {
+		//Método que realiza todas las combinaciones posibles de las letras para obtener qué palabras
+		//incluye el nivel
+		return permutation( "",s); }
+	private List<String> permutation(String prefix, String str ){
+		final List<String> list = new ArrayList<>();
+
+		final int n = str.length();
+		if (n == 0) {
+			list.add(prefix);
+		} else {
+			for (int i = 0; i < n; i++) {
+				list.addAll(permutation(prefix + str.charAt(i),
+						str.substring(0, i) + str.substring(i + 1, n)));;
+			}
+		}
+
+		return list;
+	}
+
+	public static List<String> substrings(final String source) {
+		final List<String> list = new ArrayList<>();
+		for (int i = 0; i < source.length(); i++) {
+			for (int j = i + 1; j <= source.length(); j++) {
+				list.add(source.substring(i, j));
+			}
+		}
+		return list;
+	}
+
+
 
 	public int getNumeroPalabras(){
 		//Devuelve el número de palabras del nivel
