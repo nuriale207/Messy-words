@@ -154,7 +154,10 @@ public class Nivel extends Observable {
 //			output.setLength( output.length() - 1 );
 //		}
 //	}
-	//Codigo de :https://stackoverflow.com/questions/31816647/how-do-i-get-not-just-all-substrings-but-all-possible-substrings-of-a-string
+	/**Código extraído de StackOverflow
+	 Pregunta: https://stackoverflow.com/questions/31816647/how-do-i-get-not-just-all-substrings-but-all-possible-substrings-of-a-string
+	 Autor: https://stackoverflow.com/users/4137489/marstran
+	 Modificado por Nuria Lebeña para obtener también los substrings**/
 	public void combinarPalabras(){
 		//Método que realiza todas las combinaciones posibles de las letras para obtener qué palabras
 		//incluye el nivel

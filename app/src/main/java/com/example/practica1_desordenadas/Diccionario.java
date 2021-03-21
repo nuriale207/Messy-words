@@ -51,6 +51,11 @@ public class Diccionario {
 		String palabra = "lista.txt",line;
 		System.out.println(palabra);
         try {
+			/**Diccionario extraído de Github
+			 Repositorio: https://github.com/javierarce/palabras/blob/master/listado-general.txt
+			 Autor: https://github.com/javierarce
+			 **/
+			//Fuente del diccionario:
         	InputStream fich = pContexto.getResources().openRawResource(R.raw.diccionario);
 			BufferedReader br = new BufferedReader(new InputStreamReader(fich));
 

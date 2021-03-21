@@ -51,6 +51,12 @@ public class PantallaJuego extends AppCompatActivity implements DialogoFinNivel.
         //Paso 0: Mirar el tema que tiene que tener la app
         SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(this);
         String tema=preferencias.getString("tema","Greenish blue");
+      /**
+        Codigo obtenido de StackOverflow:
+                Pregunta:https://stackoverflow.com/questions/2482848/how-to-change-current-theme-at-runtime-in-android
+                Usuario:https://stackoverflow.com/users/243782/pentium10
+        **/
+
         if(tema.equals("Greenish blue")){
             setTheme(R.style.TemaDesordenadasGreen);
         }
@@ -362,7 +368,10 @@ ListaNiveles.getListaNiveles().resetNivel(idNivel);        //Se abre la activida
 
     @Override
     public void onBackPressed() {
-        //Fuente:https://es.stackoverflow.com/questions/15925/como-hacer-para-bloquear-al-usario-el-bot%C3%B3n-atr%C3%A1s-en-mi-app/15975
+        /**Código extraído de StackOverflow
+         Repositorio: https://github.com/javierarce/palabras/blob/master/listado-general.txt
+         Autor: https://es.stackoverflow.com/users/9982/rafael-guti%c3%a9rrez
+         **/
         //Al pulsar el botón atras se resetea el nivel
         ListaNiveles.getListaNiveles().resetNivel(idNivel);
         finish();
