@@ -35,6 +35,11 @@ public class MainActivity extends  AppCompatActivity implements DialogoSalir.Lis
         //Paso 0: Se mira el tema que tiene que tener la actividad
         SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(this);
         String tema=preferencias.getString("tema","Greenish blue");
+        /**
+         Codigo obtenido de StackOverflow:
+         Pregunta:https://stackoverflow.com/questions/2482848/how-to-change-current-theme-at-runtime-in-android
+         Usuario:https://stackoverflow.com/users/243782/pentium10
+         **/
         if(tema.equals("Greenish blue")){
             setTheme(R.style.TemaDesordenadasGreen);
         }

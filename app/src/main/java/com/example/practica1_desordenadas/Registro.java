@@ -52,6 +52,11 @@ public class Registro extends AppCompatActivity implements DialogoIniciarSesion.
         //Paso 0: Mirar el tema que tiene que tener la app
         SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(this);
         String tema=preferencias.getString("tema","Greenish blue");
+        /**
+         Codigo obtenido de StackOverflow:
+         Pregunta:https://stackoverflow.com/questions/2482848/how-to-change-current-theme-at-runtime-in-android
+         Usuario:https://stackoverflow.com/users/243782/pentium10
+         **/
         if(tema.equals("Greenish blue")){
             setTheme(R.style.TemaDesordenadasGreen);
         }
