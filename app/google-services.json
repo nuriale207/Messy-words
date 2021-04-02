@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "922899951479",
+    "project_id": "practica1-desordenadas",
+    "storage_bucket": "practica1-desordenadas.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:922899951479:android:7222e611dc5aa66f357b72",
+        "android_client_info": {
+          "package_name": "com.example.practica1_desordenadas"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "922899951479-p3eqp9e4du5t8600m1ia4ktvd7gk52tn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC8shvx6VfRQY-7jo_qRmtSDFPI8VIjLGA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "922899951479-p3eqp9e4du5t8600m1ia4ktvd7gk52tn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
