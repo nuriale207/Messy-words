@@ -1,7 +1,13 @@
 package com.example.practica1_desordenadas;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.preference.PreferenceManager;
+import androidx.work.Data;
+import androidx.work.ExistingWorkPolicy;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkInfo;
+import androidx.work.WorkManager;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -74,33 +80,37 @@ public class IniciarSesion extends AppCompatActivity implements DialogoIniciarSe
         botonIniciarSesion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BaseDeDatos GestorDB = new BaseDeDatos (v.getContext(), "NombreBD", null, 1);
-                String[] campos = new String[]{"NombreUsuario","Contraseña"};
-                String[] argumentos = new String[] {nombreUsuario.getText().toString()};
-                SQLiteDatabase db = GestorDB.getWritableDatabase();
-                Cursor cu = db.query("Usuarios", campos, "NombreUsuario=?", argumentos, null, null, null);
-                if(cu.moveToNext()){
-                    String contraseñaReal=cu.getString(1);
-                    if (contraseñaReal.equals(contraseña.getText().toString())){
-                        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(v.getContext());
-                        SharedPreferences.Editor editor= prefs.edit();
-                        editor.putString("nombreUsuario",cu.getString(0));
-                        Intent i =new Intent(v.getContext(),MostrarPerfil.class);
-                        startActivity(i);
-                        editor.apply();
-                    }
-                    else{
-                        Toast toast=Toast.makeText(getApplicationContext(),"La contraseña es incorrecta", Toast.LENGTH_LONG);
-                        toast.setGravity(Gravity.BOTTOM| Gravity.CENTER, 0, 0);
-                        toast.show();
-                    }
-
-                }
-                else{
-                    Toast toast=Toast.makeText(getApplicationContext(),"No hay ningún usuario registrado con ese nombre, regístrate", Toast.LENGTH_LONG);
-                    toast.setGravity(Gravity.BOTTOM| Gravity.CENTER, 0, 0);
-                    toast.show();
-                }
+//                BaseDeDatos GestorDB = new BaseDeDatos (v.getContext(), "NombreBD", null, 1);
+//                String[] campos = new String[]{"NombreUsuario","Contraseña"};
+//                String[] argumentos = new String[] {nombreUsuario.getText().toString()};
+//                SQLiteDatabase db = GestorDB.getWritableDatabase();
+//                Cursor cu = db.query("Usuarios", campos, "NombreUsuario=?", argumentos, null, null, null);
+//                if(cu.moveToNext()){
+//                    String contraseñaReal=cu.getString(1);
+//                    if (contraseñaReal.equals(contraseña.getText().toString())){
+//                        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(v.getContext());
+//                        SharedPreferences.Editor editor= prefs.edit();
+//                        editor.putString("nombreUsuario",cu.getString(0));
+//                        Intent i =new Intent(v.getContext(),MostrarPerfil.class);
+//                        startActivity(i);
+//                        editor.apply();
+//                    }
+//                    else{
+//                        Toast toast=Toast.makeText(getApplicationContext(),"La contraseña es incorrecta", Toast.LENGTH_LONG);
+//                        toast.setGravity(Gravity.BOTTOM| Gravity.CENTER, 0, 0);
+//                        toast.show();
+//                    }
+//
+//                }
+//                else{
+//                    Toast toast=Toast.makeText(getApplicationContext(),"No hay ningún usuario registrado con ese nombre, regístrate", Toast.LENGTH_LONG);
+//                    toast.setGravity(Gravity.BOTTOM| Gravity.CENTER, 0, 0);
+//                    toast.show();
+//                }
+                Log.i("MYAPP","pulsado");
+                String contraseñaReal=contraseña.getText().toString();
+                String nombre=nombreUsuario.getText().toString();
+                comprobarInicioSesion(nombre,contraseñaReal);
             }
         });
 
@@ -118,6 +128,52 @@ public class IniciarSesion extends AppCompatActivity implements DialogoIniciarSe
 
 
     }
+    //Método que se comunica con la base de datos para comprobar que el usuario existe y la contraseña es correcta
+    private void comprobarInicioSesion(String nombre, String contraseña) {
+        Log.i("MYAPP","comprobando contraseña");
+
+        Data datos = new Data.Builder()
+                .putString("fichero","usuarios.php")
+                .putString("parametros","funcion=comprobarContrasena&nombreUsuario="+nombre+"&contrasena="+contraseña)
+                .build();
+        OneTimeWorkRequest requesContrasena = new OneTimeWorkRequest.Builder(ConexionBD.class).setInputData(datos).addTag("comprobarInicio").build();
+        WorkManager.getInstance(this).getWorkInfoByIdLiveData(requesContrasena.getId())
+                .observe(this, new Observer<WorkInfo>() {
+                    @Override
+                    public void onChanged(WorkInfo workInfo) {
+                        if (workInfo != null && workInfo.getState().isFinished()) {
+                            String resultado = workInfo.getOutputData().getString("resultado");
+                            Log.i("MYAPP","inicio realizado");
+
+                            Log.i("MYAPP",resultado);
+
+                            if(resultado==""){
+                                Toast toast=Toast.makeText(getApplicationContext(),"El usuario es incorrecto o no existe", Toast.LENGTH_LONG);
+                              toast.setGravity(Gravity.BOTTOM| Gravity.CENTER, 0, 0);
+                              toast.show();
+                            }
+                            else if(resultado.contains("0")){
+                                Toast toast=Toast.makeText(getApplicationContext(),"La contraseña es incorrecta", Toast.LENGTH_LONG);
+                                toast.setGravity(Gravity.BOTTOM| Gravity.CENTER, 0, 0);
+                                toast.show();
+                            } else {
+                                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplication().getBaseContext());
+                                SharedPreferences.Editor editor = prefs.edit();
+                                editor.putString("nombreUsuario", nombre);
+                                Intent i = new Intent(getApplication().getBaseContext(), MostrarPerfil.class);
+                                startActivity(i);
+                                editor.apply();
+                            }
+                        }
+                    }
+                });
+        //WorkManager.getInstance(getApplication().getBaseContext()).enqueue(requesContrasena);
+        WorkManager.getInstance(getApplication().getBaseContext()).enqueueUniqueWork("comprobarInicio", ExistingWorkPolicy.REPLACE,requesContrasena);
+
+
+
+    }
+
     //En caso de que la aplicación se detenga se almacenan los nombres escritos hasta el momento
     @Override
     protected void onSaveInstanceState (Bundle savedInstanceState) {

@@ -31,6 +31,8 @@ public class ConexionBD extends Worker {
     @NonNull
     @Override
     public Result doWork() {
+        Log.i("MYAPP","en do work");
+
         String fichero=getInputData().getString("fichero");
         String direccion = "http://ec2-54-167-31-169.compute-1.amazonaws.com/nlebena001/WEB/"+fichero;
         Log.i("MYAPP",direccion);
@@ -52,6 +54,7 @@ public class ConexionBD extends Worker {
             out.print(parametros);
             out.close();
             Log.i("MYAPP", "vAMOS A HACER EL POST");
+
             int statusCode=urlConnection.getResponseCode();
             Log.i("MYAPP", String.valueOf(statusCode));
             if (statusCode == 200) {

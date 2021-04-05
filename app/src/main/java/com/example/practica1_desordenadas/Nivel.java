@@ -24,6 +24,7 @@ public class Nivel extends Observable {
 	private int numeroDeIntentos=10;
 	private StringBuilder output = new StringBuilder();
 	private int palabras=0;
+	private HashSet<String> palabrasNivel;
 
 
 	public Nivel(int id,String pnombre, int idImagen) {

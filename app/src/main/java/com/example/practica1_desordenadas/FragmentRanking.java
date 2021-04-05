@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.work.Data;
+import androidx.work.ExistingWorkPolicy;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
@@ -82,7 +83,7 @@ public class FragmentRanking extends Fragment {
                 .putString("fichero","usuarios.php")
                 .putString("parametros","funcion=listar")
                 .build();
-        OneTimeWorkRequest otwr = new OneTimeWorkRequest.Builder(ConexionBD.class).setInputData(datos).build();
+        OneTimeWorkRequest otwr = new OneTimeWorkRequest.Builder(ConexionBD.class).setInputData(datos).addTag("ranking").build();
         WorkManager.getInstance(getContext()).getWorkInfoByIdLiveData(otwr.getId())
                 .observe(this, new Observer<WorkInfo>() {
                     @Override
@@ -158,7 +159,7 @@ public class FragmentRanking extends Fragment {
                         }
                     }
                 });
-        WorkManager.getInstance(this.getContext()).enqueue(otwr);
+        WorkManager.getInstance(this.getContext()).enqueueUniqueWork("ranking", ExistingWorkPolicy.REPLACE,otwr);
 
         //Configuración del adaptador para incluir los dos elementos
 

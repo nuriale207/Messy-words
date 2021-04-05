@@ -1,7 +1,13 @@
 package com.example.practica1_desordenadas;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.preference.PreferenceManager;
+import androidx.work.Data;
+import androidx.work.ExistingWorkPolicy;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkInfo;
+import androidx.work.WorkManager;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,16 +18,24 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.sql.Blob;
 import java.util.Locale;
@@ -68,6 +82,15 @@ public class MostrarPerfil extends AppCompatActivity implements DialogoIniciarSe
         EditText textEmail=findViewById(R.id.editTextTextEmail);
         EditText textPuntuacion=findViewById(R.id.editTextTextPuntuacion);
 
+        volver.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i=new Intent(getApplicationContext(),MainActivity.class);
+                startActivity(i);
+                finish();
+            }
+        });
+
         //Paso 2: Gestión del idioma
         //Paso 1: miro el idioma de las preferencias
         String idiomaConfigurado=preferencias.getString("idioma","castellano");
@@ -109,7 +132,7 @@ public class MostrarPerfil extends AppCompatActivity implements DialogoIniciarSe
         }
 
         //Se obtienen de la base de datos los datos del usuario a mostrar
-            BaseDeDatos GestorDB = new BaseDeDatos (this, "NombreBD", null, 1);
+            /*BaseDeDatos GestorDB = new BaseDeDatos (this, "NombreBD", null, 1);
             String[] campos = new String[]{"NombreUsuario","Email","Puntuacion","Imagen"};
             String[] argumentos = new String[] {nombre};
             SQLiteDatabase db = GestorDB.getWritableDatabase();
@@ -129,15 +152,63 @@ public class MostrarPerfil extends AppCompatActivity implements DialogoIniciarSe
                 Bitmap bmp = BitmapFactory.decodeByteArray(image, 0,image.length);
                 imagen.setImageBitmap(bmp);
             }
+*/
+        Data datos = new Data.Builder()
+                .putString("fichero","usuarios.php")
+                .putString("parametros","funcion=datosUsuario&nombreUsuario="+nombre)
+                .build();
+        OneTimeWorkRequest otwr = new OneTimeWorkRequest.Builder(ConexionBD.class).setInputData(datos).addTag("perfil").build();
+        WorkManager.getInstance(this).getWorkInfoByIdLiveData(otwr.getId())
+                .observe(this, new Observer<WorkInfo>() {
+                    @Override
+                    public void onChanged(WorkInfo workInfo) {
+                        if(workInfo != null && workInfo.getState().isFinished()){
+                            String resultado=workInfo.getOutputData().getString("resultado");
 
-        volver.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i=new Intent(getApplicationContext(),MainActivity.class);
-                startActivity(i);
-                finish();
-            }
-        });
+                            try {
+
+                                Log.i("MYAPP",resultado);
+                                JSONObject jsonObject = new JSONObject(resultado);
+
+                                nombreUsuario.setText(getResources().getString(R.string.nombreUsuario));
+                                email.setText(getResources().getString(R.string.email));
+                                puntuacion.setText(getResources().getString(R.string.puntuacion));
+                                textNombreUsuario.setText(jsonObject.getString("NombreUsuario"));
+                                textNombreUsuario.setEnabled(false);
+                                textEmail.setText(jsonObject.getString("Email"));
+                                textEmail.setEnabled(false);
+                                textPuntuacion.setText(jsonObject.getString("Puntuacion"));
+                                textPuntuacion.setEnabled(false);
+
+                                /**
+                                 * Código obtenido de stackoverflow
+                                 * Link a la pregunta:https://stackoverflow.com/questions/4837110/how-to-convert-a-base64-string-into-a-bitmap-image-to-show-it-in-a-imageview
+                                 * Perfil del usuario:https://stackoverflow.com/users/432209/user432209
+                                 */
+                                String img64=jsonObject.getString("Imagen");
+                                byte[] fotoEnBytes= Base64.decode(img64,Base64.DEFAULT);
+                                Bitmap decodedByte = BitmapFactory.decodeByteArray(fotoEnBytes, 0,fotoEnBytes.length);
+                                imagen.setImageBitmap(decodedByte);
+
+                                   /* String img64=jsonObj.getString("Imagen");
+                                Log.i("MYAPP",img64);
+
+                                byte[] fotoEnBytes= Base64.decode(img64,Base64.DEFAULT);
+                                Bitmap decodedByte = BitmapFactory.decodeByteArray(fotoEnBytes, 0,fotoEnBytes.length);
+                                imagen.setImageBitmap(decodedByte);*/
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                                Log.i("MYAPP","Error con el JSON");
+                            }
+                            Log.i("MYAPP",resultado);
+                        }
+                    }
+                });
+        WorkManager.getInstance(getApplication().getBaseContext()).enqueueUniqueWork("perfil", ExistingWorkPolicy.REPLACE,otwr);
+
+
 
     }
    //La clase mostrar perfil implementa los métodos de la barra de tareas
