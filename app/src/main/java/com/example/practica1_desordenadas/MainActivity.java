@@ -24,6 +24,7 @@ import java.util.Locale;
 public class MainActivity extends  AppCompatActivity implements DialogoSalir.ListenerdelDialogoSalir, DialogoIniciarSesion.ListenerdelDialogoIniciarSesion {
     Button botonJugar;
     Button botonRanking;
+    Button botonPistas;
     Button botonInstrucciones;
     Button botonSalir;
     String idioma;
@@ -72,6 +73,7 @@ public class MainActivity extends  AppCompatActivity implements DialogoSalir.Lis
         }
         //Paso 1: Se obtienen los elementos del layout
         botonJugar=findViewById(R.id.botonJugar);
+        botonPistas=findViewById(R.id.botonPistas);
         setSupportActionBar(findViewById(R.id.labarra));
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         botonRanking=findViewById(R.id.botonRanking);
