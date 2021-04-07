@@ -41,12 +41,25 @@ import java.sql.Blob;
 import java.util.Locale;
 
 public class MostrarPerfil extends AppCompatActivity implements DialogoIniciarSesion.ListenerdelDialogoIniciarSesion {
+    Button volver;
 
+    TextView nombreUsuario;
+    TextView email;
+    TextView puntuacion;
+
+    ImageView imagen;
+
+    EditText textNombreUsuario;
+    EditText textEmail;
+    EditText textPuntuacion;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //Paso 0: Mirar el tema que tiene que tener la app
         SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(this);
         String tema=preferencias.getString("tema","Greenish blue");
+//        preferencias.edit().remove("email").apply();
+//        preferencias.edit().remove("puntuacion").apply();
+//        preferencias.edit().remove("pistas").apply();
         /**
          Codigo obtenido de StackOverflow:
          Pregunta:https://stackoverflow.com/questions/2482848/how-to-change-current-theme-at-runtime-in-android
@@ -69,18 +82,23 @@ public class MostrarPerfil extends AppCompatActivity implements DialogoIniciarSe
         setSupportActionBar(findViewById(R.id.toolbar2));
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        Button volver=findViewById(R.id.botonVolver);
+        volver=findViewById(R.id.botonVolver);
         volver.setText(R.string.volver);
 
-        TextView nombreUsuario=findViewById(R.id.textNombreDeUsuario);
-        TextView email=findViewById(R.id.textEmail2);
-        TextView puntuacion=findViewById(R.id.textPuntuación);
+        nombreUsuario=findViewById(R.id.textNombreDeUsuario);
+        email=findViewById(R.id.textEmail2);
+         puntuacion=findViewById(R.id.textPuntuación);
 
-        ImageView imagen=findViewById(R.id.imageView2);
+        imagen=findViewById(R.id.imageView2);
 
-        EditText textNombreUsuario=findViewById(R.id.editTextTextNombresuario);
-        EditText textEmail=findViewById(R.id.editTextTextEmail);
-        EditText textPuntuacion=findViewById(R.id.editTextTextPuntuacion);
+        textNombreUsuario=findViewById(R.id.editTextTextNombresuario);
+        textEmail=findViewById(R.id.editTextTextEmail);
+        textPuntuacion=findViewById(R.id.editTextTextPuntuacion);
+
+
+        nombreUsuario.setText(getResources().getString(R.string.nombreUsuario));
+        email.setText(getResources().getString(R.string.email));
+        puntuacion.setText(getResources().getString(R.string.puntuacion));
 
         volver.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -124,11 +142,23 @@ public class MostrarPerfil extends AppCompatActivity implements DialogoIniciarSe
         String nombre="";
         if(extras!=null){
             nombre=extras.getString("usuario");
+            obtenerDatos(nombre,false);
         }
         else{
             //Si el intent no tiene extras se coge de las preferencias
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
             nombre=prefs.getString("nombreUsuario",null);
+            if (prefs.contains("email")){
+                String textoEmail=prefs.getString("email",null);
+                Integer puntuacionUsuario=prefs.getInt("puntuacion",0);
+                textEmail.setText(textoEmail);
+                textPuntuacion.setText(puntuacionUsuario.toString());
+                textNombreUsuario.setText(nombre);
+
+            }
+            else{
+                obtenerDatos(nombre,true);
+            }
         }
 
         //Se obtienen de la base de datos los datos del usuario a mostrar
@@ -153,6 +183,13 @@ public class MostrarPerfil extends AppCompatActivity implements DialogoIniciarSe
                 imagen.setImageBitmap(bmp);
             }
 */
+
+
+
+
+    }
+
+    private void obtenerDatos(String nombre, boolean almacenar) {
         Data datos = new Data.Builder()
                 .putString("fichero","usuarios.php")
                 .putString("parametros","funcion=datosUsuario&nombreUsuario="+nombre)
@@ -169,26 +206,35 @@ public class MostrarPerfil extends AppCompatActivity implements DialogoIniciarSe
 
                                 Log.i("MYAPP",resultado);
                                 JSONObject jsonObject = new JSONObject(resultado);
+                                Log.i("MYAPP", String.valueOf(jsonObject));
 
-                                nombreUsuario.setText(getResources().getString(R.string.nombreUsuario));
-                                email.setText(getResources().getString(R.string.email));
-                                puntuacion.setText(getResources().getString(R.string.puntuacion));
+
                                 textNombreUsuario.setText(jsonObject.getString("NombreUsuario"));
                                 textNombreUsuario.setEnabled(false);
                                 textEmail.setText(jsonObject.getString("Email"));
                                 textEmail.setEnabled(false);
                                 textPuntuacion.setText(jsonObject.getString("Puntuacion"));
                                 textPuntuacion.setEnabled(false);
+                                int pistas=jsonObject.getInt("Pistas");
+                                if (almacenar){
+                                    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplication().getBaseContext());
+                                    SharedPreferences.Editor editor = prefs.edit();
 
+                                    editor.putString("email",textEmail.getText().toString());
+                                    editor.putInt("puntuacion", Integer.parseInt(textPuntuacion.getText().toString()));
+                                    editor.putInt("pistas",pistas);
+                                    editor.apply();
+
+                                }
                                 /**
                                  * Código obtenido de stackoverflow
                                  * Link a la pregunta:https://stackoverflow.com/questions/4837110/how-to-convert-a-base64-string-into-a-bitmap-image-to-show-it-in-a-imageview
                                  * Perfil del usuario:https://stackoverflow.com/users/432209/user432209
                                  */
-                                String img64=jsonObject.getString("Imagen");
-                                byte[] fotoEnBytes= Base64.decode(img64,Base64.DEFAULT);
-                                Bitmap decodedByte = BitmapFactory.decodeByteArray(fotoEnBytes, 0,fotoEnBytes.length);
-                                imagen.setImageBitmap(decodedByte);
+                                //String img64=jsonObject.getString("Imagen");
+//                                byte[] fotoEnBytes= Base64.decode(img64,Base64.DEFAULT);
+//                                Bitmap decodedByte = BitmapFactory.decodeByteArray(fotoEnBytes, 0,fotoEnBytes.length);
+//                                imagen.setImageBitmap(decodedByte);
 
                                    /* String img64=jsonObj.getString("Imagen");
                                 Log.i("MYAPP",img64);
@@ -208,10 +254,9 @@ public class MostrarPerfil extends AppCompatActivity implements DialogoIniciarSe
                 });
         WorkManager.getInstance(getApplication().getBaseContext()).enqueueUniqueWork("perfil", ExistingWorkPolicy.REPLACE,otwr);
 
-
-
     }
-   //La clase mostrar perfil implementa los métodos de la barra de tareas
+
+    //La clase mostrar perfil implementa los métodos de la barra de tareas
     //Se comentan en esta clase, las demás también los implementan de la misma manera.
     //La excepción es la clase pantalla juego que implementa una barra de tareas diferente
     @Override
@@ -272,6 +317,9 @@ public class MostrarPerfil extends AppCompatActivity implements DialogoIniciarSe
         //Se elimina el usuario logeado de las preferencias
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         prefs.edit().remove("nombreUsuario").apply();
+        prefs.edit().remove("email").apply();
+        prefs.edit().remove("puntuacion").apply();
+        prefs.edit().remove("pistas").apply();
     }
 
     @Override

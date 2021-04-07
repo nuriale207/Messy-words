@@ -230,6 +230,11 @@ public class MainActivity extends  AppCompatActivity implements DialogoSalir.Lis
         //Se elimina el usuario logeado de las preferencias
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         prefs.edit().remove("nombreUsuario").apply();
+        prefs.edit().remove("email").apply();
+        prefs.edit().remove("puntuacion").apply();
+        prefs.edit().remove("pistas").apply();
+
+
     }
 
     @Override
