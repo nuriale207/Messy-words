@@ -25,7 +25,6 @@ public class MainActivity extends  AppCompatActivity implements DialogoSalir.Lis
     Button botonJugar;
     Button botonRanking;
     Button botonPistas;
-    Button botonInstrucciones;
     Button botonSalir;
     String idioma;
 
@@ -74,6 +73,7 @@ public class MainActivity extends  AppCompatActivity implements DialogoSalir.Lis
         //Paso 1: Se obtienen los elementos del layout
         botonJugar=findViewById(R.id.botonJugar);
         botonPistas=findViewById(R.id.botonPistas);
+        botonPistas.setText(R.string.pistas);
         setSupportActionBar(findViewById(R.id.labarra));
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         botonRanking=findViewById(R.id.botonRanking);
@@ -159,6 +159,13 @@ public class MainActivity extends  AppCompatActivity implements DialogoSalir.Lis
             }
         });
 
+        botonPistas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i=new Intent(v.getContext(),ActividadMapa.class);
+                startActivity(i);
+            }
+        });
 
 
 

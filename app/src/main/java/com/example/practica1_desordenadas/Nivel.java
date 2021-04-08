@@ -24,7 +24,8 @@ public class Nivel extends Observable {
 	private int numeroDeIntentos=10;
 	private StringBuilder output = new StringBuilder();
 	private int palabras=0;
-	private HashSet<String> palabrasNivel;
+	private ArrayList<String> palabrasNivel;
+	private String pistaActual;
 
 
 	public Nivel(int id,String pnombre, int idImagen) {
@@ -35,7 +36,7 @@ public class Nivel extends Observable {
 		this.idImagen=idImagen;
 		listaLetras=new HashSet<Character>();
 		palabrasAcertadas=new HashSet<String>();
-
+		pistaActual="";
 		int i=0;
 		while (i<pnombre.length()){
 			anadirLetra(pnombre.charAt(i));
@@ -177,6 +178,7 @@ public class Nivel extends Observable {
 			}
 
 		}
+		this.palabrasNivel=palabrasDic;
 
 	}
 
@@ -269,5 +271,35 @@ public class Nivel extends Observable {
 		this.aciertos=nAciertos;
 		this.palabrasAcertadas=acertadas;
 		this.numeroDeIntentos=nIntentos;
+	}
+
+	public String getPista(){
+		//Método para obtener una pista del nivel. Devolverá la mitad de la primera palabra que esté sin acertar
+		String pista="";
+
+		if(this.pistaActual=="" || this.palabrasAcertadas.contains(pistaActual)){
+			boolean encontrada= false;
+			int i=0;
+			while(!encontrada){
+				String palabra=this.palabrasNivel.get(i);
+				if(!this.palabrasAcertadas.contains(palabra)){
+					int size=palabra.length();
+					size=size/2;
+					if(size/2<2){
+						size=2;
+					}
+					pista=palabra.substring(0,size);
+					this.pistaActual=palabra;
+					encontrada=true;
+				}
+				i=i+1;
+			}
+		}
+		else{
+			pista=pistaActual;
+		}
+
+		return pista;
+
 	}
 }
