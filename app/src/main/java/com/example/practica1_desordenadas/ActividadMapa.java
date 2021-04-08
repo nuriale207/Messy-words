@@ -134,7 +134,7 @@ public class ActividadMapa extends FragmentActivity implements OnMapReadyCallbac
                         Location location=locationResult.getLastLocation();
 
                         if(!hayRuta()){
-                            posicionActual.remove();
+
                             posicionActual = elmapa.addMarker(new MarkerOptions()
                                     .position(new LatLng(location.getLatitude(), location.getLongitude()))
                                     .title("Tu posición"));
@@ -151,6 +151,9 @@ public class ActividadMapa extends FragmentActivity implements OnMapReadyCallbac
                             }
                         }
                         else{
+                            if(posicionActual!=null){
+                                posicionActual.remove();
+                            }
                             posicionActual.remove();
                             posicionActual = elmapa.addMarker(new MarkerOptions()
                                     .position(new LatLng(location.getLatitude(), location.getLongitude()))
