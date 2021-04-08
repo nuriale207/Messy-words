@@ -345,7 +345,7 @@ public class ActividadMapa extends FragmentActivity implements OnMapReadyCallbac
         String key = "key=AIzaSyAtorhrGKh2yh4mXKX1iwm5PE-oi0cbjpY";
 
         // Building the parameters to the web service
-        String parameters = str_origin+"&amp;"+str_dest+"&amp;"+key;
+        String parameters = str_origin+"&"+str_dest+"&"+key;
 
         // Output format
         String output = "json";
