@@ -16,6 +16,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -39,8 +40,10 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 
@@ -67,13 +70,13 @@ public class ActividadMapa extends FragmentActivity implements OnMapReadyCallbac
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        SharedPreferences.Editor editor = preferencias.edit();
-        editor.remove("longitudInicio");
-        editor.remove("latitudInicio");
-        editor.remove("longitudDestino");
-        editor.remove("latitudDestino");
-        editor.apply();
+//        SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+//        SharedPreferences.Editor editor = preferencias.edit();
+//        editor.remove("longitudInicio");
+//        editor.remove("latitudInicio");
+//        editor.remove("longitudDestino");
+//        editor.remove("latitudDestino");
+//        editor.apply();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_actividad_mapa);
         SupportMapFragment elfragmento =
@@ -151,13 +154,16 @@ public class ActividadMapa extends FragmentActivity implements OnMapReadyCallbac
                             }
                         }
                         else{
+                            mapa.clear();
                             if(posicionActual!=null){
                                 posicionActual.remove();
                             }
-                            posicionActual.remove();
                             posicionActual = elmapa.addMarker(new MarkerOptions()
                                     .position(new LatLng(location.getLatitude(), location.getLongitude()))
                                     .title("Tu posición"));
+                            mostrarRuta();
+
+                            comprobarRuta();
                         }
 
 
@@ -188,24 +194,84 @@ public class ActividadMapa extends FragmentActivity implements OnMapReadyCallbac
         otraRuta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                eliminarRuta();
+
+                posicionActual=mapa.addMarker(new MarkerOptions()
+                        .position(posicionActual.getPosition())
+                        .title("Tu posición"));
                 LatLng puntoDestino = getRandomLocation(posicionActual.getPosition(), 500);
                 posicionDestino.remove();
-                posicionDestino=elmapa.addMarker(new MarkerOptions()
+                posicionDestino=mapa.addMarker(new MarkerOptions()
                         .position(puntoDestino)
                         .title("Posición destino"));
-                SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                SharedPreferences.Editor editor = preferencias.edit();
-                editor.remove("longitudInicio");
-                editor.remove("latitudInicio");
-                editor.remove("longitudDestino");
-                editor.remove("latitudDestino");
-                editor.apply();
 
 
             }
         });
     }
 
+    private void mostrarRuta() {
+        SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        double longInicio=preferencias.getFloat("longitudInicio",0);
+        double latitudInicio=preferencias.getFloat("latitudInicio",0);
+        double longitudDestino=preferencias.getFloat("longitudDestino",0);
+        double latitudDestino=preferencias.getFloat("latitudDestino",0);
+        posicionInicial=mapa.addMarker(new MarkerOptions()
+                .position(new LatLng(latitudInicio,longInicio))
+                .title("Posición inicial"));
+        posicionDestino=mapa.addMarker(new MarkerOptions()
+                .position(new LatLng(latitudDestino,longitudDestino))
+                .title("Posición destino"));
+        generarRuta();
+    }
+
+    private void eliminarRuta(){
+        mapa.clear();
+        SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = preferencias.edit();
+        editor.remove("longitudInicio");
+        editor.remove("latitudInicio");
+        editor.remove("longitudDestino");
+        editor.remove("latitudDestino");
+        editor.apply();
+    }
+
+    private void comprobarRuta(){
+        boolean llegado=comprobarSiLlegado();
+
+        if(llegado){
+            //Mostrar diálogo con la cantidad de pistas obtenidas
+
+            //Resetear mapa
+            eliminarRuta();
+            posicionActual=mapa.addMarker(new MarkerOptions()
+                    .position(posicionActual.getPosition())
+                    .title("Tu posición"));
+            LatLng puntoDestino = getRandomLocation(posicionActual.getPosition(), 500);
+            posicionDestino.remove();
+            posicionDestino=mapa.addMarker(new MarkerOptions()
+                    .position(puntoDestino)
+                    .title("Posición destino"));
+        }
+    }
+
+    private boolean comprobarSiLlegado() {
+        LatLng posInicio=posicionActual.getPosition();
+        Location localizacionA=new Location("punto A");
+        localizacionA.setLatitude(posInicio.latitude);
+        localizacionA.setLongitude(posInicio.longitude);
+        LatLng posDestin=posicionDestino.getPosition();
+        Location localizacionB=new Location("punto B");
+        localizacionB.setLatitude(posDestin.latitude);
+        localizacionB.setLongitude(posDestin.longitude);
+
+        float distancia=localizacionA.distanceTo(localizacionB);
+        boolean llegado=false;
+        if (distancia<=10){
+            llegado=true;
+        }
+        return llegado;
+    }
 
 
     private boolean hayRuta() {
@@ -266,15 +332,7 @@ public class ActividadMapa extends FragmentActivity implements OnMapReadyCallbac
         return randomPoints.get(indexOfNearestPointToCentre);
     }
 
-    private void getRandomPosition(double pLatitude, double pLongitude) throws IOException {
-        String ciudad = getCurrentCity(pLatitude, pLongitude);
 
-        if (!ciudad.equals("")) {
-
-        } else {
-            // do your stuff
-        }
-    }
 
     private String getCurrentCity(double pLatitude, double pLongitude) throws IOException {
         /**
@@ -311,28 +369,56 @@ public class ActividadMapa extends FragmentActivity implements OnMapReadyCallbac
 
         String url = getDirectionsUrl(this.posicionInicial.getPosition(),this.posicionDestino.getPosition());
 
-        Data datos = new Data.Builder()
-                .putString("url",url)
-                .build();
-        OneTimeWorkRequest requesContrasena = new OneTimeWorkRequest.Builder(ConexionMaps.class).setInputData(datos).addTag("comprobarInicio").build();
-        WorkManager.getInstance(this).getWorkInfoByIdLiveData(requesContrasena.getId())
-                .observe(this, new Observer<WorkInfo>() {
-                    @Override
-                    public void onChanged(WorkInfo workInfo) {
-                        if (workInfo != null && workInfo.getState().isFinished()) {
-                            String resultado = workInfo.getOutputData().getString("resultado");
+//        Data datos = new Data.Builder()
+//                .putString("url",url)
+//                .build();
+//        OneTimeWorkRequest requesContrasena = new OneTimeWorkRequest.Builder(ConexionMaps.class).setInputData(datos).addTag("comprobarInicio").build();
+//        WorkManager.getInstance(this).getWorkInfoByIdLiveData(requesContrasena.getId())
+//                .observe(this, new Observer<WorkInfo>() {
+//                    @Override
+//                    public void onChanged(WorkInfo workInfo) {
+//                        if (workInfo != null && workInfo.getState().isFinished()) {
+//                            String resultado = workInfo.getOutputData().getString("resultado");
+//
+//                            Log.i("MYAPP",resultado);
+//
+//
+//                        }
+//                    }
+//                });
+//        //WorkManager.getInstance(getApplication().getBaseContext()).enqueue(requesContrasena);
+//        WorkManager.getInstance(getApplication().getBaseContext()).enqueueUniqueWork("comprobarInicio", ExistingWorkPolicy.REPLACE,requesContrasena);
+          List<LatLng> list=new ArrayList<LatLng>();
+          list.add(posicionInicial.getPosition());
+          if(posicionActual!=null){
+              list.add(posicionActual.getPosition());
 
-                            Log.i("MYAPP",resultado);
-
-
-                        }
-                    }
-                });
-        //WorkManager.getInstance(getApplication().getBaseContext()).enqueue(requesContrasena);
-        WorkManager.getInstance(getApplication().getBaseContext()).enqueueUniqueWork("comprobarInicio", ExistingWorkPolicy.REPLACE,requesContrasena);
-
+          }
+          list.add(posicionDestino.getPosition());
+          drawPolyLineOnMap(list);
 
     }
+
+    public void drawPolyLineOnMap(List<LatLng> list) {
+        PolylineOptions polyOptions = new PolylineOptions();
+        polyOptions.color(Color.RED);
+        polyOptions.width(5);
+        polyOptions.addAll(list);
+
+        mapa.addPolyline(polyOptions);
+
+        LatLngBounds.Builder builder = new LatLngBounds.Builder();
+        for (LatLng latLng : list) {
+            builder.include(latLng);
+        }
+
+        final LatLngBounds bounds = builder.build();
+
+        //BOUND_PADDING is an int to specify padding of bound.. try 100.
+        CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, 100);
+        mapa.animateCamera(cu);
+    }
+
     private String getDirectionsUrl(LatLng origin,LatLng dest){
 
         // Origin of route
