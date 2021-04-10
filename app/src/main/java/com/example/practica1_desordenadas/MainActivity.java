@@ -12,11 +12,13 @@ import android.content.res.Resources;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ScrollView;
+import android.widget.Toast;
 import android.widget.Toolbar;
 
 import java.util.Locale;
@@ -162,8 +164,13 @@ public class MainActivity extends  AppCompatActivity implements DialogoSalir.Lis
         botonPistas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i=new Intent(v.getContext(),ActividadMapa.class);
-                startActivity(i);
+                if(preferencias.getString("nombreUsuario",null)!=null){
+                    Intent i=new Intent(v.getContext(),ActividadMapa.class);
+                    startActivity(i);
+                }
+                else{
+
+                }
             }
         });
 
@@ -202,6 +209,9 @@ public class MainActivity extends  AppCompatActivity implements DialogoSalir.Lis
 
             }
             else{
+                Toast toast=Toast.makeText(getApplicationContext(),"Es necesario haber iniciado sesión para esta función", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.BOTTOM| Gravity.CENTER, 0, 0);
+                toast.show();
                 //Se abre la actividad de iniciar sesión
                 Intent iIniciarSesion=new Intent(this,IniciarSesion.class);
                 startActivity(iIniciarSesion);

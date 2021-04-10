@@ -69,4 +69,8 @@
     <string name="instruccionesTexto">Messy words es un juego de formar palabras. Consta de 14 niveles en los que hay que tratar de formar todas las palabras posibles con las letras proporcionadas. Según se vayan escribiendo palabras el juego indicará cuantas quedan por acertar. La partida termina al acertar todas las palabras o al terminarse los intentos del nivel.  Además, Messy Words permite llevar un ranking de las puntuaciones de distintos usuarios y así poder competir por ganar el primer puesto en el ranking.</string>
     <string name="pistas">Pistas</string>
     <string name="pista">Pista</string>
+    <string name="comenzarRuta">Comenzar ruta</string>
+    <string name="generarOtraRuta">Generar otra ruta</string>
+    <string name="enhorabuenaDestino">Enhorabuena has llegado al destino</string>
+    <string name="aceptar">Aceptar</string>
 </resources>

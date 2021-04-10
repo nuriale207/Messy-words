@@ -241,6 +241,9 @@ public class ActividadMapa extends FragmentActivity implements OnMapReadyCallbac
 
         if(llegado){
             //Mostrar diálogo con la cantidad de pistas obtenidas
+            DialogoMapa dialogoMapa=new DialogoMapa();
+            dialogoMapa.show(getSupportFragmentManager(), "etiqueta");
+            añadirPistas();
 
             //Resetear mapa
             eliminarRuta();
@@ -253,6 +256,36 @@ public class ActividadMapa extends FragmentActivity implements OnMapReadyCallbac
                     .position(puntoDestino)
                     .title("Posición destino"));
         }
+    }
+
+    private void añadirPistas() {
+        SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        String usuario=preferencias.getString("nombreUsuario","");
+        int pistas=preferencias.getInt("pistas",0);
+        pistas=pistas+10;
+        Data datos = new Data.Builder()
+                .putString("fichero","usuarios.php")
+                .putString("parametros","funcion=pistas&nombreUsuario="+usuario+"&pistas="+pistas)
+                .build();
+        OneTimeWorkRequest requesContrasena = new OneTimeWorkRequest.Builder(ConexionBD.class).setInputData(datos).addTag("modificarPistas").build();
+        WorkManager.getInstance(this).getWorkInfoByIdLiveData(requesContrasena.getId())
+                .observe(this, new Observer<WorkInfo>() {
+                    @Override
+                    public void onChanged(WorkInfo workInfo) {
+                        if (workInfo != null && workInfo.getState().isFinished()) {
+                            String resultado = workInfo.getOutputData().getString("resultado");
+                            Log.i("MYAPP","inicio realizado");
+
+                            Log.i("MYAPP",resultado);
+
+                        }
+                    }
+                });
+        //WorkManager.getInstance(getApplication().getBaseContext()).enqueue(requesContrasena);
+        WorkManager.getInstance(getApplication().getBaseContext()).enqueueUniqueWork("modificarPistas", ExistingWorkPolicy.REPLACE,requesContrasena);
+        SharedPreferences.Editor editor = preferencias.edit();
+        editor.putInt("pistas",pistas);
+        editor.apply();
     }
 
     private boolean comprobarSiLlegado() {
