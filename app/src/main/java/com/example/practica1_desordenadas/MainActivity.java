@@ -169,7 +169,7 @@ public class MainActivity extends  AppCompatActivity implements DialogoSalir.Lis
                     startActivity(i);
                 }
                 else{
-                    Toast toast=Toast.makeText(getApplicationContext(),"Es necesario haber iniciado sesión para esta función", Toast.LENGTH_LONG);
+                    Toast toast=Toast.makeText(getApplicationContext(),getString(R.string.necesarioIniciarSesion), Toast.LENGTH_LONG);
                     toast.setGravity(Gravity.BOTTOM| Gravity.CENTER, 0, 0);
                     toast.show();
                     //Se abre la actividad de iniciar sesión
@@ -215,7 +215,7 @@ public class MainActivity extends  AppCompatActivity implements DialogoSalir.Lis
 
             }
             else{
-                Toast toast=Toast.makeText(getApplicationContext(),"Es necesario haber iniciado sesión para esta función", Toast.LENGTH_LONG);
+                Toast toast=Toast.makeText(getApplicationContext(),getString(R.string.necesarioIniciarSesion), Toast.LENGTH_LONG);
                 toast.setGravity(Gravity.BOTTOM| Gravity.CENTER, 0, 0);
                 toast.show();
                 //Se abre la actividad de iniciar sesión

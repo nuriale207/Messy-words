@@ -75,4 +75,5 @@
     <string name="aceptar">Aceptar</string>
     <string name="tuCantidadDePistasEs">"Tu cantidad de pistas: "</string>
     <string name="planificaRutaParaPistas">Planifica y realiza una ruta en el mapa para sumar 10 pistas</string>
+    <string name="necesarioIniciarSesion">Es necesario iniciar sesión para acceder a esta función</string>
 </resources>

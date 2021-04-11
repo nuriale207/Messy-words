@@ -148,7 +148,7 @@ public class ActividadMapa extends FragmentActivity implements OnMapReadyCallbac
         //Cuando el mapa está listo se elige el tipo de mapa a mostrar y se solicita el permiso de localización
         mapa = elmapa;
 
-        elmapa.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+        elmapa.setMapType(GoogleMap.MAP_TYPE_HYBRID);
 
         FusedLocationProviderClient proveedordelocalizacion =
                 LocationServices.getFusedLocationProviderClient(this);
