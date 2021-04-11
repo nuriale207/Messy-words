@@ -15,7 +15,7 @@
         android:layout_width="276dp"
         android:layout_height="53dp"
         android:text="RANKING"
-        app:layout_constraintBottom_toTopOf="@+id/botonSalir"
+        app:layout_constraintBottom_toTopOf="@+id/botonPistas"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -30,7 +30,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/botonRanking" />
+        app:layout_constraintTop_toBottomOf="@+id/botonPistas" />
 
     <Button
         android:id="@+id/botonJugar"
@@ -64,6 +64,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/labarra"
         app:srcCompat="@drawable/nombre_app" />
+
+    <Button
+        android:id="@+id/botonPistas"
+        android:layout_width="276dp"
+        android:layout_height="53dp"
+        android:text="Pistas"
+        app:layout_constraintBottom_toTopOf="@+id/botonSalir"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/botonRanking" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

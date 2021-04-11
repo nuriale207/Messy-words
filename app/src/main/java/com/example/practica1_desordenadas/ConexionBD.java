@@ -57,6 +57,7 @@ public class ConexionBD extends Worker {
 
             int statusCode=urlConnection.getResponseCode();
             Log.i("MYAPP", String.valueOf(statusCode));
+            Log.i("MYAPP",urlConnection.getResponseMessage());
             if (statusCode == 200) {
                 Log.i("MYAPP","CONEXION ESTABLECIDA");
 

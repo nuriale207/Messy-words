@@ -46,6 +46,7 @@ public class PantallaJuego extends AppCompatActivity implements DialogoFinNivel.
     ListView intentosAnteriores;
     ListaNiveles listaNiveles = ListaNiveles.getListaNiveles();
     BaseDeDatos GestorDB = new BaseDeDatos (this, "NombreBD", null, 1);
+    Button botonPista;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //Paso 0: Mirar el tema que tiene que tener la app
@@ -155,7 +156,10 @@ public class PantallaJuego extends AppCompatActivity implements DialogoFinNivel.
         TextView tagIntentos=findViewById(R.id.tagIntentos);
         tagPuntuacion.setText(getString(R.string.puntuacion)+": "+nivel.getPuntuacion());
         tagIntentos.setText(getString(R.string.intentos)+": "+nivel.getIntentos());
-
+        botonPista=findViewById(R.id.buttonPista);
+        botonPista.setText(R.string.pista);
+        TextView pistas=findViewById(R.id.tagPistas);
+        pistas.setText(R.string.pistas);
 
         boton.setText(R.string.anadir);
 
@@ -264,6 +268,7 @@ public class PantallaJuego extends AppCompatActivity implements DialogoFinNivel.
                 tagIntentos.setText(getString(R.string.intentos)+": "+nivel.getIntentos());
             }
 
+
             //Método que actualiza la puntuación del usuario en la base de datos
             public int registrarPuntuacion() {
                 String nombre=preferencias.getString("nombreUsuario",null);
@@ -291,8 +296,14 @@ public class PantallaJuego extends AppCompatActivity implements DialogoFinNivel.
             }
         });
 
-
-
+        //Listener del botón de las pistas
+        botonPista.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String pista=nivel.getPista();
+                texto.setText(pista);
+            }
+        });
 
 
 

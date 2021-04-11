@@ -12,11 +12,13 @@ import android.content.res.Resources;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ScrollView;
+import android.widget.Toast;
 import android.widget.Toolbar;
 
 import java.util.Locale;
@@ -24,7 +26,7 @@ import java.util.Locale;
 public class MainActivity extends  AppCompatActivity implements DialogoSalir.ListenerdelDialogoSalir, DialogoIniciarSesion.ListenerdelDialogoIniciarSesion {
     Button botonJugar;
     Button botonRanking;
-    Button botonInstrucciones;
+    Button botonPistas;
     Button botonSalir;
     String idioma;
 
@@ -72,6 +74,8 @@ public class MainActivity extends  AppCompatActivity implements DialogoSalir.Lis
         }
         //Paso 1: Se obtienen los elementos del layout
         botonJugar=findViewById(R.id.botonJugar);
+        botonPistas=findViewById(R.id.botonPistas);
+        botonPistas.setText(R.string.pistas);
         setSupportActionBar(findViewById(R.id.labarra));
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         botonRanking=findViewById(R.id.botonRanking);
@@ -157,6 +161,24 @@ public class MainActivity extends  AppCompatActivity implements DialogoSalir.Lis
             }
         });
 
+        botonPistas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(preferencias.getString("nombreUsuario",null)!=null){
+                    Intent i=new Intent(v.getContext(),ActividadMapa.class);
+                    startActivity(i);
+                }
+                else{
+                    Toast toast=Toast.makeText(getApplicationContext(),getString(R.string.necesarioIniciarSesion), Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.BOTTOM| Gravity.CENTER, 0, 0);
+                    toast.show();
+                    //Se abre la actividad de iniciar sesión
+                    Intent iIniciarSesion=new Intent(v.getContext(),IniciarSesion.class);
+                    startActivity(iIniciarSesion);
+
+                }
+            }
+        });
 
 
 
@@ -193,6 +215,9 @@ public class MainActivity extends  AppCompatActivity implements DialogoSalir.Lis
 
             }
             else{
+                Toast toast=Toast.makeText(getApplicationContext(),getString(R.string.necesarioIniciarSesion), Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.BOTTOM| Gravity.CENTER, 0, 0);
+                toast.show();
                 //Se abre la actividad de iniciar sesión
                 Intent iIniciarSesion=new Intent(this,IniciarSesion.class);
                 startActivity(iIniciarSesion);

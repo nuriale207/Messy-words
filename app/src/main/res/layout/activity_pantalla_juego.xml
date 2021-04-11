@@ -6,6 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".PantallaJuego">
 
+    <TextView
+        android:id="@+id/tagPistas"
+        android:layout_width="124dp"
+        android:layout_height="19dp"
+        android:text="Pistas"
+        app:layout_constraintBottom_toTopOf="@+id/imageView"
+        app:layout_constraintEnd_toStartOf="@+id/tagIntentos"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarJuego" />
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarJuego"
         android:layout_width="match_parent"
@@ -13,16 +24,17 @@
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
-        app:layout_constraintBottom_toTopOf="@+id/tagPuntuacion"
+        app:layout_constraintBottom_toTopOf="@+id/tagPistas"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/tagPuntuacion"
-        android:layout_width="187dp"
-        android:layout_height="24dp"
+        android:layout_width="124dp"
+        android:layout_height="19dp"
         android:text="Puntuación"
         app:layout_constraintBottom_toTopOf="@+id/imageView"
         app:layout_constraintEnd_toEndOf="parent"
@@ -32,15 +44,14 @@
 
     <TextView
         android:id="@+id/tagIntentos"
-        android:layout_width="178dp"
-        android:layout_height="24dp"
+        android:layout_width="124dp"
+        android:layout_height="19dp"
         android:text="Intentos"
         app:layout_constraintBottom_toTopOf="@+id/imageView"
         app:layout_constraintEnd_toStartOf="@+id/tagPuntuacion"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbarJuego"
-        app:layout_constraintVertical_bias="0.47" />
+        app:layout_constraintStart_toEndOf="@+id/tagPistas"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarJuego" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -50,7 +61,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tagPuntuacion"
+        app:layout_constraintTop_toBottomOf="@+id/tagIntentos"
         app:srcCompat="@drawable/letras" />
 
     <EditText
@@ -58,9 +69,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:hint="@string/escribePalabra"
         android:inputType="textPersonName"
         android:text=""
-        android:hint="@string/escribePalabra"
         app:layout_constraintBottom_toTopOf="@+id/botonAñadir"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -83,8 +94,19 @@
         android:layout_height="wrap_content"
         android:text="Añadir"
         app:layout_constraintBottom_toTopOf="@+id/lista"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/buttonPista"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textoPalabra" />
+
+    <Button
+        android:id="@+id/buttonPista"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pista"
+        app:layout_constraintBottom_toTopOf="@+id/lista"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/botonAñadir"
         app:layout_constraintTop_toBottomOf="@+id/textoPalabra" />
 </androidx.constraintlayout.widget.ConstraintLayout>
