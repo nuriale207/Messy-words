@@ -2,7 +2,13 @@ package com.example.practica1_desordenadas;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
+import androidx.lifecycle.Observer;
 import androidx.preference.PreferenceManager;
+import androidx.work.Data;
+import androidx.work.ExistingWorkPolicy;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkInfo;
+import androidx.work.WorkManager;
 
 import android.app.Activity;
 import android.app.NotificationChannel;
@@ -40,6 +46,8 @@ public class PantallaJuego extends AppCompatActivity implements DialogoFinNivel.
     //Se establecen las variables que se van a emplear durante la partida
     int idNivel;
     int idImagen;
+    int numPistas;
+    boolean hayPistas;
     Nivel nivel;
     ArrayAdapter adapter;
     ArrayList<String> lista=new ArrayList<String>();
@@ -47,6 +55,7 @@ public class PantallaJuego extends AppCompatActivity implements DialogoFinNivel.
     ListaNiveles listaNiveles = ListaNiveles.getListaNiveles();
     BaseDeDatos GestorDB = new BaseDeDatos (this, "NombreBD", null, 1);
     Button botonPista;
+    TextView pistas;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //Paso 0: Mirar el tema que tiene que tener la app
@@ -105,7 +114,8 @@ public class PantallaJuego extends AppCompatActivity implements DialogoFinNivel.
             startActivity(getIntent());
 
         };
-
+        pistas=findViewById(R.id.tagPistas);
+        botonPista=findViewById(R.id.buttonPista);
         //Paso3: Gestión de la pérdida de información. En caso de que en el medio de la partida se
         //gire la pantalla o algo interrumpa la actividad esta se almacena
         //Se emplean distintos métodos de la clase nivel y listaNiveles para establecer el nivel con
@@ -117,7 +127,11 @@ public class PantallaJuego extends AppCompatActivity implements DialogoFinNivel.
             int pPuntuacion=savedInstanceState.getInt("nivelPuntuacion");
             int nAciertos=savedInstanceState.getInt("nivelAciertos");
             int nIntentos=savedInstanceState.getInt("nivelIntentos");
+            hayPistas=savedInstanceState.getBoolean("hayPistas");
 
+            if(hayPistas){
+                numPistas=savedInstanceState.getInt("numPistas");
+            }
             ArrayList<String> arrayAcertadas=savedInstanceState.getStringArrayList("nivelAcertadas");
             lista=arrayAcertadas;
             HashSet<String> acertadas= new HashSet<>(arrayAcertadas);
@@ -137,6 +151,20 @@ public class PantallaJuego extends AppCompatActivity implements DialogoFinNivel.
             nivel=ListaNiveles.getListaNiveles().getNivel(idNivel);
             ListaNiveles.getListaNiveles().setNivelAct(nivel);
             idImagen=nivel.getIdImagen();
+            if(preferencias.getString("nombreUsuario",null)!=null){
+                numPistas=preferencias.getInt("pistas",0);
+                hayPistas=true;
+                pistas.setText(getString(R.string.pistas)+" :"+numPistas);
+                botonPista.setText(R.string.pista);
+
+
+            }
+            else{
+                hayPistas=false;
+                pistas.setText("");
+                botonPista.setVisibility(View.INVISIBLE);
+                botonPista.setEnabled(false);
+            }
         }
 
 
@@ -156,10 +184,7 @@ public class PantallaJuego extends AppCompatActivity implements DialogoFinNivel.
         TextView tagIntentos=findViewById(R.id.tagIntentos);
         tagPuntuacion.setText(getString(R.string.puntuacion)+": "+nivel.getPuntuacion());
         tagIntentos.setText(getString(R.string.intentos)+": "+nivel.getIntentos());
-        botonPista=findViewById(R.id.buttonPista);
-        botonPista.setText(R.string.pista);
-        TextView pistas=findViewById(R.id.tagPistas);
-        pistas.setText(R.string.pistas);
+        pistas=findViewById(R.id.tagPistas);
 
         boton.setText(R.string.anadir);
 
@@ -189,8 +214,10 @@ public class PantallaJuego extends AppCompatActivity implements DialogoFinNivel.
                         //tanto un toast como una notificación
                         Toast toastGanado=Toast.makeText(getApplicationContext(),getString(R.string.hasGanado), Toast.LENGTH_LONG);
                         toastGanado.setGravity(Gravity.TOP| Gravity.CENTER, 0, 0);
-                        int puntuacion=registrarPuntuacion();
-
+                        registrarPuntuacion();
+                        if(hayPistas){
+                            actualizarPistas();
+                        }
                         //Se genera el diálogo de fin de nivel
                         DialogoFinNivel dialogoFinNivel=new DialogoFinNivel();
                         dialogoFinNivel.show(getSupportFragmentManager(), "etiqueta");
@@ -207,7 +234,7 @@ public class PantallaJuego extends AppCompatActivity implements DialogoFinNivel.
                                 elManager.createNotificationChannel(elCanal);
                                 elBuilder.setSmallIcon(android.R.drawable.star_big_on)
                                         .setContentTitle(getString(R.string.hasGanado))
-                                        .setContentText(getString(R.string.puntuacionEs)+puntuacion+" "+getString(R.string.pulsaMejora))
+                                        .setContentText(getString(R.string.puntuacionEs)+nivel.getPuntuacion()+" "+getString(R.string.pulsaMejora))
                                         .setSubText(getString(R.string.hasGanado))
                                         .setVibrate(new long[]{0, 1000, 500, 1000})
                                         .setAutoCancel(true).setContentIntent(intentEnNot);
@@ -256,7 +283,9 @@ public class PantallaJuego extends AppCompatActivity implements DialogoFinNivel.
                         toast.setGravity(Gravity.TOP| Gravity.CENTER, 0, 0);
                         toast.show();
                         registrarPuntuacion();
-
+                        if(hayPistas){
+                            actualizarPistas();
+                        }
                         DialogoFinNivel dialogoFinNivel=new DialogoFinNivel();
                         dialogoFinNivel.show(getSupportFragmentManager(), "etiqueta");
                     }
@@ -270,41 +299,105 @@ public class PantallaJuego extends AppCompatActivity implements DialogoFinNivel.
 
 
             //Método que actualiza la puntuación del usuario en la base de datos
-            public int registrarPuntuacion() {
-                String nombre=preferencias.getString("nombreUsuario",null);
-                if (nombre !=null){
-                    Log.i("MYAPP","registrando puntuación");
-                    //Si hay un usuario registrado se almacena su puntuación
-                    String[] campos = new String[]{"Puntuacion"};
-                    String[] argumentos = new String[] {nombre};
-                    SQLiteDatabase db = GestorDB.getWritableDatabase();
-                    Cursor cu = db.query("Usuarios", campos, "NombreUsuario=?", argumentos, null, null, null);
-                    Log.i("MYAPP",nombre);
-                    int puntuacion=0;
-                    if(cu.moveToNext()){
-                        puntuacion=cu.getInt(0);
-                    }
-                    puntuacion=puntuacion+nivel.getPuntuacion();
-                    ContentValues cv=new ContentValues();
-                    Log.i("MYAPP", String.valueOf(puntuacion));
 
-                    cv.put("Puntuacion",puntuacion);
-                    db.update("Usuarios",cv,"NombreUsuario=?",argumentos);
-                    return puntuacion;
-                                    }
-                return 0;
-            }
         });
 
         //Listener del botón de las pistas
+
+
         botonPista.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String pista=nivel.getPista();
-                texto.setText(pista);
+                if(hayPistas){
+                    numPistas=numPistas-1;
+                    if(numPistas>=0){
+                        String pista=nivel.getPista();
+                        texto.setText(pista);
+                        pistas.setText(getString(R.string.pistas)+": "+numPistas);
+                    }
+                    else {
+                        Toast toast=Toast.makeText(getApplicationContext(),R.string.noPistas, Toast.LENGTH_LONG);
+                        toast.setGravity(Gravity.BOTTOM| Gravity.CENTER, 0, 0);
+                        toast.show();
+                    }
+
+                }
+                else {
+                    Toast toast=Toast.makeText(getApplicationContext(),R.string.necesarioIniciarSesion, Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.BOTTOM| Gravity.CENTER, 0, 0);
+                    toast.show();
+                }
+
             }
         });
 
+
+
+    }
+    public void registrarPuntuacion() {
+        SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(this);
+
+        String usuario=preferencias.getString("nombreUsuario",null);
+        if (usuario !=null){
+            int puntuacion=nivel.getPuntuacion();
+            Data datos = new Data.Builder()
+                    .putString("fichero","usuarios.php")
+                    .putString("parametros","funcion=puntuacion&nombreUsuario="+usuario+"&puntuacion="+puntuacion)
+                    .build();
+            OneTimeWorkRequest requesContrasena = new OneTimeWorkRequest.Builder(ConexionBD.class).setInputData(datos).addTag("registrarPuntuacion").build();
+            WorkManager.getInstance(this).getWorkInfoByIdLiveData(requesContrasena.getId())
+                    .observe(this, new Observer<WorkInfo>() {
+                        @Override
+                        public void onChanged(WorkInfo workInfo) {
+                            if (workInfo != null && workInfo.getState().isFinished()) {
+                                String resultado = workInfo.getOutputData().getString("resultado");
+                                Log.i("MYAPP","inicio realizado");
+
+                                Log.i("MYAPP",resultado);
+
+                            }
+                        }
+                    });
+            //WorkManager.getInstance(getApplication().getBaseContext()).enqueue(requesContrasena);
+            WorkManager.getInstance(getApplication().getBaseContext()).enqueueUniqueWork("registrarPuntuacion", ExistingWorkPolicy.REPLACE,requesContrasena);
+
+        }
+
+    }
+    private void actualizarPistas() {
+        SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(this);
+        //Se actualiza la cantidad de pistas en las preferencias
+
+        SharedPreferences.Editor editor=preferencias.edit();
+        editor.putInt("pistas",numPistas);
+        editor.apply();
+        String usuario=preferencias.getString("nombreUsuario","");
+        //Método que se comunica con la BD para actualizar las pistas del usuario
+        //Se obtienen las pistas actuales de las preferencias
+
+        int pistas=preferencias.getInt("pistas",0);
+        //Se incrementan en 10 y se añaden a la BD
+        pistas=pistas+10;
+        Data datos = new Data.Builder()
+                .putString("fichero","usuarios.php")
+                .putString("parametros","funcion=pistas&nombreUsuario="+usuario+"&pistas="+pistas)
+                .build();
+        OneTimeWorkRequest requesContrasena = new OneTimeWorkRequest.Builder(ConexionBD.class).setInputData(datos).addTag("modificarPistas").build();
+        WorkManager.getInstance(this).getWorkInfoByIdLiveData(requesContrasena.getId())
+                .observe(this, new Observer<WorkInfo>() {
+                    @Override
+                    public void onChanged(WorkInfo workInfo) {
+                        if (workInfo != null && workInfo.getState().isFinished()) {
+                            String resultado = workInfo.getOutputData().getString("resultado");
+                            Log.i("MYAPP","inicio realizado");
+
+                            Log.i("MYAPP",resultado);
+
+                        }
+                    }
+                });
+        //WorkManager.getInstance(getApplication().getBaseContext()).enqueue(requesContrasena);
+        WorkManager.getInstance(getApplication().getBaseContext()).enqueueUniqueWork("modificarPistas", ExistingWorkPolicy.REPLACE,requesContrasena);
 
 
     }
@@ -320,6 +413,11 @@ public class PantallaJuego extends AppCompatActivity implements DialogoFinNivel.
             savedInstanceState.putInt("nivelPuntuacion",nivel.getPuntuacion());
             savedInstanceState.putInt("nivelAciertos",nivel.getAciertos());
             savedInstanceState.putInt("nivelIntentos",nivel.getIntentos());
+            savedInstanceState.putBoolean("hayPistas",hayPistas);
+            if(hayPistas){
+                savedInstanceState.putInt("numPistas",numPistas);
+
+            }
 
             savedInstanceState.putStringArrayList("nivelAcertadas",nivel.getPalabrasAcertadas());
 
