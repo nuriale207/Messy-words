@@ -57,4 +57,6 @@
     <string name="generarOtraRuta">Beste ibilbide bat sortu</string>
     <string name="enhorabuenaDestino">Zorionak helmugara heldu zara</string>
     <string name="aceptar">Onartu</string>
+    <string name="tuCantidadDePistasEs">Laguntza kopurua:</string>
+    <string name="planificaRutaParaPistas">Bidearen plangintza egin eta helmugara heltzean 10 pista gehituko dira</string>
 </resources>

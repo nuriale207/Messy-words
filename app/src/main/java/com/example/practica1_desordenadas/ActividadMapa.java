@@ -16,6 +16,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
@@ -27,6 +28,8 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -67,63 +70,97 @@ public class ActividadMapa extends FragmentActivity implements OnMapReadyCallbac
     Marker posicionActual;
     Marker posicionInicial;
     Marker posicionDestino;
-
+    TextView textoPistas;
+    TextView textoInstrucciones;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-//        SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-//        SharedPreferences.Editor editor = preferencias.edit();
-//        editor.remove("longitudInicio");
-//        editor.remove("latitudInicio");
-//        editor.remove("longitudDestino");
-//        editor.remove("latitudDestino");
-//        editor.apply();
+
+        //Paso 0: Se mira el tema que tiene que tener la actividad
+        SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(this);
+        String tema=preferencias.getString("tema","Greenish blue");
+        /**
+         Codigo obtenido de StackOverflow:
+         Pregunta:https://stackoverflow.com/questions/2482848/how-to-change-current-theme-at-runtime-in-android
+         Usuario:https://stackoverflow.com/users/243782/pentium10
+         **/
+        if(tema.equals("Greenish blue")){
+            setTheme(R.style.TemaDesordenadasGreen);
+        }
+        else if(tema.equals("Pinkish purple")){
+            setTheme(R.style.TemaDesordenadasPurple);
+        }
+        else{
+            setTheme(R.style.TemaDesordenadasHighContrast);
+        }
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        //Paso 2: Gestión del idioma
+        //Paso 1: miro el idioma de las preferencias
+        String idiomaConfigurado=preferencias.getString("idioma","castellano");
+        String sufijoIdioma="es";
+        if (idiomaConfigurado.equals("Euskera")){
+            sufijoIdioma="eu";
+        }
+
+        //Paso 2: miro la localización del dispositivo
+        String localizacionActual= getResources().getString(R.string.localizacion);
+
+        //Paso 3: si la localización no coincide con el idioma de las preferencias se
+        //cambia al idioma correspondiente
+        if(!localizacionActual.equals(sufijoIdioma)){
+            Locale nuevaloc = new Locale(sufijoIdioma);
+
+            Locale.setDefault(nuevaloc);
+            Configuration configuration =
+                    getBaseContext().getResources().getConfiguration();
+            configuration.setLocale(nuevaloc);
+            configuration.setLayoutDirection(nuevaloc);
+            Context context =
+                    getBaseContext().createConfigurationContext(configuration);
+            getBaseContext().getResources().updateConfiguration(configuration, context.getResources().getDisplayMetrics());
+
+            finish();
+            Log.i("MYAPP",Locale.getDefault().getLanguage());
+            startActivity(getIntent());
+
+        }
+        //Paso 3: se añade el texto de los textview y botones
         setContentView(R.layout.activity_actividad_mapa);
         SupportMapFragment elfragmento =
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentoMapa);
         elfragmento.getMapAsync(this);
         empezarRuta = findViewById(R.id.botonEmpezarRuta);
         otraRuta=findViewById(R.id.otraRuta);
-        LocationCallback actualizador = new LocationCallback() {
-            @Override
-            public void onLocationResult(LocationResult locationResult) {
-                super.onLocationResult(locationResult);
-                if (locationResult != null) {
+        empezarRuta.setText(R.string.comenzarRuta);
+        otraRuta.setText(R.string.generarOtraRuta);
 
-                } else {
-
-                }
-            }
-        };
-
+        textoPistas=findViewById(R.id.textNumPistas);
+        textoInstrucciones=findViewById(R.id.textInstrucciones);
+        textoInstrucciones.setText(R.string.planificaRutaParaPistas);
+        int pistas=preferencias.getInt("pistas",0);
+        textoPistas.setText(getString(R.string.tuCantidadDePistasEs)+" "+pistas);
 
     }
 
     @Override
     public void onMapReady(GoogleMap elmapa) {
+        //Cuando el mapa está listo se elige el tipo de mapa a mostrar y se solicita el permiso de localización
         mapa = elmapa;
 
         elmapa.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
         FusedLocationProviderClient proveedordelocalizacion =
                 LocationServices.getFusedLocationProviderClient(this);
-        CameraUpdate actualizar = CameraUpdateFactory.newLatLngZoom(new LatLng(43.26, -2.95), 9);
-        elmapa.animateCamera(actualizar);
+        //En caso de que el permiso esté denegado se solicita
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
+
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                     1);
 
 
         } else {
-
+            //Se obtiene la posición del usuario cada 5 segundos
             LocationRequest peticion = LocationRequest.create();
             peticion.setInterval(1000);
             peticion.setFastestInterval(5000);
@@ -135,7 +172,7 @@ public class ActividadMapa extends FragmentActivity implements OnMapReadyCallbac
                     super.onLocationResult(locationResult);
                     if (locationResult != null) {
                         Location location=locationResult.getLastLocation();
-
+                        //Si no se ha planificado una ruta anteriormente se muestra una posición de destino aleatoria a 500 metros de la posición actual
                         if(!hayRuta()){
 
                             posicionActual = elmapa.addMarker(new MarkerOptions()
@@ -154,6 +191,8 @@ public class ActividadMapa extends FragmentActivity implements OnMapReadyCallbac
                             }
                         }
                         else{
+                            //Si se ha planificado una ruta anteriormente se vacía el mapa y se muestra tanto la ruta como la posición actual modificada
+
                             mapa.clear();
                             if(posicionActual!=null){
                                 posicionActual.remove();
@@ -168,16 +207,21 @@ public class ActividadMapa extends FragmentActivity implements OnMapReadyCallbac
 
 
                     } else {
-
+                        //Se muestra un mensaje indicando que ha habido un error al obtener la posición
+                        Toast toast=Toast.makeText(getApplicationContext(),"No se ha podido obtener la ubicación en tiempo real", Toast.LENGTH_LONG);
+                        toast.setGravity(Gravity.BOTTOM| Gravity.CENTER, 0, 0);
+                        toast.show();
                     }
                 }
             };
             proveedordelocalizacion.requestLocationUpdates(peticion, actualizador, null);
         }
 
+        //Al pulsar el boton empezar ruta
         empezarRuta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Se almacenan en la preferencia las coordenadas de la ruta para poder retomarla en caso de cerrar la app
                 SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                 SharedPreferences.Editor editor = preferencias.edit();
                 editor.putFloat("longitudInicio", (float) posicionActual.getPosition().longitude);
@@ -185,17 +229,20 @@ public class ActividadMapa extends FragmentActivity implements OnMapReadyCallbac
                 editor.putFloat("longitudDestino", (float) posicionDestino.getPosition().longitude);
                 editor.putFloat("latitudDestino", (float) posicionDestino.getPosition().latitude);
                 editor.apply();
+                //Se establece que la posición inicial sea la actual
                 posicionInicial=posicionActual;
+                //Se dibuja la ruta
                 generarRuta();
 
             }
         });
-
+        //Al pulsar el boton generar otra ruta
         otraRuta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Se elimina la ruta establecida
                 eliminarRuta();
-
+                //Se muestra la posición actual y una nueva posición de destino establecida aleatoriamente
                 posicionActual=mapa.addMarker(new MarkerOptions()
                         .position(posicionActual.getPosition())
                         .title("Tu posición"));
@@ -211,6 +258,8 @@ public class ActividadMapa extends FragmentActivity implements OnMapReadyCallbac
     }
 
     private void mostrarRuta() {
+        //Método que se encarga de mostrar la ruta almacenada
+        //Obtiene las coordenadas de las preferencias y añade los marcadores
         SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         double longInicio=preferencias.getFloat("longitudInicio",0);
         double latitudInicio=preferencias.getFloat("latitudInicio",0);
@@ -222,10 +271,12 @@ public class ActividadMapa extends FragmentActivity implements OnMapReadyCallbac
         posicionDestino=mapa.addMarker(new MarkerOptions()
                 .position(new LatLng(latitudDestino,longitudDestino))
                 .title("Posición destino"));
+        //Llama al método encargado de dibujar las líneas en el mapa
         generarRuta();
     }
 
     private void eliminarRuta(){
+        //Elimina el contenido del mapa y la ruta de las preferencias
         mapa.clear();
         SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         SharedPreferences.Editor editor = preferencias.edit();
@@ -237,12 +288,15 @@ public class ActividadMapa extends FragmentActivity implements OnMapReadyCallbac
     }
 
     private void comprobarRuta(){
+        //Método que comprueba si se ha llegado al destino y añade las pistas y resetea el mapa en caso de haber llegado
         boolean llegado=comprobarSiLlegado();
 
         if(llegado){
             //Mostrar diálogo con la cantidad de pistas obtenidas
             DialogoMapa dialogoMapa=new DialogoMapa();
             dialogoMapa.show(getSupportFragmentManager(), "etiqueta");
+
+            //Añade las pistas al usuario
             añadirPistas();
 
             //Resetear mapa
@@ -259,9 +313,12 @@ public class ActividadMapa extends FragmentActivity implements OnMapReadyCallbac
     }
 
     private void añadirPistas() {
+        //Método que se comunica con la BD para actualizar las pistas del usuario
+        //Se obtienen las pistas actuales de las preferencias
         SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         String usuario=preferencias.getString("nombreUsuario","");
         int pistas=preferencias.getInt("pistas",0);
+        //Se incrementan en 10 y se añaden a la BD
         pistas=pistas+10;
         Data datos = new Data.Builder()
                 .putString("fichero","usuarios.php")
@@ -283,12 +340,15 @@ public class ActividadMapa extends FragmentActivity implements OnMapReadyCallbac
                 });
         //WorkManager.getInstance(getApplication().getBaseContext()).enqueue(requesContrasena);
         WorkManager.getInstance(getApplication().getBaseContext()).enqueueUniqueWork("modificarPistas", ExistingWorkPolicy.REPLACE,requesContrasena);
+        //Se actualiza la cantidad de pistas en las preferencias
         SharedPreferences.Editor editor = preferencias.edit();
         editor.putInt("pistas",pistas);
         editor.apply();
     }
 
     private boolean comprobarSiLlegado() {
+        //Comprueba si se ha llegado al destino con 10 metros de margen
+        //Genera la localizacion actual y la de destino
         LatLng posInicio=posicionActual.getPosition();
         Location localizacionA=new Location("punto A");
         localizacionA.setLatitude(posInicio.latitude);
@@ -298,6 +358,7 @@ public class ActividadMapa extends FragmentActivity implements OnMapReadyCallbac
         localizacionB.setLatitude(posDestin.latitude);
         localizacionB.setLongitude(posDestin.longitude);
 
+        //Calcula la distancia entre las dos localizaciones
         float distancia=localizacionA.distanceTo(localizacionB);
         boolean llegado=false;
         if (distancia<=10){
@@ -308,6 +369,7 @@ public class ActividadMapa extends FragmentActivity implements OnMapReadyCallbac
 
 
     private boolean hayRuta() {
+        //Método que comprueba si existe una ruta almacenada
         SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         if(preferencias.contains("longitudInicio")){
             return true;
@@ -325,6 +387,7 @@ public class ActividadMapa extends FragmentActivity implements OnMapReadyCallbac
          Pregunta:https://stackoverflow.com/questions/33976732/generate-random-latlng-given-device-location-and-radius
          Usuario:https://stackoverflow.com/users/5242161/abhishek
          **/
+        //Obtiene una localización aleatoria a radius metros del punto point pasado como parámetro
         List<LatLng> randomPoints = new ArrayList<>();
         List<Float> randomDistances = new ArrayList<>();
         Location myLocation = new Location("");
@@ -366,23 +429,6 @@ public class ActividadMapa extends FragmentActivity implements OnMapReadyCallbac
     }
 
 
-
-    private String getCurrentCity(double pLatitude, double pLongitude) throws IOException {
-        /**
-         Codigo obtenido de StackOverflow:
-         Pregunta:https://stackoverflow.com/questions/2296377/how-to-get-city-name-from-latitude-and-longitude-coordinates-in-google-maps
-         Usuario:https://stackoverflow.com/users/143505/ccheneson
-         **/
-        Geocoder gcd = new Geocoder(getApplicationContext(), Locale.getDefault());
-        List<Address> addresses = gcd.getFromLocation(pLatitude, pLongitude, 1);
-        String city = "";
-        if (addresses.size() > 0) {
-            city = addresses.get(0).getLocality();
-            Log.i("MYAPP", city);
-        }
-        return city;
-    }
-
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
 
@@ -398,29 +444,7 @@ public class ActividadMapa extends FragmentActivity implements OnMapReadyCallbac
 
 
     private void generarRuta() {
-        // Getting URL to the Google Directions API
-
-        String url = getDirectionsUrl(this.posicionInicial.getPosition(),this.posicionDestino.getPosition());
-
-//        Data datos = new Data.Builder()
-//                .putString("url",url)
-//                .build();
-//        OneTimeWorkRequest requesContrasena = new OneTimeWorkRequest.Builder(ConexionMaps.class).setInputData(datos).addTag("comprobarInicio").build();
-//        WorkManager.getInstance(this).getWorkInfoByIdLiveData(requesContrasena.getId())
-//                .observe(this, new Observer<WorkInfo>() {
-//                    @Override
-//                    public void onChanged(WorkInfo workInfo) {
-//                        if (workInfo != null && workInfo.getState().isFinished()) {
-//                            String resultado = workInfo.getOutputData().getString("resultado");
-//
-//                            Log.i("MYAPP",resultado);
-//
-//
-//                        }
-//                    }
-//                });
-//        //WorkManager.getInstance(getApplication().getBaseContext()).enqueue(requesContrasena);
-//        WorkManager.getInstance(getApplication().getBaseContext()).enqueueUniqueWork("comprobarInicio", ExistingWorkPolicy.REPLACE,requesContrasena);
+        //Genera una ruta entre dos puntos para ello crea una lista de LatLng y llama a un método que dibuja una polyline
           List<LatLng> list=new ArrayList<LatLng>();
           list.add(posicionInicial.getPosition());
           if(posicionActual!=null){
@@ -433,6 +457,12 @@ public class ActividadMapa extends FragmentActivity implements OnMapReadyCallbac
     }
 
     public void drawPolyLineOnMap(List<LatLng> list) {
+        /**
+         Codigo obtenido de StackOverflow:
+         Pregunta:https://stackoverflow.com/questions/17425499/how-to-draw-interactive-polyline-on-route-google-maps-v2-android
+         Usuario:https://stackoverflow.com/users/5242161/abhishek
+         **/
+        //Método que dibuja líneas entre los puntos pasados como parámetros
         PolylineOptions polyOptions = new PolylineOptions();
         polyOptions.color(Color.RED);
         polyOptions.width(5);
@@ -448,10 +478,17 @@ public class ActividadMapa extends FragmentActivity implements OnMapReadyCallbac
         final LatLngBounds bounds = builder.build();
 
         //BOUND_PADDING is an int to specify padding of bound.. try 100.
-        CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, 100);
-        mapa.animateCamera(cu);
+        //CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, 100);
+        CameraUpdate actualizar = CameraUpdateFactory.newLatLngZoom(this.posicionDestino.getPosition(), 15);
+        mapa.animateCamera(actualizar);
+        //mapa.animateCamera(cu);
     }
 
+    //Métodos añadidos para poder realizar una petición a la api directions, finalmente no se hizo porque la api resultó ser de pago
+    /**
+     * Method to create URL to directions api
+     * Courtesy : jeffreysambells.com/2010/05/27/decoding-polylines-from-google-maps-direction-api-with-java
+     * */
     private String getDirectionsUrl(LatLng origin,LatLng dest){
 
         // Origin of route
@@ -474,8 +511,11 @@ public class ActividadMapa extends FragmentActivity implements OnMapReadyCallbac
 
         return url;
     }
+    /**
+     *  Method that Receives a JSONObject and returns a list of lists containing latitude and longitude10/05/27/decoding-polylines-from-google-maps-direction-api-with-java
+     * Courtesy : jeffreysambells.com/2010/05/27/decoding-polylines-from-google-maps-direction-api-with-java
+     * */
 
-    /** Receives a JSONObject and returns a list of lists containing latitude and longitude */
     public List<List<HashMap<String,String>>> parse(JSONObject jObject){
 
         List<List<HashMap<String, String>>> routes = new ArrayList<>() ;

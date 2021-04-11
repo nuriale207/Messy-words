@@ -73,4 +73,6 @@
     <string name="generarOtraRuta">Generar otra ruta</string>
     <string name="enhorabuenaDestino">Enhorabuena has llegado al destino</string>
     <string name="aceptar">Aceptar</string>
+    <string name="tuCantidadDePistasEs">"Tu cantidad de pistas: "</string>
+    <string name="planificaRutaParaPistas">Planifica y realiza una ruta en el mapa para sumar 10 pistas</string>
 </resources>

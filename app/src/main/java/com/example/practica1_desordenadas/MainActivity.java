@@ -169,6 +169,12 @@ public class MainActivity extends  AppCompatActivity implements DialogoSalir.Lis
                     startActivity(i);
                 }
                 else{
+                    Toast toast=Toast.makeText(getApplicationContext(),"Es necesario haber iniciado sesión para esta función", Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.BOTTOM| Gravity.CENTER, 0, 0);
+                    toast.show();
+                    //Se abre la actividad de iniciar sesión
+                    Intent iIniciarSesion=new Intent(v.getContext(),IniciarSesion.class);
+                    startActivity(iIniciarSesion);
 
                 }
             }
