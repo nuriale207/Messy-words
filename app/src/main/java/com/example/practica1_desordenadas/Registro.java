@@ -4,7 +4,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.Observer;
 import androidx.preference.PreferenceManager;
+import androidx.work.Data;
+import androidx.work.ExistingWorkPolicy;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkInfo;
+import androidx.work.WorkManager;
 
 import android.Manifest;
 import android.app.Activity;
@@ -188,51 +194,111 @@ public class Registro extends AppCompatActivity implements DialogoIniciarSesion.
         }
     }
 
-    private void añadirUsuario(String nombreUsuario, String email, String  contraseña1,String  contraseña2) {
-        //Se obtienen los niveles de la base de datos
-        BaseDeDatos GestorDB = new BaseDeDatos (this, "NombreBD", null, 1);
-
-        String[] campos = new String[]{"NombreUsuario"};
-        String[] argumentos = new String[] {nombreUsuario};
-        SQLiteDatabase db = GestorDB.getWritableDatabase();
-        Cursor cu = db.query("Usuarios", campos, "NombreUsuario=?", argumentos, null, null, null);
-        if(cu.moveToNext()){
-            Toast toast=Toast.makeText(getApplicationContext(),"Ya existe un usuario con ese nombre", Toast.LENGTH_LONG);
-            toast.setGravity(Gravity.BOTTOM| Gravity.CENTER, 0, 0);
+    private void añadirUsuario(String nombreUsuario, String email, String contraseña1, String contraseña2) {
+        if (!contraseña1.equals(contraseña2)) {
+            Toast toast = Toast.makeText(getApplicationContext(), "Las contraseñas no coinciden", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 0);
             toast.show();
-        }
-        else{
-            if (!contraseña1.equals(contraseña2)){
-                Toast toast=Toast.makeText(getApplicationContext(),"Las contraseñas no coinciden", Toast.LENGTH_LONG);
-                toast.setGravity(Gravity.BOTTOM| Gravity.CENTER, 0, 0);
-                toast.show();
-            }
-            else{
-                ContentValues nuevo = new ContentValues();
-                nuevo.put("NombreUsuario", nombreUsuario);
-                nuevo.put("Email", email);
+        } else {
+            Data datos = new Data.Builder()
+                    .putString("fichero", "usuarios.php")
+                    .putString("parametros", "funcion=insertarUsuario&nombreUsuario=" + nombreUsuario + "&email=" + email + "&contrasena=" + contraseña1)
+                    .build();
+            OneTimeWorkRequest requesContrasena = new OneTimeWorkRequest.Builder(ConexionBD.class).setInputData(datos).addTag("existeUsuario").build();
+            WorkManager.getInstance(this).getWorkInfoByIdLiveData(requesContrasena.getId())
+                    .observe(this, new Observer<WorkInfo>() {
+                        @Override
+                        public void onChanged(WorkInfo workInfo) {
+                            if (workInfo != null && workInfo.getState().isFinished()) {
+                                String resultado = workInfo.getOutputData().getString("resultado");
+                                Log.i("MYAPP", "inicio realizado");
 
-                nuevo.put("Contraseña", contraseña1);
-                Bitmap bitmap = ((BitmapDrawable)imagen.getDrawable()).getBitmap();
-                ByteArrayOutputStream bos = new ByteArrayOutputStream();
-                bitmap .compress(Bitmap.CompressFormat.PNG, 100, bos);
-                byte[] img = bos.toByteArray();
-                nuevo.put("Imagen",img);
-                db.insert("Usuarios",null,nuevo);
-                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-                SharedPreferences.Editor editor= prefs.edit();
-                editor.putString("nombreUsuario",nombreUsuario);
-                Intent i =new Intent(this,MostrarPerfil.class);
-                startActivity(i);
-                editor.apply();
-            }
+                                Log.i("MYAPP", resultado);
+                                if (resultado.contains("error")){
+                                    Toast toast=Toast.makeText(getApplicationContext(),"Ya existe un usuario con ese nombre", Toast.LENGTH_LONG);
+                                    toast.setGravity(Gravity.BOTTOM| Gravity.CENTER, 0, 0);
+                                    toast.show();
+                                }
+                                else{
+                                    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                                    SharedPreferences.Editor editor= prefs.edit();
+                                    editor.putString("nombreUsuario", nombreUsuario);
+                                    editor.apply();
+                                    Intent i = new Intent(getApplicationContext(), MostrarPerfil.class);
+                                    startActivity(i);
+                                }
 
+
+                            }
+                        }
+                    });
+            //WorkManager.getInstance(getApplication().getBaseContext()).enqueue(requesContrasena);
+            WorkManager.getInstance(getApplication().getBaseContext()).enqueueUniqueWork("existeUsuario", ExistingWorkPolicy.REPLACE, requesContrasena);
         }
-        cu.close();
-        db.close();
+
+
 
 
     }
+//
+//    private void insertarUsuario(String nombreUsuario, String email, String  contraseña1) {
+//
+//        Data datos = new Data.Builder()
+//                .putString("fichero","usuarios.php")
+//                .putString("parametros","funcion=insertarUsuario&nombreUsuario="+nombreUsuario+"&email="+email+"&contrasena="+contraseña1)
+//                .build();
+//        OneTimeWorkRequest requesContrasena = new OneTimeWorkRequest.Builder(ConexionBD.class).setInputData(datos).addTag("existeUsuario").build();
+//        WorkManager.getInstance(this).getWorkInfoByIdLiveData(requesContrasena.getId())
+//                .observe(this, new Observer<WorkInfo>() {
+//                    @Override
+//                    public void onChanged(WorkInfo workInfo) {
+//                        if (workInfo != null && workInfo.getState().isFinished()) {
+//                            String resultado = workInfo.getOutputData().getString("resultado");
+//                            Log.i("MYAPP","inicio realizado");
+//
+//                            Log.i("MYAPP",resultado);
+//
+//
+//
+//                        }
+//                    }
+//                });
+//        //WorkManager.getInstance(getApplication().getBaseContext()).enqueue(requesContrasena);
+//        WorkManager.getInstance(getApplication().getBaseContext()).enqueueUniqueWork("existeUsuario", ExistingWorkPolicy.REPLACE,requesContrasena);
+//
+//    }
+//
+//    private void existeUsuario(String nombreUsuario) {
+//        final boolean[] existe = {false};
+//        Data datos = new Data.Builder()
+//                .putString("fichero","usuarios.php")
+//                .putString("parametros","funcion=datosUsuario&nombreUsuario="+nombreUsuario)
+//                .build();
+//        OneTimeWorkRequest requesContrasena = new OneTimeWorkRequest.Builder(ConexionBD.class).setInputData(datos).addTag("existeUsuario").build();
+//        WorkManager.getInstance(this).getWorkInfoByIdLiveData(requesContrasena.getId())
+//                .observe(this, new Observer<WorkInfo>() {
+//                    @Override
+//                    public void onChanged(WorkInfo workInfo) {
+//                        if (workInfo != null && workInfo.getState().isFinished()) {
+//                            String resultado = workInfo.getOutputData().getString("resultado");
+//                            Log.i("MYAPP","inicio realizado");
+//
+//                            Log.i("MYAPP",resultado);
+//
+//                            if(resultado!=""){
+//                                existe[0] =true;
+//
+//                            }
+//
+//                        }
+//
+//                    }
+//                });
+//        //WorkManager.getInstance(getApplication().getBaseContext()).enqueue(requesContrasena);
+//        WorkManager.getInstance(getApplication().getBaseContext()).enqueueUniqueWork("existeUsuario", ExistingWorkPolicy.REPLACE,requesContrasena);
+//
+//
+//    }
 
     public void solicitarPermisoCamara(){
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) !=
