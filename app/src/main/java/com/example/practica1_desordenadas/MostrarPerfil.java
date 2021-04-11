@@ -13,31 +13,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.util.Base64;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.sql.Blob;
 import java.util.Locale;
 
 public class MostrarPerfil extends AppCompatActivity implements DialogoIniciarSesion.ListenerdelDialogoIniciarSesion {
@@ -46,12 +34,14 @@ public class MostrarPerfil extends AppCompatActivity implements DialogoIniciarSe
     TextView nombreUsuario;
     TextView email;
     TextView puntuacion;
+    TextView pistas;
 
     ImageView imagen;
 
     EditText textNombreUsuario;
     EditText textEmail;
     EditText textPuntuacion;
+    EditText textPistas;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //Paso 0: Mirar el tema que tiene que tener la app
@@ -87,18 +77,20 @@ public class MostrarPerfil extends AppCompatActivity implements DialogoIniciarSe
 
         nombreUsuario=findViewById(R.id.textNombreDeUsuario);
         email=findViewById(R.id.textEmail2);
-         puntuacion=findViewById(R.id.textPuntuación);
+         puntuacion=findViewById(R.id.textoPistas2);
+         pistas=findViewById(R.id.textPistas);
 
         imagen=findViewById(R.id.imageView2);
 
         textNombreUsuario=findViewById(R.id.editTextTextNombresuario);
         textEmail=findViewById(R.id.editTextTextEmail);
         textPuntuacion=findViewById(R.id.editTextTextPuntuacion);
-
+        textPistas=findViewById(R.id.editTextPistas);
 
         nombreUsuario.setText(getResources().getString(R.string.nombreUsuario));
         email.setText(getResources().getString(R.string.email));
         puntuacion.setText(getResources().getString(R.string.puntuacion));
+        pistas.setText(getResources().getString(R.string.pistas));
 
         volver.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,6 +133,10 @@ public class MostrarPerfil extends AppCompatActivity implements DialogoIniciarSe
         Bundle extras=getIntent().getExtras();
         String nombre="";
         if(extras!=null){
+            pistas.setVisibility(View.INVISIBLE);
+            textPistas=findViewById(R.id.editTextPistas);
+
+            textPistas.setVisibility(View.INVISIBLE);
             nombre=extras.getString("usuario");
             obtenerDatos(nombre,false);
         }
@@ -151,9 +147,13 @@ public class MostrarPerfil extends AppCompatActivity implements DialogoIniciarSe
             if (prefs.contains("email")){
                 String textoEmail=prefs.getString("email",null);
                 Integer puntuacionUsuario=prefs.getInt("puntuacion",0);
+                Integer pistas=prefs.getInt("pistas",0);
                 textEmail.setText(textoEmail);
                 textPuntuacion.setText(puntuacionUsuario.toString());
                 textNombreUsuario.setText(nombre);
+                textPistas=findViewById(R.id.editTextPistas);
+
+                textPistas.setText(pistas.toString());
 
             }
             else{
