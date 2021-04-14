@@ -77,4 +77,7 @@
     <string name="planificaRutaParaPistas">Planifica y realiza una ruta en el mapa para sumar 10 pistas</string>
     <string name="necesarioIniciarSesion">Es necesario iniciar sesión para acceder a esta función</string>
     <string name="noPistas">No quedan pistas</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+    <string name="palabrasAleatoriasEntrenamiento">Palabra aleatoria de entrenamiento para el juego:</string>
 </resources>

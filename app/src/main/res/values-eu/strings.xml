@@ -61,4 +61,5 @@
     <string name="planificaRutaParaPistas">Bidearen plangintza egin eta helmugara heltzean 10 pista gehituko dira</string>
     <string name="necesarioIniciarSesion">Saioa hasi funtzio hau erabili ahal izateko</string>
     <string name="noPistas">Ez da lagungarririk geratzen</string>
+    <string name="palabrasAleatoriasEntrenamiento">Ausazko hitza jolasean onena izateko:</string>
 </resources>

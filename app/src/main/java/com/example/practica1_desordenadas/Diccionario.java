@@ -13,6 +13,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Random;
 
 
 public class Diccionario {
@@ -21,10 +22,10 @@ public class Diccionario {
 	// si realmente existen las palabras escritas por el jugador.
 	private HashMap<String,Palabra> palabras;
 	private static Diccionario miListaPalabras=new Diccionario();
-	
+	private int numPalabras;
 	private Diccionario() {
 		palabras=new HashMap<String,Palabra>();
-
+		numPalabras=0;
 	}
 	
 	public static Diccionario getDiccionario() {
@@ -37,8 +38,18 @@ public class Diccionario {
 		//Añade palabras nuevas al diccionario
 		Palabra p=new Palabra(pal);
 		palabras.put(pal,p);
+		this.numPalabras=this.numPalabras+1;
 	}
-	
+
+	public String obtenerPalabraAleatoria(){
+		Random r = new Random();
+		int indice= r.nextInt(this.numPalabras);
+
+		String palabra = (String) palabras.keySet().toArray()[indice];
+
+		return palabra;
+	}
+
 	public boolean contiene(String pPalabra) {
 		//Comprueba si la palabra pasada como parámetro está en el diccionario
 		return this.palabras.containsKey(pPalabra);
@@ -46,7 +57,7 @@ public class Diccionario {
 
 	public void cargar(Context pContexto) {
 		// Realiza la carga del diccionario
-
+		this.numPalabras=0;
 
 		String palabra = "lista.txt",line;
 		System.out.println(palabra);
