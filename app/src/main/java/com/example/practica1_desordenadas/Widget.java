@@ -5,6 +5,7 @@ import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.widget.RemoteViews;
 
 import java.io.BufferedReader;
@@ -18,18 +19,22 @@ public class Widget extends AppWidgetProvider {
 
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
-
-        CharSequence widgetText = context.getString(R.string.appwidget_text);
-        // Construct the RemoteViews object
-        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget);
-        Intent intent = new Intent(context,Widget.class);
-        intent.setAction("ACTUALIZAR_WIDGET");
-        intent.putExtra( AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context,7768, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        views.setOnClickPendingIntent(R.id.generarOtra,pendingIntent);
-
+        //Se obtiene la palabra aleatoriamente del diccionario
         Diccionario.getDiccionario().cargar(context);
         String palabra=Diccionario.getDiccionario().obtenerPalabraAleatoria();
+
+        // Construct the RemoteViews object
+        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget);
+
+        //Añadir el intent al boton de busqueda en el diccionario
+        String url = "https://dle.rae.es/"+palabra;
+
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setData(Uri.parse(url));
+        PendingIntent pending = PendingIntent.getActivity(context, 0,intent, 0);
+        views.setOnClickPendingIntent(R.id.buscarEnDic, pending);
+
 
         views.setTextViewText(R.id.palabraAleatoria,palabra);
         //views.setOnClickPendingIntent(R.id.generarOtra,getPendingSelfIntent(context, "clickOtra"));
@@ -63,33 +68,11 @@ public class Widget extends AppWidgetProvider {
     public void onDisabled(Context context) {
         // Enter relevant functionality for when the last widget is disabled
     }
-    public void onReceive(Context context, Intent intent) {
+//    public void onReceive(Context context, Intent intent) {
+//
+//
+//    }
 
-        if (intent.getAction().equals("ACTUALIZAR_WIDGET")){
-            //your onClick action is here
-            int widgetId = intent.getIntExtra( AppWidgetManager.EXTRA_APPWIDGET_ID,
-                    AppWidgetManager.INVALID_APPWIDGET_ID);
-            AppWidgetManager widgetManager = AppWidgetManager.getInstance(context);
-            if (widgetId != AppWidgetManager.INVALID_APPWIDGET_ID) {
-                actualizarWidget(context, widgetManager, widgetId);
-            }
-            RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget);
-            Diccionario.getDiccionario().cargar(context);
-            String palabra=Diccionario.getDiccionario().obtenerPalabraAleatoria();
-
-            views.setTextViewText(R.id.palabraAleatoria,palabra);
-            views.setOnClickPendingIntent(R.id.generarOtra,getPendingSelfIntent(context, "clickOtra"));
-
-        }
-    }
-
-    private void actualizarWidget(Context context, AppWidgetManager widgetManager, int widgetId) {
-        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget);
-        Diccionario.getDiccionario().cargar(context);
-        String palabra=Diccionario.getDiccionario().obtenerPalabraAleatoria();
-
-        views.setTextViewText(R.id.palabraAleatoria,palabra);
-    }
 
     ;
 }
