@@ -35,9 +35,10 @@ public class Widget extends AppWidgetProvider {
         PendingIntent pending = PendingIntent.getActivity(context, 0,intent, 0);
         views.setOnClickPendingIntent(R.id.buscarEnDic, pending);
 
+        //Añadir el intent para generar otra palabra al pulsar el boton Otra palabra
 
         views.setTextViewText(R.id.palabraAleatoria,palabra);
-        //views.setOnClickPendingIntent(R.id.generarOtra,getPendingSelfIntent(context, "clickOtra"));
+        views.setOnClickPendingIntent(R.id.generarOtra,getPendingSelfIntent(context, "clickOtra"));
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
 
@@ -68,11 +69,20 @@ public class Widget extends AppWidgetProvider {
     public void onDisabled(Context context) {
         // Enter relevant functionality for when the last widget is disabled
     }
-//    public void onReceive(Context context, Intent intent) {
-//
-//
-//    }
+    public void onReceive(Context context, Intent intent) {
+        super.onReceive(context, intent);//add this line
+        if (intent.getAction().equals("clickOtra")) {
+            // your onClick action is here
+            Diccionario.getDiccionario().cargar(context);
+            String palabra=Diccionario.getDiccionario().obtenerPalabraAleatoria();
+
+            // Construct the RemoteViews object
+            RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget);
+            views.setTextViewText(R.id.palabraAleatoria,palabra);
+
+        }
+    }
 
 
-    ;
+
 }
