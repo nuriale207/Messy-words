@@ -24,7 +24,12 @@
 
             </intent-filter>
             <intent-filter>
-                <action android:name="ACTUALIZAR_WIDGET" />
+                <action android:name="com.example.Tema17Ejercicio1.ACTUALIZAR_WIDGET" />
+
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="clickOtra" />
 
             </intent-filter>
 
@@ -32,6 +37,7 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/widget_info" />
         </receiver>
+        <receiver android:name=".AlarmManagerBroadcastReceiver"/>
 
         <activity android:name=".ActividadObtenerPistas" />
         <activity android:name=".ActividadMapa" />
