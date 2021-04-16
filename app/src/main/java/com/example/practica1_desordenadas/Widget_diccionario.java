@@ -1,5 +1,6 @@
 package com.example.practica1_desordenadas;
 
+import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
@@ -7,12 +8,14 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.SystemClock;
+import android.util.Log;
 import android.widget.RemoteViews;
 
 /**
  * Implementation of App Widget functionality.
  */
-public class Widget extends AppWidgetProvider {
+public class Widget_diccionario extends AppWidgetProvider {
     private static final String ACCION_OTRA_PALABRA = "CAMBIAR_PALABRA";
     private static String palabra = "";
     /** Código obtenido de Github: https://github.com/yerenutku/WidgetExamples/blob/master/BroadcastWidgetExample/app/src/main/java/com/erenutku/broadcastwidgetexample/BroadcastWidget.java
@@ -37,7 +40,7 @@ public class Widget extends AppWidgetProvider {
         views.setOnClickPendingIntent(R.id.buscarEnDic, pending);
 
         // Añadir el intent al boton de cambiar la palabra
-        Intent intent2 = new Intent(context, Widget.class);
+        Intent intent2 = new Intent(context, Widget_diccionario.class);
         intent2.setAction(ACCION_OTRA_PALABRA);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent2,
                 PendingIntent.FLAG_UPDATE_CURRENT);
@@ -54,7 +57,16 @@ public class Widget extends AppWidgetProvider {
             updateAppWidget(context, appWidgetManager, appWidgetId);
         }
     }
-
+    @Override
+    public void onEnabled(Context context) {
+        AlarmManager am=(AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+        Intent intent3 = new Intent(context, AlarmManagerBroadcastReceiver.class);
+        PendingIntent pi = PendingIntent.getBroadcast(context, 7475, intent3, PendingIntent.FLAG_UPDATE_CURRENT);
+        am.setRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() , 60000 , pi);
+        //am.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()+ 30000 , 60000 , pi);
+        Log.i("MYAPP","onEnabled");
+        //am.setRepeating(AlarmManager.RTC_WAKEUP, SystemClock.elapsedRealtime()+30000, 60000 , pi);
+    }
     @Override
     public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
@@ -79,7 +91,7 @@ public class Widget extends AppWidgetProvider {
             views.setOnClickPendingIntent(R.id.buscarEnDic, pending);
 
             // This time we dont have widgetId. Reaching our widget with that way.
-            ComponentName appWidget = new ComponentName(context, Widget.class);
+            ComponentName appWidget = new ComponentName(context, Widget_diccionario.class);
             AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
             // Instruct the widget manager to update the widget
             appWidgetManager.updateAppWidget(appWidget, views);
