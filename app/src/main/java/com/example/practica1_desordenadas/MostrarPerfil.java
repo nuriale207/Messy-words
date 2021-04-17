@@ -13,14 +13,18 @@ import androidx.work.WorkManager;
 
 import android.Manifest;
 import android.content.ContentProviderOperation;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,6 +32,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -35,7 +40,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Locale;
 
-public class MostrarPerfil extends AppCompatActivity implements DialogoIniciarSesion.ListenerdelDialogoIniciarSesion {
+public class MostrarPerfil extends AppCompatActivity implements DialogoIniciarSesion.ListenerdelDialogoIniciarSesion, DialogoExisteContacto.ListenerdelDialogExisteContacto {
     Button volver;
     Button añadirAContactos;
 
@@ -206,6 +211,27 @@ public class MostrarPerfil extends AppCompatActivity implements DialogoIniciarSe
 
 
     }
+
+
+    //Método que comprueba si ya existe un contacto con el nombre indicado
+    private boolean existeContacto(String nombreContacto){
+        ContentResolver contentResolver =getApplicationContext().getContentResolver();
+        Uri uri = ContactsContract.Data.CONTENT_URI;
+        String[] projection = new String[] { ContactsContract.PhoneLookup._ID };
+        String selection = ContactsContract.CommonDataKinds.StructuredName.DISPLAY_NAME + " = ?";
+        String[] selectionArguments = { nombreContacto };
+        Cursor cursor = contentResolver.query(uri, projection, selection, selectionArguments, null);
+        boolean existe=false;
+        if (cursor != null) {
+            while (cursor.moveToNext()) {
+                existe=true;
+            }
+        }
+        return existe;
+    }
+
+
+    //Método que solicita el permiso para escribir contactos y poder acceder a ellos
     private void solicitarPermisoAñadirContactos() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_CONTACTS) !=
                 PackageManager.PERMISSION_GRANTED) {
@@ -226,14 +252,50 @@ public class MostrarPerfil extends AppCompatActivity implements DialogoIniciarSe
         } else {
             //EL PERMISO ESTÁ CONCEDIDO, EJECUTAR LA FUNCIONALIDAD
 
-           crearNuevoContacto();
+           solicitarPermisoLeerContactos();
 
         }
     }
+
+    private void solicitarPermisoLeerContactos() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS) !=
+                PackageManager.PERMISSION_GRANTED) {
+            //EL PERMISO NO ESTÁ CONCEDIDO, PEDIRLO
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_CONTACTS)) {
+                // MOSTRAR AL USUARIO UNA EXPLICACIÓN DE POR QUÉ ES NECESARIO EL PERMISO
+
+
+            } else {
+                //EL PERMISO NO ESTÁ CONCEDIDO TODAVÍA O EL USUARIO HA INDICADO
+                //QUE NO QUIERE QUE SE LE VUELVA A SOLICITAR
+
+            }
+            //PEDIR EL PERMISO
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_CONTACTS},
+                    1);
+
+        } else {
+            //EL PERMISO ESTÁ CONCEDIDO, EJECUTAR LA FUNCIONALIDAD
+
+            crearNuevoContacto(textNombreUsuario.getText().toString()+"_messy_words");
+
+        }
+    }
+
     //Método encargado de añadir a contactos el usuario mostrado
-    private void crearNuevoContacto() {
-        String nombreContacto=textNombreUsuario.getText().toString();
+    private void crearNuevoContacto(String nombreContacto) {
+        /** Parte del código obtenido de Github: https://gist.github.com/tonyshkurenko/1787ce39fa61fec41c25800741bde934
+         * Autor:https://gist.github.com/tonyshkurenko
+         * Adaptado por Nuria Lebeña para esta app**/
+        //String nombreContacto=textNombreUsuario.getText().toString();
         String email=textEmail.getText().toString();
+        //nombreContacto=nombreContacto+"_messy_words";
+        int i=2;
+        if (existeContacto(nombreContacto)){
+            DialogoExisteContacto dialogoExisteContacto=new DialogoExisteContacto();
+            dialogoExisteContacto.show(getSupportFragmentManager(), "etiqueta");
+            return;
+        }
 
         final ArrayList<ContentProviderOperation> ops = new ArrayList<>();
         ops.add(ContentProviderOperation.newInsert(
@@ -263,6 +325,10 @@ public class MostrarPerfil extends AppCompatActivity implements DialogoIniciarSe
         try {
             getApplicationContext().getContentResolver().applyBatch(ContactsContract.AUTHORITY, ops);
             Log.i("MYAPP","Contacto añadido");
+            Toast toast=Toast.makeText(getApplicationContext(),getString(R.string.contactoAñadido)+nombreContacto, Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.BOTTOM| Gravity.CENTER, 0, 0);
+            toast.show();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -411,4 +477,16 @@ public class MostrarPerfil extends AppCompatActivity implements DialogoIniciarSe
 
     }
 
+    @Override
+    public void alpulsarAñadir() {
+        String nombreSinSufijo=textNombreUsuario.getText().toString()+"_messy_words";
+        int i=2;
+        String nombre=nombreSinSufijo+i;
+        while (existeContacto(nombre)){
+            i=i+1;
+            nombre=nombreSinSufijo+i;
+        }
+        crearNuevoContacto(nombre);
+
+    }
 }
