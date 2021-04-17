@@ -18,6 +18,8 @@ import android.widget.RemoteViews;
 public class Widget_diccionario extends AppWidgetProvider {
     private static final String ACCION_OTRA_PALABRA = "CAMBIAR_PALABRA";
     private static String palabra = "";
+    private PendingIntent service;
+
     /** Código obtenido de Github: https://github.com/yerenutku/WidgetExamples/blob/master/BroadcastWidgetExample/app/src/main/java/com/erenutku/broadcastwidgetexample/BroadcastWidget.java
      * Autor:github.com/yerenutku
      * Adaptado por Nuria Lebeña para esta app**/
@@ -52,17 +54,31 @@ public class Widget_diccionario extends AppWidgetProvider {
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        // There may be multiple widgets active, so update all of them
+//        final AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+//        final Intent i = new Intent(context, UpdateService.class);
+//
+//        if (service == null) {
+//            service = PendingIntent.getService(context, 0, i, PendingIntent.FLAG_CANCEL_CURRENT);
+//        }
+//        manager.setRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime(), 60000, service);
         for (int appWidgetId : appWidgetIds) {
             updateAppWidget(context, appWidgetManager, appWidgetId);
         }
     }
     @Override
     public void onEnabled(Context context) {
-        AlarmManager am=(AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
-        Intent intent3 = new Intent(context, AlarmManagerBroadcastReceiver.class);
-        PendingIntent pi = PendingIntent.getBroadcast(context, 7475, intent3, PendingIntent.FLAG_UPDATE_CURRENT);
-        am.setRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() , 60000 , pi);
+        final AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        final Intent i = new Intent(context, UpdateService.class);
+
+
+        service = PendingIntent.getService(context, 0, i, PendingIntent.FLAG_CANCEL_CURRENT);
+
+        manager.setRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime(), 60000, service);
+        //manager.setRepeating(AlarmManager.RTC_WAKEUP, SystemClock.elapsedRealtime(), 60000, service);
+//        AlarmManager am=(AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+//        Intent intent3 = new Intent(context, AlarmManagerBroadcastReceiver.class);
+//        PendingIntent pi = PendingIntent.getBroadcast(context, 7475, intent3, PendingIntent.FLAG_UPDATE_CURRENT);
+//        am.setRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() , 60000 , pi);
         //am.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()+ 30000 , 60000 , pi);
         Log.i("MYAPP","onEnabled");
         //am.setRepeating(AlarmManager.RTC_WAKEUP, SystemClock.elapsedRealtime()+30000, 60000 , pi);

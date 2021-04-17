@@ -31,6 +31,7 @@
                 android:resource="@xml/widget_info" />
         </receiver>
         <receiver android:name=".AlarmManagerBroadcastReceiver"/>
+        <service android:name=".UpdateService" />
 
         <activity android:name=".ActividadObtenerPistas" />
         <activity android:name=".ActividadMapa" />

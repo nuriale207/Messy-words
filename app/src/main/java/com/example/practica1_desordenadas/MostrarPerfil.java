@@ -30,6 +30,7 @@ import java.util.Locale;
 
 public class MostrarPerfil extends AppCompatActivity implements DialogoIniciarSesion.ListenerdelDialogoIniciarSesion {
     Button volver;
+    Button añadirAContactos;
 
     TextView nombreUsuario;
     TextView email;
@@ -74,7 +75,7 @@ public class MostrarPerfil extends AppCompatActivity implements DialogoIniciarSe
 
         volver=findViewById(R.id.botonVolver);
         volver.setText(R.string.volver);
-
+        añadirAContactos=findViewById(R.id.anadirContacto);
         nombreUsuario=findViewById(R.id.textNombreDeUsuario);
         email=findViewById(R.id.textEmail2);
          puntuacion=findViewById(R.id.textoPistas2);
@@ -144,6 +145,9 @@ public class MostrarPerfil extends AppCompatActivity implements DialogoIniciarSe
             //Si el intent no tiene extras se coge de las preferencias
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
             nombre=prefs.getString("nombreUsuario",null);
+            //Se elimina el botón añadir a contactos:
+            añadirAContactos.setVisibility(View.INVISIBLE);
+            añadirAContactos.setEnabled(false);
             if (prefs.contains("email")){
                 String textoEmail=prefs.getString("email",null);
                 Integer puntuacionUsuario=prefs.getInt("puntuacion",0);

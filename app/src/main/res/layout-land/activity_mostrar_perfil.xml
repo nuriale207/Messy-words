@@ -6,6 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".MostrarPerfil">
 
+    <Button
+        android:id="@+id/anadirContacto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Añadir a contactos"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/botonVolver"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/imageView2"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
+
     <LinearLayout
         android:id="@+id/linearLayout6"
         android:layout_width="183dp"
@@ -91,7 +102,7 @@
         android:layout_width="172dp"
         android:layout_height="59dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/botonVolver"
+        app:layout_constraintBottom_toTopOf="@+id/anadirContacto"
         app:layout_constraintEnd_toStartOf="@+id/linearLayout6"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/imageView2"
@@ -131,7 +142,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/imageView2"
+        app:layout_constraintStart_toEndOf="@+id/anadirContacto"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout6" />
 
     <androidx.appcompat.widget.Toolbar
@@ -140,5 +151,8 @@
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme" />
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
