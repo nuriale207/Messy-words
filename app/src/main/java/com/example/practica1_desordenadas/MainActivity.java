@@ -21,6 +21,8 @@ import android.widget.ScrollView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
+import com.google.firebase.messaging.FirebaseMessaging;
+
 import java.util.Locale;
 
 public class MainActivity extends  AppCompatActivity implements DialogoSalir.ListenerdelDialogoSalir, DialogoIniciarSesion.ListenerdelDialogoIniciarSesion {
@@ -53,6 +55,7 @@ public class MainActivity extends  AppCompatActivity implements DialogoSalir.Lis
         }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        FirebaseMessaging.getInstance().subscribeToTopic("topic_general");
 
         int orientation = getResources().getConfiguration().orientation;
         if (orientation == Configuration. ORIENTATION_LANDSCAPE ){

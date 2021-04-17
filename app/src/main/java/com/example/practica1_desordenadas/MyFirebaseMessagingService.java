@@ -15,15 +15,50 @@ import androidx.core.app.NotificationCompat;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-        String titulo=remoteMessage.getNotification().getTitle();
-        String body=remoteMessage.getNotification().getBody();
-        Log.i("FIREBASE", body);
+        //En caso de venir del servidor php la notificación viene en un json
+        String titulo;
+        String body;
+        if(remoteMessage.getNotification()==null) {
+            Log.i("MYAPP","El mensaje es nulo");
 
-        sendNotification(titulo,body);
+//            try {
+//                remoteMessage.getData().get("body");
+//                JSONObject jsonObject=new JSONObject(remoteMessage.getData().toString());
+//                titulo=jsonObject.getString("titulo");
+//                body=jsonObject.getString("body");
+//                Log.i("FIREBASE",  titulo+"+"+body);
+//
+//                sendNotification(titulo,body);
+//
+//
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+            titulo=remoteMessage.getData().get("titulo");
+            body=remoteMessage.getData().get("body");
+            Log.i("FIREBASE",  titulo+"+"+body);
+
+            sendNotification(titulo,body);
+
+            Log.i("FIREBASE",  remoteMessage.getData().toString());
+        }
+        else{
+            titulo=remoteMessage.getNotification().getTitle();
+
+
+            body=remoteMessage.getNotification().getBody();
+            Log.i("FIREBASE", body);
+
+            sendNotification(titulo,body);
+        }
+
     }
 
     private void sendNotification(String titulo,String messageBody) {
