@@ -1,6 +1,8 @@
 package com.example.practica1_desordenadas;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
 import androidx.preference.PreferenceManager;
 import androidx.work.Data;
@@ -9,11 +11,15 @@ import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
 
+import android.Manifest;
+import android.content.ContentProviderOperation;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,6 +32,7 @@ import android.widget.TextView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 public class MostrarPerfil extends AppCompatActivity implements DialogoIniciarSesion.ListenerdelDialogoIniciarSesion {
@@ -99,6 +106,13 @@ public class MostrarPerfil extends AppCompatActivity implements DialogoIniciarSe
                 Intent i=new Intent(getApplicationContext(),MainActivity.class);
                 startActivity(i);
                 finish();
+            }
+        });
+
+        añadirAContactos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                solicitarPermisoAñadirContactos();
             }
         });
 
@@ -191,6 +205,67 @@ public class MostrarPerfil extends AppCompatActivity implements DialogoIniciarSe
 
 
 
+    }
+    private void solicitarPermisoAñadirContactos() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_CONTACTS) !=
+                PackageManager.PERMISSION_GRANTED) {
+            //EL PERMISO NO ESTÁ CONCEDIDO, PEDIRLO
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_CONTACTS)) {
+                // MOSTRAR AL USUARIO UNA EXPLICACIÓN DE POR QUÉ ES NECESARIO EL PERMISO
+
+
+            } else {
+                //EL PERMISO NO ESTÁ CONCEDIDO TODAVÍA O EL USUARIO HA INDICADO
+                //QUE NO QUIERE QUE SE LE VUELVA A SOLICITAR
+
+            }
+            //PEDIR EL PERMISO
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_CONTACTS},
+                    1);
+
+        } else {
+            //EL PERMISO ESTÁ CONCEDIDO, EJECUTAR LA FUNCIONALIDAD
+
+           crearNuevoContacto();
+
+        }
+    }
+    //Método encargado de añadir a contactos el usuario mostrado
+    private void crearNuevoContacto() {
+        String nombreContacto=textNombreUsuario.getText().toString();
+        String email=textEmail.getText().toString();
+
+        final ArrayList<ContentProviderOperation> ops = new ArrayList<>();
+        ops.add(ContentProviderOperation.newInsert(
+                ContactsContract.RawContacts.CONTENT_URI)
+                .withValue(ContactsContract.RawContacts.ACCOUNT_TYPE, null)
+                .withValue(ContactsContract.RawContacts.ACCOUNT_NAME, null)
+                .build());
+
+        ops.add(ContentProviderOperation.newInsert(
+                ContactsContract.Data.CONTENT_URI)
+                .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
+                .withValue(ContactsContract.Data.MIMETYPE,
+                        ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE)
+                .withValue(
+                        ContactsContract.CommonDataKinds.StructuredName.DISPLAY_NAME,
+                        nombreContacto).build());
+
+        ops.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
+                .withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0)
+                .withValue(ContactsContract.Data.MIMETYPE,
+                        ContactsContract.CommonDataKinds.Email.CONTENT_ITEM_TYPE)
+                .withValue(ContactsContract.CommonDataKinds.Email.DATA, email)
+                .withValue(ContactsContract.CommonDataKinds.Email.TYPE, ContactsContract.CommonDataKinds.Email.TYPE_WORK)
+                .build());
+
+        // Asking the Contact provider to create a new contact
+        try {
+            getApplicationContext().getContentResolver().applyBatch(ContactsContract.AUTHORITY, ops);
+            Log.i("MYAPP","Contacto añadido");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void obtenerDatos(String nombre, boolean almacenar) {
