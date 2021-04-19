@@ -67,13 +67,14 @@ public class Widget_diccionario extends AppWidgetProvider {
     }
     @Override
     public void onEnabled(Context context) {
-        final AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        final Intent i = new Intent(context, UpdateService.class);
+//        final AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+//        final Intent i = new Intent(context, UpdateService.class);
+//
+//
+//        service = PendingIntent.getService(context, 0, i, PendingIntent.FLAG_CANCEL_CURRENT);
+//
+//        manager.setRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime(), 60000, service);
 
-
-        service = PendingIntent.getService(context, 0, i, PendingIntent.FLAG_CANCEL_CURRENT);
-
-        manager.setRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime(), 60000, service);
         //manager.setRepeating(AlarmManager.RTC_WAKEUP, SystemClock.elapsedRealtime(), 60000, service);
 //        AlarmManager am=(AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
 //        Intent intent3 = new Intent(context, AlarmManagerBroadcastReceiver.class);

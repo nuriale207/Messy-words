@@ -270,6 +270,9 @@ public class MainActivity extends  AppCompatActivity implements DialogoSalir.Lis
         //Se abre la ventana de inicio de sesión
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         prefs.edit().remove("nombreUsuario").apply();
+        prefs.edit().remove("email").apply();
+        prefs.edit().remove("puntuacion").apply();
+        prefs.edit().remove("pistas").apply();
         Intent i=new Intent(this,IniciarSesion.class);
         startActivity(i);
 

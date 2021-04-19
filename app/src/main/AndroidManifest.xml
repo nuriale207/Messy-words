@@ -19,13 +19,21 @@
         android:supportsRtl="true"
         android:theme="@style/TemaDesordenadasGreen"
         android:usesCleartextTraffic="true">
+        <receiver android:name=".Widget_automatico">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_automatico_info" />
+        </receiver>
         <receiver android:name=".Widget_diccionario">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
             <intent-filter>
                 <action android:name="CAMBIAR PALABRA" />
-
             </intent-filter>
 
             <meta-data
@@ -37,11 +45,10 @@
         <service android:name=".UpdateService" />
         <service android:name=".MyFirebaseMessagingService">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"></action>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
 
-        <activity android:name=".ActividadObtenerPistas" />
         <activity android:name=".ActividadMapa" />
         <activity android:name=".ActividadPreferencias" />
         <activity android:name=".IniciarSesion" />

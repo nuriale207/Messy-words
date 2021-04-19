@@ -34,6 +34,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -159,6 +164,8 @@ public class MostrarPerfil extends AppCompatActivity implements DialogoIniciarSe
             textPistas.setVisibility(View.INVISIBLE);
             nombre=extras.getString("usuario");
             obtenerDatos(nombre,false);
+            cargarImagen(nombre);
+
         }
         else{
             //Si el intent no tiene extras se coge de las preferencias
@@ -177,10 +184,13 @@ public class MostrarPerfil extends AppCompatActivity implements DialogoIniciarSe
                 textPistas=findViewById(R.id.editTextPistas);
 
                 textPistas.setText(pistas.toString());
+                cargarImagen(nombre);
+
 
             }
             else{
                 obtenerDatos(nombre,true);
+                cargarImagen(nombre);
             }
         }
 
@@ -210,6 +220,18 @@ public class MostrarPerfil extends AppCompatActivity implements DialogoIniciarSe
 
 
 
+    }
+
+    private void cargarImagen(String nombre) {
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReference();
+        StorageReference pathReference = storageRef.child("images/"+nombre+".jpg");
+        pathReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Glide.with(getApplicationContext()).load(uri).into(imagen);
+            }
+        });
     }
 
 
@@ -472,6 +494,9 @@ public class MostrarPerfil extends AppCompatActivity implements DialogoIniciarSe
         //Se abre la ventana de inicio de sesión
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         prefs.edit().remove("nombreUsuario").apply();
+        prefs.edit().remove("email").apply();
+        prefs.edit().remove("puntuacion").apply();
+        prefs.edit().remove("pistas").apply();
         Intent i=new Intent(this,IniciarSesion.class);
         startActivity(i);
 

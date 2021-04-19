@@ -101,7 +101,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             elBuilder.setSmallIcon(android.R.drawable.star_big_on)
                     .setContentTitle(titulo)
                     .setContentText(messageBody)
-                    .setSubText(getString(R.string.hasGanado))
+                    .setSubText(titulo)
                     .setVibrate(new long[]{0, 1000, 500, 1000})
                     .setAutoCancel(true).setContentIntent(intentEnNot);
             elManager.notify(1, elBuilder.build());

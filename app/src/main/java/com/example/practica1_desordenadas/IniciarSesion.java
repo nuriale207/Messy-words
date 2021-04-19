@@ -257,6 +257,9 @@ public class IniciarSesion extends AppCompatActivity implements DialogoIniciarSe
         //Se abre la ventana de inicio de sesión y se elimina el usuario logeado actualmente
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         prefs.edit().remove("nombreUsuario").apply();
+        prefs.edit().remove("email").apply();
+        prefs.edit().remove("puntuacion").apply();
+        prefs.edit().remove("pistas").apply();
         Intent i=new Intent(this,IniciarSesion.class);
         startActivity(i);
 

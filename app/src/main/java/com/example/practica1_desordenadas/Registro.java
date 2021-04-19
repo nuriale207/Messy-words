@@ -38,6 +38,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -53,6 +62,10 @@ public class Registro extends AppCompatActivity implements DialogoIniciarSesion.
     Button añadirImagen;
     Button registrarse;
     ImageView imagen;
+
+    //Firebase
+    FirebaseStorage storage;
+    StorageReference storageReference;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //Paso 0: Mirar el tema que tiene que tener la app
@@ -73,6 +86,9 @@ public class Registro extends AppCompatActivity implements DialogoIniciarSesion.
             setTheme(R.style.TemaDesordenadasHighContrast);
         }
         super.onCreate(savedInstanceState);
+
+
+
         setContentView(R.layout.activity_registro);
 
         setSupportActionBar(findViewById(R.id.toolbar3));
@@ -224,6 +240,7 @@ public class Registro extends AppCompatActivity implements DialogoIniciarSesion.
                                     SharedPreferences.Editor editor= prefs.edit();
                                     editor.putString("nombreUsuario", nombreUsuario);
                                     editor.apply();
+                                    guardarImagen();
                                     Intent i = new Intent(getApplicationContext(), MostrarPerfil.class);
                                     startActivity(i);
                                 }
@@ -239,6 +256,55 @@ public class Registro extends AppCompatActivity implements DialogoIniciarSesion.
 
 
 
+    }
+    public byte[] getByteArray(){
+        // Get the data from an ImageView as bytes
+        this.imagen.setDrawingCacheEnabled(true);
+        imagen.buildDrawingCache();
+        Bitmap bitmap = imagen.getDrawingCache();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] data = baos.toByteArray();
+        return data;
+    }
+
+    private void guardarImagen() {
+
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
+
+        StorageReference imageRef = storageReference.child("images" + "/" + nombreUsuario.getText().toString() + ".jpg");
+
+        imageRef.putBytes(getByteArray())
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        //if the upload is successful
+                        //hiding the progress dialog
+                        //and displaying a success toast
+                        //String profilePicUrl = taskSnapshot.getDownloadUrl().toString();
+                        Toast.makeText(getApplication(), "La imagen se ha subido con éxito", Toast.LENGTH_LONG).show();
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        //if the upload is not successful
+                        //hiding the progress dialog
+                        //and displaying error message
+                        Toast.makeText(getApplication(), exception.getCause().getLocalizedMessage(), Toast.LENGTH_LONG).show();
+                    }
+                })
+                .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                        //calculating progress percentage
+//                        double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
+//                        //displaying percentage in progress dialog
+//                        progressDialog.setMessage("Uploaded " + ((int) progress) + "%...");
+                    }
+                });
     }
 //
 //    private void insertarUsuario(String nombreUsuario, String email, String  contraseña1) {
@@ -436,6 +502,9 @@ public class Registro extends AppCompatActivity implements DialogoIniciarSesion.
         //Se abre la ventana de inicio de sesión
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         prefs.edit().remove("nombreUsuario").apply();
+        prefs.edit().remove("email").apply();
+        prefs.edit().remove("puntuacion").apply();
+        prefs.edit().remove("pistas").apply();
         Intent i=new Intent(this,IniciarSesion.class);
         startActivity(i);
 

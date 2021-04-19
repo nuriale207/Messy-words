@@ -17,7 +17,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import rx.Scheduler;
-
+//CLASE PARA GESTIONAR LAS PETICIONES A LA API DIRECTIONS DE GOOGLE MAPS
+//NO SE HA UTILIZADO PORQUE LA API HA RESULTADO SER DE PAGO
 public class ConexionMaps extends Worker {
     public ConexionMaps(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);
