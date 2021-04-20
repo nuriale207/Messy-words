@@ -209,13 +209,54 @@ public class Registro extends AppCompatActivity implements DialogoIniciarSesion.
 
         }
     }
-
-    private void añadirUsuario(String nombreUsuario, String email, String contraseña1, String contraseña2) {
-        if (!contraseña1.equals(contraseña2)) {
+    private boolean comprobarFormulario(String nombreUsuario, String email, String contraseña1, String contraseña2){
+        boolean valido=true;
+        if(nombreUsuario.length()<2){
+            valido=false;
+            Toast toast = Toast.makeText(getApplicationContext(), "El nombre de usuario tener al menos dos caracteres", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 0);
+            toast.show();
+        }
+        else if(email.length()<5){
+            valido=false;
+            Toast toast = Toast.makeText(getApplicationContext(), "El email debe tener al menos 5 caracteres", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 0);
+            toast.show();
+        }
+        else if(!email.contains("@")||!email.contains(".")){
+            valido=false;
+            Toast toast = Toast.makeText(getApplicationContext(), "El email debe tener la forma example@example.com", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 0);
+            toast.show();
+        }
+        else if(contraseña1.length()<8){
+            valido=false;
+            Toast toast = Toast.makeText(getApplicationContext(), "La contraseña debe tener al menos 8 caracteres", Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 0);
+            toast.show();
+        }
+        else if(!contraseña1.equals(contraseña2)){
+            valido=false;
             Toast toast = Toast.makeText(getApplicationContext(), "Las contraseñas no coinciden", Toast.LENGTH_LONG);
             toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 0);
             toast.show();
-        } else {
+        }
+
+
+
+
+        return valido;
+    }
+
+    private void añadirUsuario(String nombreUsuario, String email, String contraseña1, String contraseña2) {
+        boolean valido=
+                comprobarFormulario(nombreUsuario, email, contraseña1, contraseña2);
+        if (valido) {
+
+//            Toast toast = Toast.makeText(getApplicationContext(), "Las contraseñas no coinciden", Toast.LENGTH_LONG);
+//            toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 0);
+//            toast.show();
+//        } else {
             Data datos = new Data.Builder()
                     .putString("fichero", "usuarios.php")
                     .putString("parametros", "funcion=insertarUsuario&nombreUsuario=" + nombreUsuario + "&email=" + email + "&contrasena=" + contraseña1)

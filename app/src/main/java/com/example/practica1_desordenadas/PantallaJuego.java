@@ -11,6 +11,7 @@ import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
 
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -25,6 +26,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
@@ -77,6 +79,13 @@ public class PantallaJuego extends AppCompatActivity implements DialogoFinNivel.
             setTheme(R.style.TemaDesordenadasHighContrast);
         }
         super.onCreate(savedInstanceState);
+        //Establecer alarma
+//        AlarmManager am=(AlarmManager)this.getSystemService(Context.ALARM_SERVICE);
+//        Intent intent3 = new Intent(this, AlarmaJuegoBroadcastReceiver.class);
+//        PendingIntent pi = PendingIntent.getBroadcast(this, 7474, intent3, PendingIntent.FLAG_UPDATE_CURRENT);
+//        am.set(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime()+60000 ,  pi);
+
+
         setContentView(R.layout.activity_pantalla_juego);
         Bundle extras=getIntent().getExtras();
         setSupportActionBar(findViewById(R.id.toolbarJuego));

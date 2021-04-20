@@ -101,9 +101,13 @@ public class MostrarPerfil extends AppCompatActivity implements DialogoIniciarSe
         imagen=findViewById(R.id.imageView2);
 
         textNombreUsuario=findViewById(R.id.editTextTextNombresuario);
+        textNombreUsuario.setEnabled(false);
         textEmail=findViewById(R.id.editTextTextEmail);
+        textEmail.setEnabled(false);
         textPuntuacion=findViewById(R.id.editTextTextPuntuacion);
+        textPuntuacion.setEnabled(false);
         textPistas=findViewById(R.id.editTextPistas);
+        textPistas.setEnabled(false);
 
         nombreUsuario.setText(getResources().getString(R.string.nombreUsuario));
         email.setText(getResources().getString(R.string.email));
@@ -376,17 +380,18 @@ public class MostrarPerfil extends AppCompatActivity implements DialogoIniciarSe
                                 Log.i("MYAPP", String.valueOf(jsonObject));
 
 
-                                textNombreUsuario.setText(jsonObject.getString("NombreUsuario"));
+                                 textNombreUsuario.setText(jsonObject.getString("NombreUsuario"));
                                 textNombreUsuario.setEnabled(false);
                                 textEmail.setText(jsonObject.getString("Email"));
                                 textEmail.setEnabled(false);
                                 textPuntuacion.setText(jsonObject.getString("Puntuacion"));
                                 textPuntuacion.setEnabled(false);
                                 int pistas=jsonObject.getInt("Pistas");
+
                                 if (almacenar){
                                     SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplication().getBaseContext());
                                     SharedPreferences.Editor editor = prefs.edit();
-
+                                    textPistas.setText(String.valueOf(pistas));
                                     editor.putString("email",textEmail.getText().toString());
                                     editor.putInt("puntuacion", Integer.parseInt(textPuntuacion.getText().toString()));
                                     editor.putInt("pistas",pistas);
