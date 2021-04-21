@@ -3,6 +3,8 @@ package com.example.practica1_desordenadas;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
@@ -10,7 +12,9 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
@@ -76,6 +80,28 @@ public class MainActivity extends  AppCompatActivity implements DialogoSalir.Lis
             }
         }
         //Paso 1: Se obtienen los elementos del layout
+//        AlarmManager am = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
+//        Intent intent3 = new Intent(this, AlarmaJuegoBroadcastReceiver.class);
+//        PendingIntent pi = PendingIntent.getBroadcast(this, 20, intent3, 0);
+//        am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 60000, pi);
+
+//        final AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+//        final Intent i = new Intent(this, UpdateService.class);
+//        PendingIntent service = PendingIntent.getService(this, 0, i, PendingIntent.FLAG_CANCEL_CURRENT);
+//      //  manager.setRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime(), 60000, service);
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//            manager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()+60000, service);
+//        } else if (Build.VERSION.SDK_INT >=  Build.VERSION_CODES.KITKAT) {
+//            manager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()+60000,service);
+//        } else {
+//            manager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()+60000, service);
+//        }
+
+//        final AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+//        final Intent i = new Intent(this, UpdateService.class);
+//        PendingIntent service = PendingIntent.getService(this, 20, i, PendingIntent.FLAG_CANCEL_CURRENT);
+//        manager.setRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime(), 60000, service);
+
         botonJugar=findViewById(R.id.botonJugar);
         botonPistas=findViewById(R.id.botonPistas);
         botonPistas.setText(R.string.pistas);

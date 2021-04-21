@@ -37,6 +37,14 @@ public class  ListaNiveles extends Observable {
 		Nivel nivel =getNivel(idNivel);
 		nivel.set(pPuntuacion, nAciertos, acertadas, nIntentos);
 	}
+
+	public void resetearNiveles(){
+		Iterator<Integer> itr=idNiveles.iterator();
+		while (itr.hasNext()){
+			int idNivel=itr.next();
+			resetNivel(idNivel);
+		}
+	}
 	public void resetNivel(int idNivel){
 		//Resetea el nivel
 		Nivel nivel=getNivel(idNivel);

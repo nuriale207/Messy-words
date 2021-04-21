@@ -1,5 +1,6 @@
 package com.example.practica1_desordenadas;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -7,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -62,6 +64,8 @@ public class ActividadSeleccionarNivel extends  AppCompatActivity implements Dia
         ListaNiveles listaNiveles=new ListaNiveles();
         Log.i("MYAPP","cargandoNiveles");
         listaNiveles.cargarNiveles(this);
+        listaNiveles.resetearNiveles();
+
 
         //Se obtienen de los niveles las listas necesarias para el correcto funcionamiento de la app
         imagenes=listaNiveles.getImagenesNiveles();
@@ -70,7 +74,23 @@ public class ActividadSeleccionarNivel extends  AppCompatActivity implements Dia
         TextView idTitulo=findViewById(R.id.idTitulo);
         idTitulo.setText(R.string.seleccionarNivel);
         Button boton=findViewById(R.id.botonVolver2);
+        //Paso 1: se gestiona el nivel que hay que cargar cuyo id es proporcionado por la actividad
+        //precedente
+        Bundle extras=getIntent().getExtras();
 
+        if (extras!=null){
+            if (extras.getString("finTiempo").equals("abrirDialogo") ){
+                AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+                alertDialog.setMessage(getString(R.string.tiempoAgotado));
+                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, getString(R.string.aceptar),
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                alertDialog.show();
+            }
+        }
 
         //Paso 2: Gestión del idioma
         String idiomaConfigurado=preferencias.getString("idioma","castellano");

@@ -58,7 +58,8 @@
                 android:id="@+id/generarOtra"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ver otra palabra" />
+                android:text="Ver otra palabra"
+                android:textColorHint="#FFFFFF" />
 
             <Button
                 android:id="@+id/buscarEnDic"

@@ -82,4 +82,5 @@
     <string name="palabrasAleatoriasEntrenamiento">Palabra aleatoria de entrenamiento para el juego:</string>
     <string name="contactoRepetido">Ya existe un contacto con ese nombre. ¿Quieres añadirlo con otro nombre?</string>
     <string name="contactoAñadido">Se ha creado un nuevo contacto con el nombre:</string>
+    <string name="tiempoAgotado">¡Se ha acabado el tiempo!</string>
 </resources>

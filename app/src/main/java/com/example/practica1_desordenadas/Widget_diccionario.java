@@ -29,7 +29,7 @@ public class Widget_diccionario extends AppWidgetProvider {
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(),R.layout.widget);
 
-        //Añadir el intent al boton de busqueda en el diccionario
+        //Añadir el intent al boton de busqueda en el diccionario para abrir el navegador
         Diccionario.getDiccionario().cargar(context);
         String palabra=Diccionario.getDiccionario().obtenerPalabraAleatoria();
         String url = "https://dle.rae.es/"+palabra;
@@ -41,7 +41,7 @@ public class Widget_diccionario extends AppWidgetProvider {
         PendingIntent pending = PendingIntent.getActivity(context, 0,intent, 0);
         views.setOnClickPendingIntent(R.id.buscarEnDic, pending);
 
-        // Añadir el intent al boton de cambiar la palabra
+        // Añadir el intent al boton de cambiar la palabra para cambiar la palabra del diccionario mostrada
         Intent intent2 = new Intent(context, Widget_diccionario.class);
         intent2.setAction(ACCION_OTRA_PALABRA);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent2,
@@ -54,35 +54,13 @@ public class Widget_diccionario extends AppWidgetProvider {
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-//        final AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-//        final Intent i = new Intent(context, UpdateService.class);
-//
-//        if (service == null) {
-//            service = PendingIntent.getService(context, 0, i, PendingIntent.FLAG_CANCEL_CURRENT);
-//        }
-//        manager.setRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime(), 60000, service);
         for (int appWidgetId : appWidgetIds) {
             updateAppWidget(context, appWidgetManager, appWidgetId);
         }
     }
     @Override
     public void onEnabled(Context context) {
-        final AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        final Intent i = new Intent(context, UpdateService.class);
-
-
-        service = PendingIntent.getService(context, 0, i, PendingIntent.FLAG_CANCEL_CURRENT);
-
-        manager.setRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime(), 60000, service);
-
-        //manager.setRepeating(AlarmManager.RTC_WAKEUP, SystemClock.elapsedRealtime(), 60000, service);
-//        AlarmManager am=(AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
-//        Intent intent3 = new Intent(context, AlarmManagerBroadcastReceiver.class);
-//        PendingIntent pi = PendingIntent.getBroadcast(context, 7475, intent3, PendingIntent.FLAG_UPDATE_CURRENT);
-//        am.setRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() , 60000 , pi);
-        //am.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()+ 30000 , 60000 , pi);
         Log.i("MYAPP","onEnabled");
-        //am.setRepeating(AlarmManager.RTC_WAKEUP, SystemClock.elapsedRealtime()+30000, 60000 , pi);
     }
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -107,10 +85,9 @@ public class Widget_diccionario extends AppWidgetProvider {
             PendingIntent pending = PendingIntent.getActivity(context, 0,intent2, 0);
             views.setOnClickPendingIntent(R.id.buscarEnDic, pending);
 
-            // This time we dont have widgetId. Reaching our widget with that way.
+            // Se actualiza el widget
             ComponentName appWidget = new ComponentName(context, Widget_diccionario.class);
             AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-            // Instruct the widget manager to update the widget
             appWidgetManager.updateAppWidget(appWidget, views);
         }
     }

@@ -198,7 +198,7 @@ public class Registro extends AppCompatActivity implements DialogoIniciarSesion.
             }
             //PEDIR EL PERMISO
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                    1);
+                    2);
 
         } else {
             //EL PERMISO ESTÁ CONCEDIDO, EJECUTAR LA FUNCIONALIDAD
@@ -441,13 +441,36 @@ public class Registro extends AppCompatActivity implements DialogoIniciarSesion.
                 // Si la petición se cancela, granResults estará vacío
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // PERMISO CONCEDIDO, EJECUTAR LA FUNCIONALIDAD
+                    Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(cameraIntent, 1);
 
 
                 } else {
                     // PERMISO DENEGADO, DESHABILITAR LA FUNCIONALIDAD O EJECUTAR ALTERNATIVA
+                    Toast toast = Toast.makeText(getApplicationContext(), "Acepta el permiso para poder usar la cámara", Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 0);
+                    toast.show();
                 }
                 return;
             }
+            case 2: {
+                // Si la petición se cancela, granResults estará vacío
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // PERMISO CONCEDIDO, EJECUTAR LA FUNCIONALIDAD
+                    Intent galleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    galleryIntent.setType("image/*");
+                    startActivityForResult(galleryIntent, 2);
+
+
+                } else {
+                    // PERMISO DENEGADO, DESHABILITAR LA FUNCIONALIDAD O EJECUTAR ALTERNATIVA
+                    Toast toast = Toast.makeText(getApplicationContext(), "Acepta el permiso para poder acceder a la galería", Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 0);
+                    toast.show();
+                }
+                return;
+            }
+
 
         }
     }
