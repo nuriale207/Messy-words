@@ -24,7 +24,7 @@ public class Nivel extends Observable {
 	private int numeroDeIntentos=10;
 	private StringBuilder output = new StringBuilder();
 	private int palabras=0;
-	private ArrayList<String> palabrasNivel;
+	private HashSet<String> palabrasNivel;
 	private String pistaActual;
 
 
@@ -34,7 +34,7 @@ public class Nivel extends Observable {
 		this.id=id;
 		this.nombre=pnombre;
 		this.idImagen=idImagen;
-		listaLetras=new HashSet<Character>();
+		listaLetras=new ArrayList<Character>();
 		palabrasAcertadas=new HashSet<String>();
 		pistaActual="";
 		int i=0;
@@ -107,16 +107,20 @@ public class Nivel extends Observable {
 			return false;
 		}
 		int i=0;
-		HashSet<Character> letras= new HashSet<Character>();
+		ArrayList<Character> letras= new ArrayList<Character>();
 		Iterator<Character> itr=this.listaLetras.iterator();
 		while(itr.hasNext()) {
 			letras.add(itr.next());
 		}
 		
 		while(i<palabra.length()) {
-			if(!letras.remove(palabra.charAt(i))) {
+			int indice=letras.indexOf(palabra.charAt(i));
+			if(indice==-1) {
 				return false;
-			};
+			}
+			else {
+				letras.remove(indice);
+			}
 			i++;
 		}
 	
@@ -165,7 +169,7 @@ public class Nivel extends Observable {
 		//incluye el nivel
 		List<String> combinaciones= substrings(this.nombre);
 		List<String> palabras=new ArrayList<String>();
-		ArrayList<String> palabrasDic=new ArrayList<String>();
+		HashSet<String> palabrasDic=new HashSet<String>();
 		for(int i=0;i<combinaciones.size();i++){
 			palabras.addAll(permutation(combinaciones.get(i)));
 		}
@@ -173,12 +177,12 @@ public class Nivel extends Observable {
 		for(int i=0;i<palabras.size();i++){
 			if (Diccionario.getDiccionario().contiene(palabras.get(i))){
 				Log.i("MYAPP",output.toString());
-				this.palabras=this.palabras+1;
 				palabrasDic.add(palabras.get(i));
 			}
 
 		}
 		this.palabrasNivel=palabrasDic;
+		this.palabras=this.palabrasNivel.size();
 
 	}
 
@@ -276,16 +280,17 @@ public class Nivel extends Observable {
 	public String getPista(){
 		//Método para obtener una pista del nivel. Devolverá la mitad de la primera palabra que esté sin acertar
 		String pista="";
+		ArrayList<String> listaPalabrasNivel = new ArrayList<String>(this.palabrasNivel);
 
 		if(this.pistaActual=="" || this.palabrasAcertadas.contains(pistaActual)){
 			boolean encontrada= false;
 			int i=0;
 			while(!encontrada){
-				String palabra=this.palabrasNivel.get(i);
+				String palabra=listaPalabrasNivel.get(i);
 				if(!this.palabrasAcertadas.contains(palabra)){
 					int size=palabra.length();
 					size=size/2;
-					if(size/2<2){
+					if(size<2){
 						size=2;
 					}
 					pista=palabra.substring(0,size);
