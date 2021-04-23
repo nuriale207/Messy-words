@@ -8,7 +8,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.widget.Toast;
 
-public class UpdateService extends Service {
+public class ServicioTerminarJuego extends Service {
     @Override
     public IBinder onBind(Intent intent) {
         return null;

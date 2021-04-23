@@ -38,13 +38,13 @@ public class Widget_diccionario extends AppWidgetProvider {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.setData(Uri.parse(url));
-        PendingIntent pending = PendingIntent.getActivity(context, 0,intent, 0);
+        PendingIntent pending = PendingIntent.getActivity(context, 2,intent, 0);
         views.setOnClickPendingIntent(R.id.buscarEnDic, pending);
 
         // Añadir el intent al boton de cambiar la palabra para cambiar la palabra del diccionario mostrada
         Intent intent2 = new Intent(context, Widget_diccionario.class);
         intent2.setAction(ACCION_OTRA_PALABRA);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent2,
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 2, intent2,
                 PendingIntent.FLAG_UPDATE_CURRENT);
 
         views.setOnClickPendingIntent(R.id.generarOtra, pendingIntent);
@@ -82,7 +82,7 @@ public class Widget_diccionario extends AppWidgetProvider {
             Intent intent2 = new Intent(Intent.ACTION_VIEW);
             intent2.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent2.setData(Uri.parse(url));
-            PendingIntent pending = PendingIntent.getActivity(context, 0,intent2, 0);
+            PendingIntent pending = PendingIntent.getActivity(context, 2,intent2, 0);
             views.setOnClickPendingIntent(R.id.buscarEnDic, pending);
 
             // Se actualiza el widget

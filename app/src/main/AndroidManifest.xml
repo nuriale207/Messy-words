@@ -36,7 +36,7 @@
                 android:resource="@xml/widget_info" />
         </receiver>
         <receiver android:name=".AlarmaJuegoBroadcastReceiver" />
-        <service android:name=".UpdateService" />
+        <service android:name=".ServicioTerminarJuego" />
 
         <service android:name=".MyFirebaseMessagingService">
             <intent-filter>

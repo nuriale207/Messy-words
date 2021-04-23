@@ -58,6 +58,13 @@ public class PantallaJuego extends AppCompatActivity implements DialogoFinNivel.
     BaseDeDatos GestorDB = new BaseDeDatos (this, "NombreBD", null, 1);
     Button botonPista;
     TextView pistas;
+    AlarmManager manager;
+    Intent i;
+    PendingIntent service;
+    long inicio = System.currentTimeMillis();
+    int tiempo=60000;
+    int tiempoResta=0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //Paso 0: Mirar el tema que tiene que tener la app
@@ -79,11 +86,7 @@ public class PantallaJuego extends AppCompatActivity implements DialogoFinNivel.
             setTheme(R.style.TemaDesordenadasHighContrast);
         }
         super.onCreate(savedInstanceState);
-        //Establecer alarma
-//        AlarmManager am=(AlarmManager)this.getSystemService(Context.ALARM_SERVICE);
-//        Intent intent3 = new Intent(this, AlarmaJuegoBroadcastReceiver.class);
-//        PendingIntent pi = PendingIntent.getBroadcast(this, 7474, intent3, PendingIntent.FLAG_UPDATE_CURRENT);
-//        am.set(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime()+60000 ,  pi);
+
 
 
         setContentView(R.layout.activity_pantalla_juego);
@@ -136,6 +139,11 @@ public class PantallaJuego extends AppCompatActivity implements DialogoFinNivel.
             int pPuntuacion=savedInstanceState.getInt("nivelPuntuacion");
             int nAciertos=savedInstanceState.getInt("nivelAciertos");
             int nIntentos=savedInstanceState.getInt("nivelIntentos");
+            int tiempoRestaNuevo=savedInstanceState.getInt("tiempo");
+            int tiempoRestaAc=savedInstanceState.getInt("tiempoAcumulado");
+            tiempo=tiempo-tiempoRestaNuevo-tiempoRestaAc;
+            tiempoResta=tiempoRestaAc+tiempoResta;
+
             hayPistas=savedInstanceState.getBoolean("hayPistas");
 
             if(hayPistas){
@@ -174,6 +182,28 @@ public class PantallaJuego extends AppCompatActivity implements DialogoFinNivel.
                 botonPista.setVisibility(View.INVISIBLE);
                 botonPista.setEnabled(false);
             }
+
+        }
+
+        // Se establece una alarma para que termine la partida al de 5 minutos de empezar la partida
+        manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        i = new Intent(this, ServicioTerminarJuego.class);
+        service = PendingIntent.getService(this, 0, i, PendingIntent.FLAG_CANCEL_CURRENT);
+        /**
+         * Código obtenido de: https://stackoverflow.com/questions/41525944/alarm-manager-not-working-in-my-code
+         * Autor: https://stackoverflow.com/users/4393601/pedro-sim%c3%b5es
+         * **/
+        Log.i("MYAPP","TIEMPO PROGRAMADO"+tiempo);
+        Log.i("MYAPP","TIEMPO ACUMULADO"+tiempoResta);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            ///manager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 300000, service);
+            manager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + tiempo, service);
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            //manager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 300000, service);
+            manager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + tiempo, service);
+        } else {
+            //manager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 300000, service);
+            manager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + tiempo, service);
         }
 
 
@@ -227,6 +257,14 @@ public class PantallaJuego extends AppCompatActivity implements DialogoFinNivel.
                         if(hayPistas){
                             actualizarPistas();
                         }
+                        //Al terminar la partida se para la alarma
+                        /**Código extraído de StackOverflow
+                         Pregunta :https://stackoverflow.com/questions/17615986/how-to-stop-an-alarm-in-android
+                         Autor:https://stackoverflow.com/users/1140237/user1140237
+                         **/
+                        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+                        alarmManager.cancel(service);
+
                         //Se genera el diálogo de fin de nivel
                         DialogoFinNivel dialogoFinNivel=new DialogoFinNivel();
                         dialogoFinNivel.show(getSupportFragmentManager(), "etiqueta");
@@ -272,6 +310,14 @@ public class PantallaJuego extends AppCompatActivity implements DialogoFinNivel.
                     }
 
                     else if (nivel.getIntentos()<=0){
+                        //Al terminar la partida se para la alarma
+                        /**Código extraído de StackOverflow
+                         Pregunta :https://stackoverflow.com/questions/17615986/how-to-stop-an-alarm-in-android
+                         Autor:https://stackoverflow.com/users/1140237/user1140237
+                         **/
+                        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+                        alarmManager.cancel(service);
+
                         //Si no quedan más intentos se llama al diálogo de fin de nivel
                         DialogoFinNivel dialogoFinNivel2=new DialogoFinNivel();
                         dialogoFinNivel2.show(getSupportFragmentManager(), "etiqueta");
@@ -295,6 +341,14 @@ public class PantallaJuego extends AppCompatActivity implements DialogoFinNivel.
                         if(hayPistas){
                             actualizarPistas();
                         }
+                        //Al terminar la partida se para la alarma
+                        /**Código extraído de StackOverflow
+                         Pregunta :https://stackoverflow.com/questions/17615986/how-to-stop-an-alarm-in-android
+                         Autor:https://stackoverflow.com/users/1140237/user1140237
+                         **/
+                        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+                        alarmManager.cancel(service);
+
                         DialogoFinNivel dialogoFinNivel=new DialogoFinNivel();
                         dialogoFinNivel.show(getSupportFragmentManager(), "etiqueta");
                     }
@@ -416,7 +470,20 @@ public class PantallaJuego extends AppCompatActivity implements DialogoFinNivel.
     protected void onSaveInstanceState (Bundle savedInstanceState) {
 
         super.onSaveInstanceState(savedInstanceState);
-            savedInstanceState.putString("nombreNivel",nivel.getNombre());
+        //Se para la alarma
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        alarmManager.cancel(service);
+
+        long fin = System.currentTimeMillis();
+        int tiempo = (int) ((fin - inicio));
+        Log.i("MYAPP","TIEMPO"+tiempo);
+        //Se almacena el tiempo que ha pasado durante la partida para poder configurar la siguiente alarma quitandole el tiempo
+        savedInstanceState.putInt("tiempo",tiempo);
+        //Se almacena la resta de tiempo acumulada para poder configurar la siguiente alarma quitandole el tiempo
+        savedInstanceState.putInt("tiempoAcumulado",tiempoResta+tiempo);
+
+
+        savedInstanceState.putString("nombreNivel",nivel.getNombre());
             savedInstanceState.putInt("idNivel",nivel.getId());
 
             savedInstanceState.putInt("nivelPuntuacion",nivel.getPuntuacion());
@@ -480,6 +547,14 @@ ListaNiveles.getListaNiveles().resetNivel(idNivel);        //Se abre la activida
 
     @Override
     public void alpulsarOK() {
+        //Al pulsar salir se para la alarma
+        /**Código extraído de StackOverflow
+         Pregunta :https://stackoverflow.com/questions/17615986/how-to-stop-an-alarm-in-android
+         Autor:https://stackoverflow.com/users/1140237/user1140237
+         **/
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        alarmManager.cancel(service);
+
         Intent i=new Intent(this,MainActivity.class);
         startActivity(i);
     }
@@ -487,12 +562,23 @@ ListaNiveles.getListaNiveles().resetNivel(idNivel);        //Se abre la activida
     @Override
     public void onBackPressed() {
         /**Código extraído de StackOverflow
-         Repositorio: https://github.com/javierarce/palabras/blob/master/listado-general.txt
+         Pregunta: https://github.com/javierarce/palabras/blob/master/listado-general.txt
          Autor: https://es.stackoverflow.com/users/9982/rafael-guti%c3%a9rrez
          **/
         //Al pulsar el botón atras se resetea el nivel
         ListaNiveles.getListaNiveles().resetNivel(idNivel);
         finish();
+
+
+
+        //Al pulsar el botón atras se para la alarma
+        /**Código extraído de StackOverflow
+         Pregunta :https://stackoverflow.com/questions/17615986/how-to-stop-an-alarm-in-android
+         Autor:https://stackoverflow.com/users/1140237/user1140237
+         **/
+
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        alarmManager.cancel(service);
 
     }
 }
