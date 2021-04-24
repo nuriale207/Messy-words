@@ -93,6 +93,7 @@ public class MostrarPerfil extends AppCompatActivity implements DialogoIniciarSe
         volver=findViewById(R.id.botonVolver);
         volver.setText(R.string.volver);
         añadirAContactos=findViewById(R.id.anadirContacto);
+        añadirAContactos.setText(R.string.anadirContactos);
         nombreUsuario=findViewById(R.id.textNombreDeUsuario);
         email=findViewById(R.id.textEmail2);
          puntuacion=findViewById(R.id.textoPistas2);
@@ -117,8 +118,8 @@ public class MostrarPerfil extends AppCompatActivity implements DialogoIniciarSe
         volver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i=new Intent(getApplicationContext(),MainActivity.class);
-                startActivity(i);
+//                Intent i=new Intent(getApplicationContext(),MainActivity.class);
+//                startActivity(i);
                 finish();
             }
         });

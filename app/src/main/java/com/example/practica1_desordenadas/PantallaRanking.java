@@ -82,7 +82,6 @@ public class PantallaRanking extends AppCompatActivity implements DialogoIniciar
                     getBaseContext().createConfigurationContext(configuration);
             getBaseContext().getResources().updateConfiguration(configuration, context.getResources().getDisplayMetrics());
 
-            finish();
             Log.i("MYAPP",Locale.getDefault().getLanguage());
             startActivity(getIntent());
 

@@ -60,9 +60,10 @@ public class PantallaJuego extends AppCompatActivity implements DialogoFinNivel.
     TextView pistas;
     AlarmManager manager;
     Intent i;
+    //Variables para configurar la alarma
     PendingIntent service;
     long inicio = System.currentTimeMillis();
-    int tiempo=60000;
+    int tiempo=300000;
     int tiempoResta=0;
 
     @Override

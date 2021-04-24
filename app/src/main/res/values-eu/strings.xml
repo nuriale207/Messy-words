@@ -65,4 +65,5 @@
     <string name="contactoRepetido">Jadanik izen horrekin kontaktu bat duzu. ¿Beste izen batekin gehitu nahi duzu?</string>
     <string name="contactoAñadido">"Kontatu berria sortu da ondoko izenarekin: "</string>
     <string name="tiempoAgotado">Denbora bukatu da!</string>
+    <string name="anadirContactos">Kontaktuetara gehitu</string>
 </resources>
