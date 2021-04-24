@@ -59,22 +59,11 @@
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:text="RANKING"
-        app:layout_constraintBottom_toTopOf="@+id/botonInstrucciones"
-        app:layout_constraintEnd_toStartOf="@+id/scroll"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/botonPistas" />
-
-    <Button
-        android:id="@+id/botonInstrucciones"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
-        android:text="INSTRUCCIONES"
         app:layout_constraintBottom_toTopOf="@+id/botonSalir"
         app:layout_constraintEnd_toStartOf="@+id/scroll"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/botonRanking" />
+        app:layout_constraintTop_toBottomOf="@+id/botonPistas" />
 
     <Button
         android:id="@+id/botonSalir"
@@ -85,7 +74,7 @@
         app:layout_constraintEnd_toStartOf="@+id/scroll"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/botonInstrucciones" />
+        app:layout_constraintTop_toBottomOf="@+id/botonRanking" />
 
     <ScrollView
         android:id="@+id/scroll"

@@ -98,7 +98,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             Intent i = new Intent(getApplicationContext(),ActividadSeleccionarNivel.class);
             PendingIntent intentEnNot = PendingIntent.getActivity(getApplicationContext(), 0, i, PendingIntent.FLAG_CANCEL_CURRENT);
             elManager.createNotificationChannel(elCanal);
-            elBuilder.setSmallIcon(android.R.drawable.star_big_on)
+            elBuilder.setSmallIcon(R.drawable.logo)
                     .setContentTitle(titulo)
                     .setContentText(messageBody)
                     .setSubText(titulo)
