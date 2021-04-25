@@ -394,8 +394,7 @@ public class ActividadMapa extends FragmentActivity implements OnMapReadyCallbac
         myLocation.setLatitude(point.latitude);
         myLocation.setLongitude(point.longitude);
 
-        //This is to generate 10 random points
-        //for(int i = 0; i<10; i++) {
+
         double x0 = point.latitude;
         double y0 = point.longitude;
 
@@ -422,17 +421,13 @@ public class ActividadMapa extends FragmentActivity implements OnMapReadyCallbac
         l1.setLatitude(randomLatLng.latitude);
         l1.setLongitude(randomLatLng.longitude);
         randomDistances.add(l1.distanceTo(myLocation));
-        // }
+
         //Get nearest point to the centre
         int indexOfNearestPointToCentre = randomDistances.indexOf(Collections.min(randomDistances));
         return randomPoints.get(indexOfNearestPointToCentre);
     }
 
 
-    @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
-
-    }
 
     @Override
     public void onLocationChanged(@NonNull Location location) {

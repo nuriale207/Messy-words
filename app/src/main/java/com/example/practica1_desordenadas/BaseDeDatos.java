@@ -19,13 +19,13 @@ public class BaseDeDatos extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        //La base de datos se compone de dos tablas una de usuarios y otra de niveles
+        //La base de datos local se compone de una tabla de niveles
 
-        db.execSQL("CREATE TABLE Usuarios ('NombreUsuario'  VARCHAR(255) PRIMARY KEY NOT NULL, " +
-                "'Email'VARCHAR(255) NOT NULL," +
-                "'Contraseña'VARCHAR(255) NOT NULL," +
-                "'Puntuacion' INTEGER," +
-                "'Imagen' BLOB )");
+//        db.execSQL("CREATE TABLE Usuarios ('NombreUsuario'  VARCHAR(255) PRIMARY KEY NOT NULL, " +
+//                "'Email'VARCHAR(255) NOT NULL," +
+//                "'Contraseña'VARCHAR(255) NOT NULL," +
+//                "'Puntuacion' INTEGER," +
+//                "'Imagen' BLOB )");
 
 
         db.execSQL("CREATE TABLE Niveles ('Codigo'  INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +

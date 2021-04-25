@@ -228,6 +228,7 @@ public class MostrarPerfil extends AppCompatActivity implements DialogoIniciarSe
     }
 
     private void cargarImagen(String nombre) {
+        //Metodo que carga la imagen de Firebase Storage
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReference();
         StorageReference pathReference = storageRef.child("images/"+nombre+".jpg");
@@ -284,6 +285,7 @@ public class MostrarPerfil extends AppCompatActivity implements DialogoIniciarSe
         }
     }
 
+    //Método que solicita el permiso para leer contactos
     private void solicitarPermisoLeerContactos() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS) !=
                 PackageManager.PERMISSION_GRANTED) {
@@ -318,11 +320,13 @@ public class MostrarPerfil extends AppCompatActivity implements DialogoIniciarSe
         String email=textEmail.getText().toString();
         //nombreContacto=nombreContacto+"_messy_words";
         int i=2;
+        //Si ya existe un contacto con el mismo nombre se informa de ello
         if (existeContacto(nombreContacto)){
             DialogoExisteContacto dialogoExisteContacto=new DialogoExisteContacto();
             dialogoExisteContacto.show(getSupportFragmentManager(), "etiqueta");
             return;
         }
+        //Si no, se guarda
 
         final ArrayList<ContentProviderOperation> ops = new ArrayList<>();
         ops.add(ContentProviderOperation.newInsert(
@@ -360,7 +364,8 @@ public class MostrarPerfil extends AppCompatActivity implements DialogoIniciarSe
             e.printStackTrace();
         }
     }
-
+    //Metodo que obtiene los datos del usuario de la BD y los muestra en la app
+    //En caso de que se haya inciado sesión se almacenan en las preferencias para permitir jugar sin conexión
     private void obtenerDatos(String nombre, boolean almacenar) {
         Data datos = new Data.Builder()
                 .putString("fichero","usuarios.php")
@@ -380,7 +385,6 @@ public class MostrarPerfil extends AppCompatActivity implements DialogoIniciarSe
                                 JSONObject jsonObject = new JSONObject(resultado);
                                 Log.i("MYAPP", String.valueOf(jsonObject));
 
-
                                  textNombreUsuario.setText(jsonObject.getString("NombreUsuario"));
                                 textNombreUsuario.setEnabled(false);
                                 textEmail.setText(jsonObject.getString("Email"));
@@ -399,22 +403,7 @@ public class MostrarPerfil extends AppCompatActivity implements DialogoIniciarSe
                                     editor.apply();
 
                                 }
-                                /**
-                                 * Código obtenido de stackoverflow
-                                 * Link a la pregunta:https://stackoverflow.com/questions/4837110/how-to-convert-a-base64-string-into-a-bitmap-image-to-show-it-in-a-imageview
-                                 * Perfil del usuario:https://stackoverflow.com/users/432209/user432209
-                                 */
-                                //String img64=jsonObject.getString("Imagen");
-//                                byte[] fotoEnBytes= Base64.decode(img64,Base64.DEFAULT);
-//                                Bitmap decodedByte = BitmapFactory.decodeByteArray(fotoEnBytes, 0,fotoEnBytes.length);
-//                                imagen.setImageBitmap(decodedByte);
 
-                                   /* String img64=jsonObj.getString("Imagen");
-                                Log.i("MYAPP",img64);
-
-                                byte[] fotoEnBytes= Base64.decode(img64,Base64.DEFAULT);
-                                Bitmap decodedByte = BitmapFactory.decodeByteArray(fotoEnBytes, 0,fotoEnBytes.length);
-                                imagen.setImageBitmap(decodedByte);*/
 
 
                             } catch (JSONException e) {
@@ -493,6 +482,7 @@ public class MostrarPerfil extends AppCompatActivity implements DialogoIniciarSe
         prefs.edit().remove("email").apply();
         prefs.edit().remove("puntuacion").apply();
         prefs.edit().remove("pistas").apply();
+        finish();
     }
 
     @Override

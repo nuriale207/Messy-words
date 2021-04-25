@@ -31,24 +31,7 @@ public class ViewHolderNivel extends RecyclerView.ViewHolder {
             public void onClick(View view) {
 
                 seleccion[getAdapterPosition()] = false;
-////              Se establece una alarma para que termine la partida al de 5 minutos de empezar la partida
-//                final AlarmManager manager = (AlarmManager) view.getContext().getSystemService(Context.ALARM_SERVICE);
-//                final Intent i = new Intent(view.getContext(), ServicioTerminarJuego.class);
-//                PendingIntent service = PendingIntent.getService(view.getContext(), 0, i, PendingIntent.FLAG_CANCEL_CURRENT);
-//                /**
-//                 * Código obtenido de: https://stackoverflow.com/questions/41525944/alarm-manager-not-working-in-my-code
-//                 * Autor: https://stackoverflow.com/users/4393601/pedro-sim%c3%b5es
-//                 * **/
-//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//                    ///manager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 300000, service);
-//                    manager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 60000, service);
-//                } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-//                    //manager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 300000, service);
-//                    manager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 60000, service);
-//                } else {
-//                    //manager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 300000, service);
-//                    manager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 60000, service);
-//                }
+
                 Intent i2 = new Intent(itemView.getContext(), PantallaJuego.class);
                 i2.putExtra("id", id);
                 Log.i("MYAPP", String.valueOf(laimagen.getId()));

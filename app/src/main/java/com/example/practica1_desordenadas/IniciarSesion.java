@@ -107,7 +107,7 @@ public class IniciarSesion extends AppCompatActivity implements DialogoIniciarSe
 //                    toast.setGravity(Gravity.BOTTOM| Gravity.CENTER, 0, 0);
 //                    toast.show();
 //                }
-                Log.i("MYAPP","pulsado");
+                //Se comprueba el inicio de sesión
                 String contraseñaReal=contraseña.getText().toString();
                 String nombre=nombreUsuario.getText().toString();
                 comprobarInicioSesion(nombre,contraseñaReal);
@@ -141,6 +141,7 @@ public class IniciarSesion extends AppCompatActivity implements DialogoIniciarSe
                 .observe(this, new Observer<WorkInfo>() {
                     @Override
                     public void onChanged(WorkInfo workInfo) {
+                        //Si el resultado no es adecuado se informa por qué
                         if (workInfo != null && workInfo.getState().isFinished()) {
                             String resultado = workInfo.getOutputData().getString("resultado");
                             Log.i("MYAPP","inicio realizado");

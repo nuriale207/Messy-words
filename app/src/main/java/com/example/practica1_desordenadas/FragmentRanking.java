@@ -88,6 +88,7 @@ public class FragmentRanking extends Fragment {
                 .observe(this, new Observer<WorkInfo>() {
                     @Override
                     public void onChanged(WorkInfo workInfo) {
+                        //Se gestionan los resultados obtenidos
                         if(workInfo != null && workInfo.getState().isFinished()){
                             String resultado=workInfo.getOutputData().getString("resultado");
 

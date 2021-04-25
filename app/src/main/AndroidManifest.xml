@@ -35,7 +35,7 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/widget_info" />
         </receiver>
-        <receiver android:name=".AlarmaJuegoBroadcastReceiver" />
+
         <service android:name=".ServicioTerminarJuego" />
 
         <service android:name=".MyFirebaseMessagingService">

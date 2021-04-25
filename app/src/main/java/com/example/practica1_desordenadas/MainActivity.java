@@ -191,6 +191,7 @@ public class MainActivity extends  AppCompatActivity implements DialogoSalir.Lis
         });
 
         botonPistas.setOnClickListener(new View.OnClickListener() {
+            //Se comprueba que haya un usuario logeado para poder acceder a la función de las pistas
             @Override
             public void onClick(View v) {
                 if(preferencias.getString("nombreUsuario",null)!=null){
@@ -198,6 +199,7 @@ public class MainActivity extends  AppCompatActivity implements DialogoSalir.Lis
                     startActivity(i);
                 }
                 else{
+                    //En caso de no haberlo se informa de ello y se abre la  actividad de inicio de sesión
                     Toast toast=Toast.makeText(getApplicationContext(),getString(R.string.necesarioIniciarSesion), Toast.LENGTH_LONG);
                     toast.setGravity(Gravity.BOTTOM| Gravity.CENTER, 0, 0);
                     toast.show();

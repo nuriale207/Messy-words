@@ -28,19 +28,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         if(remoteMessage.getNotification()==null) {
             Log.i("MYAPP","El mensaje es nulo");
 
-//            try {
-//                remoteMessage.getData().get("body");
-//                JSONObject jsonObject=new JSONObject(remoteMessage.getData().toString());
-//                titulo=jsonObject.getString("titulo");
-//                body=jsonObject.getString("body");
-//                Log.i("FIREBASE",  titulo+"+"+body);
-//
-//                sendNotification(titulo,body);
-//
-//
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
             titulo=remoteMessage.getData().get("titulo");
             body=remoteMessage.getData().get("body");
             Log.i("FIREBASE",  titulo+"+"+body);
@@ -50,6 +37,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             Log.i("FIREBASE",  remoteMessage.getData().toString());
         }
         else{
+            //En caso contrario se puede obtener directamente la información
             titulo=remoteMessage.getNotification().getTitle();
 
 
@@ -62,34 +50,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     }
 
     private void sendNotification(String titulo,String messageBody) {
-//        Intent intent = new Intent(this, MainActivity.class);
-//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
-//                PendingIntent.FLAG_ONE_SHOT);
-//
-//        String channelId = "notificacionFireBase";
-//        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-//        NotificationCompat.Builder notificationBuilder =
-//                new NotificationCompat.Builder(this, channelId)
-//                        .setContentTitle("Mensaje FCM")
-//                        .setContentText(messageBody)
-//                        .setAutoCancel(true)
-//                        .setSound(defaultSoundUri)
-//                        .setContentIntent(pendingIntent);
-//
-//        NotificationManager notificationManager =
-//                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-//
-//        // Since android Oreo notification channel is needed.
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//            NotificationChannel channel = new NotificationChannel(channelId,
-//                    "Channel human readable title",
-//                    NotificationManager.IMPORTANCE_DEFAULT);
-//            notificationManager.createNotificationChannel(channel);
-//        }
-//
-//        notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
-        //La notificación muestra la puntuación del jugador
+
+        //Método que muestra la notificación recibida
         NotificationManager elManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
         NotificationCompat.Builder elBuilder = new NotificationCompat.Builder(getApplicationContext(), "IdCanal");
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

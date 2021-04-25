@@ -74,8 +74,8 @@ public class ActividadSeleccionarNivel extends  AppCompatActivity implements Dia
         TextView idTitulo=findViewById(R.id.idTitulo);
         idTitulo.setText(R.string.seleccionarNivel);
         Button boton=findViewById(R.id.botonVolver2);
-        //Paso 1: se gestiona el nivel que hay que cargar cuyo id es proporcionado por la actividad
-        //precedente
+        //Paso 1: se mira si la llamada a la actividad se ha hecho por falta de tiempo en la pantalla de juego
+        //En ese caso se muestra un mensaje por pantalla, indicando que se ha terminado el tiempo
         Bundle extras=getIntent().getExtras();
 
         if (extras!=null){

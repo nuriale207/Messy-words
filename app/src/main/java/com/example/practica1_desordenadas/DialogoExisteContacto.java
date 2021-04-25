@@ -10,11 +10,11 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
 public class DialogoExisteContacto extends DialogFragment {
-    //Dialogo fin de nivel
+    //Dialogo que informa a un usuario de que un contacto está repetido
     AlertDialog.Builder builder;
     public interface ListenerdelDialogExisteContacto{
         void alpulsarAñadir();
-        //void alpulsarSiguienteNivel();
+
     }
 
     @NonNull

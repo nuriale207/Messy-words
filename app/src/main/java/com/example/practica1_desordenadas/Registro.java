@@ -210,6 +210,7 @@ public class Registro extends AppCompatActivity implements DialogoIniciarSesion.
         }
     }
     private boolean comprobarFormulario(String nombreUsuario, String email, String contraseña1, String contraseña2){
+        //Método que contempla los distintos errores que puede haber al rellenar el formulario
         boolean valido=true;
         if(nombreUsuario.length()<2){
             valido=false;
@@ -249,6 +250,7 @@ public class Registro extends AppCompatActivity implements DialogoIniciarSesion.
     }
 
     private void añadirUsuario(String nombreUsuario, String email, String contraseña1, String contraseña2) {
+        //Método que añade el usuario a la BD remota haciendo una solicitud a un Worker
         boolean valido=
                 comprobarFormulario(nombreUsuario, email, contraseña1, contraseña2);
         if (valido) {
@@ -310,7 +312,7 @@ public class Registro extends AppCompatActivity implements DialogoIniciarSesion.
     }
 
     private void guardarImagen() {
-
+        //Método que almacena la imagen en Firebase storage
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
 

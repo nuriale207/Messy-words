@@ -9,6 +9,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
 public class DialogoMapa extends DialogFragment {
+    //Dialogo que informa al usuario de que ha llegado a su destino en el mapa
     AlertDialog.Builder builder;
 
     @Override
